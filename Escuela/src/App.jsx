@@ -1,11 +1,9 @@
-import { Crud } from "./Componentes/Crud/Crud";
-import { Header } from "./Componentes/Header/Header";
+import { Login } from "./Componentes/Login/Login";
 
 function App() {
   return (
     <>
-      <Header />
-      <Crud />
+      <Login />
     </>
   );
 }
