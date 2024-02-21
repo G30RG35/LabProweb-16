@@ -5,7 +5,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 export const Header = () => {
   return (
     <>
-      <body class="d-flex align-items-center py-4 bg-body-tertiary">
+      <div className="d-flex align-items-center py-4 bg-body-tertiary">
         <div className="container">
           <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a
@@ -47,7 +47,7 @@ export const Header = () => {
             </ul>
           </header>
         </div>
-      </body>
+      </div>
     </>
   );
 };
