@@ -1,9 +1,52 @@
-import React from "react";
+import React, { useRef } from "react";
 import style from "./SelectDeMaterias.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
 
 export const SelectDeMaterias = () => {
+  function CustomToggle({ children, eventKey }) {
+    const decoratedOnClick = useAccordionButton(eventKey, () =>
+      console.log("totally custom!")
+    );
+
+    return (
+      <button
+        type="button"
+        // style={{ backgroundColor: "pink" }}
+        onClick={decoratedOnClick}
+      >
+        {children}
+      </button>
+    );
+  }
+
+  const arrayDeObjetos = [
+    {
+      id: "1",
+      titulo: "Materia 1",
+      cuerpo: "Este es el cuerpo del primer objeto.",
+    },
+    {
+      id: "2",
+      titulo: "Materia 2",
+      cuerpo: "Este es el cuerpo del segundo objeto.",
+    },
+    {
+      id: "3",
+      titulo: "Materia 3",
+      cuerpo: "Este es el cuerpo del tercer objeto.",
+    },
+  ];
+
+  const persona = {
+    id: 84596,
+    nombre: "Jorge Javier Inosroza villarreal",
+    edad: 19,
+  };
+
   return (
     <>
       <div className={`${style.divConteiner}`}>
@@ -13,118 +56,66 @@ export const SelectDeMaterias = () => {
             Ingrese a la materia para ver sus calificaciones y las horas de
             clase
           </p>
+          {/* Componente de acordeon */}
           <div>
-            <div className="accordion" id="accordionExample">
-              <div className="card">
-                <div className="card-header" id="headingOne">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseOne"
-                      aria-expanded="true"
-                      aria-controls="collapseOne"
-                    >
-                      Collapsible Group Item #1
-                    </button>
-                  </h2>
-                </div>
+            <Accordion /*defaultActiveKey="0"*/>
+              {arrayDeObjetos.map((materia) => (
+                <Accordion.Item key={materia.id} eventKey={materia.id}>
+                  <Accordion.Header>{materia.titulo}</Accordion.Header>
+                  <Accordion.Body>{materia.cuerpo}</Accordion.Body>
+                </Accordion.Item>
+              ))}
+            </Accordion>
 
-                <div
-                  id="collapseOne"
-                  className="collapse show"
-                  aria-labelledby="headingOne"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                    accusamus terry richardson ad squid. 3 wolf moon officia
-                    aute, non cupidatat skateboard dolor brunch. Food truck
-                    quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                    sunt aliqua put a bird on it squid single-origin coffee
-                    nulla assumenda shoreditch et. Nihil anim keffiyeh
-                    helvetica, craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                    Leggings occaecat craft beer farm-to-table, raw denim
-                    aesthetic synth nesciunt you probably haven't heard of them
-                    accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header" id="headingTwo">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link collapsed"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseTwo"
-                      aria-expanded="false"
-                      aria-controls="collapseTwo"
-                    >
-                      Collapsible Group Item #2
-                    </button>
-                  </h2>
-                </div>
-                <div
-                  id="collapseTwo"
-                  className="collapse"
-                  aria-labelledby="headingTwo"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                    accusamus terry richardson ad squid. 3 wolf moon officia
-                    aute, non cupidatat skateboard dolor brunch. Food truck
-                    quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                    sunt aliqua put a bird on it squid single-origin coffee
-                    nulla assumenda shoreditch et. Nihil anim keffiyeh
-                    helvetica, craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                    Leggings occaecat craft beer farm-to-table, raw denim
-                    aesthetic synth nesciunt you probably haven't heard of them
-                    accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header" id="headingThree">
-                  <h2 className="mb-0">
-                    <button
-                      className="btn btn-link collapsed"
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseThree"
-                      aria-expanded="false"
-                      aria-controls="collapseThree"
-                    >
-                      Collapsible Group Item #3
-                    </button>
-                  </h2>
-                </div>
-                <div
-                  id="collapseThree"
-                  className="collapse"
-                  aria-labelledby="headingThree"
-                  data-parent="#accordionExample"
-                >
-                  <div className="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life
-                    accusamus terry richardson ad squid. 3 wolf moon officia
-                    aute, non cupidatat skateboard dolor brunch. Food truck
-                    quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
-                    sunt aliqua put a bird on it squid single-origin coffee
-                    nulla assumenda shoreditch et. Nihil anim keffiyeh
-                    helvetica, craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-                    Leggings occaecat craft beer farm-to-table, raw denim
-                    aesthetic synth nesciunt you probably haven't heard of them
-                    accusamus labore sustainable VHS.
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* <Accordion defaultActiveKey="0">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Accordion Item #1</Accordion.Header>
+                <Accordion.Body>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Accordion Item #2</Accordion.Header>
+                <Accordion.Body>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion> */}
+
+            {
+              <Accordion>
+                <Card>
+                  <Card.Header>
+                    <CustomToggle eventKey="user">
+                      {persona.nombre}
+                    </CustomToggle>
+                  </Card.Header>
+                  <Accordion.Collapse eventKey="user">
+                    <Card.Body>
+                      {"Matricula: " + persona.id}
+                      <br/>
+                      {"Nombre: " + persona.nombre}
+                      <br/>
+                      {"Edad: " + persona.edad}
+                    </Card.Body>
+                  </Accordion.Collapse>
+                </Card>
+              </Accordion>
+            }
           </div>
         </div>
       </div>
