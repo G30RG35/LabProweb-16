@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import conexionDB from "./config/DB.js"
+import AlumnoRoutes from "./routes/AlumnoRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -31,6 +31,7 @@ app.use(cors(corsOptions));
 
 
 /** ZONA ADMIN */
+
 
 /** ZONA MAESTROS */
 
