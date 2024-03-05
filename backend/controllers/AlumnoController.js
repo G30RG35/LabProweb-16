@@ -1,28 +1,27 @@
-import Alumno from "../models/Student.js"
+import User from "../models/User.js";
 
-const getAllStudents = async(req, res) => {
-    const AlumnoOj = new Alumno()
-    const alumnos = await AlumnoOj.getAllItems(Alumno)
+const getAllUsers = async(req, res) => {
+    const userOj = new User();
+    const users = await userOj.getAllItems(User)
 
-    res.status(200).json({msg: 'Ok', alumnos})
+    res.status(200).json({msg: 'Ok', users})
 }
 
-const getOneStudent = async(req, res) => {
+const getOneUser = async(req, res) => {
     const { id } = req.params;
+    const userOj = new User();
+    const user = await userOj.getById(User, id);
 
-    const AlumnoOj = new Alumno()
-    const alumno = await AlumnoOj.getById(Alumno, id);
-
-    res.status(200).json({msg: 'Ok', alumno})
+    res.status(200).json({msg: 'Ok', user})
 }
 
-const addNewStudent = async(req, res) => {
-    const AlumnoOj = new Alumno(req.body)
+const addNewUser = async(req, res) => {
+    const userOj = new User(req.body)
     
-    const response = await AlumnoOj.saveItem(Alumno, AlumnoOj)
+    const response = await userOj.saveItem(User, userOj)
 
     if(response) {
-        return res.status(200).json({msg: 'Alumno creado correctamente'})
+        return res.status(200).json({msg: 'Usuario creado correctamente'})
     } else {
         const error = new Error('Hubo un error')
         return res.status(500).json({msg: error.message})
@@ -30,7 +29,7 @@ const addNewStudent = async(req, res) => {
 }
 
 export {
-    getAllStudents,
-    getOneStudent,
-    addNewStudent
+    getAllUsers,
+    getOneUser,
+    addNewUser
 }
