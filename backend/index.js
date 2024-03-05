@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import createConnection from "./config/DB.js";
-import StudentRoutes from "./routes/StudentRoutes.js";
+import UserRoutes from "./routes/UserRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -37,7 +37,7 @@ app.use(cors(corsOptions));
 /** ZONA MAESTROS */
 
 /** ZONA ALUMNOS */
-app.use('/api/students', StudentRoutes);
+app.use('/api/users', UserRoutes);
 
 const PORT = process.env.PORT || 4000
 
