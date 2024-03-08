@@ -1,7 +1,7 @@
 import ActiveRecord from "./ActiveRecord.js";
 
 class User extends ActiveRecord {
-    static tableName = 'usuario'
+    static tableName = 'user'
 
     static alertaExito = 'Usuario Creado Correctamente'
 
