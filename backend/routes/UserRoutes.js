@@ -3,6 +3,6 @@ import { addNewUser, getAllUsers, getOneUser, updateUser } from "../controllers/
 const router = express.Router();
 
 router.route('/').get(getAllUsers).post(addNewUser);
-router.route('/:id').get(getOneUser).post(updateUser);
+router.route('/:id').get(getOneUser).put(updateUser);
 
 export default router
