@@ -3,14 +3,19 @@ import ActiveRecord from "./ActiveRecord.js";
 class User extends ActiveRecord {
     static tableName = 'user'
 
+    static alertaExito = 'Usuario Creado Correctamente'
+
     constructor(user) {
         super();
-        this.id = user?.id
-        this.nombre = user?.nombre;
-        this.apellido = user?.apellido;
-        this.correo = user?.correo;
-        this.numero = user?.numero;
-        this.direccion = user?.direccion
+        this.ID = user?.ID;
+        this.nombre = user?.nombre ?? '';
+        this.apellidos = user?.apellidos ?? '';
+        this.fechaNac = user?.fechaNac ?? null;
+        this.correo = user?.correo ?? '';
+        this.numero = user?.numero ?? '';
+        this.password = user?.password ?? '';
+        this.direccion = user?.direccion ?? '';
+        this.activo = user?.activo ?? true;
     }
 }
 

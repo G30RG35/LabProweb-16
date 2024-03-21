@@ -1,4 +1,6 @@
+import { Console } from "console"
 import createConnection from "../config/DB.js"
+import getType from "../helpers/getType.js"
 
 const connetion = await createConnection()
 
@@ -21,24 +23,74 @@ class ActiveRecord {
     }
 
     async saveItem(modelName, object) {
-        const { claves, valores } = await this.getArray(object)
+        let { claves, valores } = await this.getArray(object)
 
-        const query = `
-            INSERT INTO ${modelName.tableName} (${claves.map(clave => clave)})
-            VALUES (${valores.map(valor => "'" + valor + "'")})
-        ` 
+        const haveID = object.ID !== undefined;
+
+        if (haveID) {
+            return this.updateItem(modelName, object, claves)
+        } else {
+            return this.createItem(modelName, valores, claves)
+        }
+    }
+
+    async updateItem(modelName, object, claves) {
+        let query = `UPDATE ${modelName.tableName}\n`;
+        query += `SET${claves.map(clave => ' ' + clave + " = " + getType(object[clave]) + "")}\n`;
+        query += `WHERE ID = ${object['ID']}`
 
         try {
             await connetion.execute(query)
-            return true
+            return 'Elemento Actualizado Correctamente'
         } catch (err) {
+            console.log(err)
+            return
+        }
+    }
+
+    async createManyItems(modelName, objects, object) {
+        let { claves } = await this.getArray(object)
+        const campos = claves?.filter(clave => clave !== 'ID');
+
+        let query = `INSERT INTO ${modelName.tableName} `;
+        query += `(${campos.map(clave => " " + clave)}) VALUES `;
+
+        await objects.map((object, index) => {
+            if(index === objects.length - 1) {
+                return query += `(${campos.map((clave) => getType(object[clave]) + "")});`
+            } else {
+                return query += `(${campos.map((clave) => getType(object[clave]) + "")}),`
+            }
+        })
+
+        try {
+            await connetion.execute(query)
+            return 'Elementos Creados Correctamente'
+        } catch (err) {
+            console.log(err)
+            return
+        }
+    }
+
+    async createItem(modelName, valores, claves) {
+        valores = valores?.filter(valor => valor !== undefined);
+        const campos = claves?.filter(clave => clave !== 'ID');
+
+        let query = `INSERT INTO ${modelName.tableName} `;
+        query += `(${campos.map(clave => " " + clave)}) VALUES (${valores.map(valor => getType(valor))})`;
+
+        try {
+            await connetion.execute(query)
+            return 'Elemento Creado Correctamente'
+        } catch (err) {
+            console.log(err)
             return
         }
     }
 
     async getArray(object) {
         const claves = Object.keys(object);
-        const valores = claves.map((clave) => object[clave]);
+        let valores = claves.map((clave) => object[clave]);
 
         return {claves, valores}
     }

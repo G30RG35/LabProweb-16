@@ -1,0 +1,44 @@
+.divConteiner {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: flex;
+    padding: 0 4em;
+}
+
+.separacion{
+    padding: 1em;
+}
+
+
+.InfoArea {
+  min-width: 200px;
+  height: 400px;
+  width: 100%;
+  border-radius: 1em;
+  background-color: gray;
+}
+
+.Rowreverse{
+    display: flex;
+    width: 100%;
+}
+
+
+@media (max-width: 768px) {
+    .Rowreverse{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .Rowreverse > div {
+        margin:10px 0;
+      }
+}
+
+.divEvento{
+    background-color: cadetblue;
+    margin: .5em;
+    border-radius: .5em;
+    width: 100%;
+    padding: 10px;
+}
