@@ -6,7 +6,6 @@ import UserRoutes from "./routes/UserRoutes.js";
 import MateriaRoutes from "./routes/MateriaRoutes.js";
 import PeriodoRoutes from "./routes/PeriodoRoutes.js";
 import SalonRoutes from "./routes/SalonRoutes.js";
-import Salon from "./models/Salon.js";
 
 const app = express();
 app.use(express.json());
@@ -30,7 +29,7 @@ const corsOptions = {
     }
 }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 /** --- ROUTING --- */
 app.use('/api/users', UserRoutes);
