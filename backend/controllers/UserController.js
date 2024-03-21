@@ -16,7 +16,7 @@ const getOneUser = async(req, res) => {
 }
 
 const addNewUser = async(req, res) => { 
-    const { users, user } = req.body
+    const { users, user } = req.body;
     
     if(user) {
         const userOj = new User(user)
