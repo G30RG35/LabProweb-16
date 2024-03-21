@@ -2,7 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import createConnection from "./config/DB.js";
-import StudentRoutes from "./routes/StudentRoutes.js";
+import UserRoutes from "./routes/UserRoutes.js";
+import MateriaRoutes from "./routes/MateriaRoutes.js";
+import PeriodoRoutes from "./routes/PeriodoRoutes.js";
+import SalonRoutes from "./routes/SalonRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -26,18 +29,23 @@ const corsOptions = {
     }
 }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 /** --- ROUTING --- */
+app.use('/api/users', UserRoutes);
 
+app.use('/api/materias', MateriaRoutes);
+app.use('/api/periodos', PeriodoRoutes);
+app.use('/api/salones', SalonRoutes);
 
-/** ZONA ADMIN */
+/** 
+app.use('/api/grupos');
+app.use('/api/clases');
+app.use('/api/escolaridad');
+app.use('/api/escolaridad');
+app.use('/api/rol');
 
-
-/** ZONA MAESTROS */
-
-/** ZONA ALUMNOS */
-app.use('/api/students', StudentRoutes);
+*/
 
 const PORT = process.env.PORT || 4000
 
