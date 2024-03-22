@@ -1,3 +1,5 @@
+import generatePSWD from "../helpers/generarPassword.js";
+import hashearPassword from "../helpers/hashearPassword.js";
 import User from "../models/User.js";
 
 const getAllUsers = async(req, res) => {
@@ -20,6 +22,8 @@ const addNewUser = async(req, res) => {
     
     if(user) {
         const userOj = new User(user)
+        userOj.password = await hashearPassword(userOj.password)
+
         const response = await userOj.saveItem(User, userOj)
 
         if(response) {

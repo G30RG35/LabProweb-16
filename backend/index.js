@@ -7,6 +7,7 @@ import MateriaRoutes from "./routes/MateriaRoutes.js";
 import PeriodoRoutes from "./routes/PeriodoRoutes.js";
 import SalonRoutes from "./routes/SalonRoutes.js";
 import RolRoutes from "./routes/RolRoutes.js";
+import AuthRoutes from "./routes/AuthRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -38,6 +39,7 @@ app.use('/api/materias', MateriaRoutes);
 app.use('/api/periodos', PeriodoRoutes);
 app.use('/api/salones', SalonRoutes);
 app.use('/api/rol', RolRoutes);
+app.use('/api/auth', AuthRoutes);
 
 /** 
 app.use('/api/grupos');

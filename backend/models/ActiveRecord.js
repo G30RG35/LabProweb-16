@@ -19,7 +19,16 @@ class ActiveRecord {
             WHERE ID = ${id}
         `)
 
-        return results
+        return results[0]
+    }
+
+    async getByElement(modelName, field, value) {
+        const [results, fields] = await connetion.execute(`
+            SELECT * FROM ${modelName.tableName}
+            WHERE ${field} = ${value}
+        `)
+
+        return results;
     }
 
     async saveItem(modelName, object) {
