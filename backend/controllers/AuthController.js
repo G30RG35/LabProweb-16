@@ -6,9 +6,9 @@ const auth = async(req, res) => {
     const { ID, password } = req.body;
     const userObj = new User(req.body);
 
-    const user = await userObj.getById(User, userObj.ID);
+    const user = await userObj.getUserInfo(ID);
 
-    if(user.length === 0) {
+    if(!user) {
         const error = new Error("El usuario no esta registrado");
         return res.status(404).json({msg: error.message});
     }
@@ -24,6 +24,13 @@ const auth = async(req, res) => {
     }
 }
 
+const getAuth = async(req, res) => {
+    const { user } = req
+
+    return res.json(user)
+}
+
 export {
-    auth
+    auth, 
+    getAuth
 }

@@ -9,12 +9,11 @@ const checkAuth = async(req, res, next) => {
         try {
             token = req.headers.authorization.split(' ')[1]
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            const user = await userObj.getById(User, decoded.id)
+            const user = await userObj.getUserInfo(decoded.id)
             const { password, ...userAuth } = user;
 
             req.user = userAuth;
         } catch (error) {
-            console.log(error)
             return res.status(404).json({ msg: "Hubo un error" })
         }
     }

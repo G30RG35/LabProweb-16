@@ -1,8 +1,9 @@
 import express from 'express';
-import { auth } from '../controllers/AuthController.js';
+import { auth, getAuth } from '../controllers/AuthController.js';
+import checkAuth from '../middleware/checkAuth.js';
 
 const router = express.Router();
 
-router.post('/', auth);
+router.route('/').get(checkAuth, getAuth).post(auth);
 
 export default router;
