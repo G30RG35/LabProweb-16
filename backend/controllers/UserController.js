@@ -1,10 +1,11 @@
 import generatePSWD from "../helpers/generarPassword.js";
 import hashearPassword from "../helpers/hashearPassword.js";
+import DetUsuarioRol from "../models/DetUsuarioRol.js";
 import User from "../models/User.js";
 
 const getAllUsers = async(req, res) => {
     const userOj = new User();
-    const users = await userOj.getAllItems(User)
+    const users = await userOj.getUsersInfo(User)
 
     res.status(200).json({msg: 'Ok', users})
 }
@@ -18,8 +19,8 @@ const getOneUser = async(req, res) => {
 }
 
 const addNewUser = async(req, res) => { 
-    const { users, user } = req.body;
-    
+    let { users, user, tipo } = req.body;
+
     if(user) {
         const userOj = new User(user)
         userOj.password = await hashearPassword(userOj.password)
@@ -36,14 +37,33 @@ const addNewUser = async(req, res) => {
 
     if(users) {
         const user = new User()
-        const usersOj = users.map(user => new User(user))
+        const userRol = new DetUsuarioRol()
+        let usersNew = []
 
-        const response = await user.createManyItems(User, usersOj, user)
+        for(let i = 0; i < users.length; i++) {
+            const userNew = new User(users[i])
+            userNew.password = await hashearPassword(userNew.password)
+            usersNew[i] = userNew
+        }
 
-        console.log(response)
+        const response = await user.createManyItems(User, usersNew, user)
+
+        const userRolArray = []
+
+        for(let i=response.res[0].insertId;i<(users.length+response.res[0].insertId);i++) {
+            const user = {
+                usuarioID : i, 
+                rolID : tipo
+            }
+
+            const detUserRol = new DetUsuarioRol(user)
+            userRolArray[i-response.res[0].insertId] = detUserRol
+        }
+
+        await userRol.createManyItems(DetUsuarioRol, userRolArray, userRol)
 
         if(response) {
-            return res.status(200).json({msg: response})
+            return res.status(200).json({msg: response.msg})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})

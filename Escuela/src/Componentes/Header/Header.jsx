@@ -7,54 +7,55 @@ export const Header = () => {
   return (
     <>
       <div className='headerNav shadow'>
-        <div className="border-bottom">
-          <header className="d-flex flex-wrap justify-content-center py-3 container">
+        <div className="navbar navbar-expand-lg navbar-light bg-light">
+          <header className="d-flex flex-wrap justify-content-between container">
             <Link
               to="/"
-              className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+              className="navbar-brand"
             >
-              <svg className="bi me-2" width="40" height="32">
-                <use href="#bootstrap"></use>
-              </svg>
-              <span className="fs-4">Logo</span>
+              <span className="fs-4">LOGO</span>
             </Link>
-
-            <ul className="nav">
-              <li className="nav-item">
-                <Link to="/" className="nav-link active">
-                  Inicio
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/eventos" className="nav-link">
-                  Eventos
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/nosotros" className="nav-link">
-                  Nosotros
-                </Link>
-              </li>
-              {!auth.ID ? (
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className='collapse navbar-collapse' id='navbarNav'>
+              <ul className="navbar-nav column-gap-2">
                 <li className="nav-item">
-                  <Link to="/login" className="btn btn-primary">
-                    Iniciar Sesión
+                  <Link to="/" className="nav-link active">
+                    Inicio
                   </Link>
                 </li>
-              ) : (
                 <li className="nav-item">
-                  <button 
-                    onClick={() => {
-                      logOut()
-                    }}
-                    className="btn btn-danger"
-                  >
-                    Cerrar Sesión
-                  </button>
+                  <Link to="/eventos" className="nav-link">
+                    Eventos
+                  </Link>
                 </li>
-              )}
-              
-            </ul>
+                <li className="nav-item">
+                  <Link to="/nosotros" className="nav-link">
+                    Nosotros
+                  </Link>
+                </li>
+                {!auth.ID ? (
+                  <li className="nav-item">
+                    <Link to="/login" className="btn btn-primary">
+                      Iniciar Sesión
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <button 
+                      onClick={() => {
+                        logOut()
+                      }}
+                      className="btn btn-danger"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </li>
+                )}
+                
+              </ul>
+            </div>
           </header>
         </div>
       </div>

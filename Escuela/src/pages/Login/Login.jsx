@@ -15,9 +15,11 @@ const Login = () => {
 
   const handleSubmit = async() => {
     const user = await handleLogin(ID, password, remember)
-    setAuth(user)
-
-    navigate('/');
+    
+    if(user) {
+      setAuth(user)
+      navigate('/');
+    }
   }
 
   const comprobarInfo = useCallback(() => {

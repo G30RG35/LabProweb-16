@@ -1,0 +1,57 @@
+.formContainer {
+    padding: 20px;
+    background-color: var(--light-gray);
+    color: var(--text-white);
+    border-radius: 10px;
+}
+.inputAlumno {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+.inputAlumno input {
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+}
+.inputAlumno span {
+    color: var(--light-blue);
+    font-weight: 500;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.btnChangePassword {
+    border: none;
+    background-color: transparent;
+    width: auto;
+    padding: 0;
+}
+.btnChangePassword svg {
+    width: 25px;
+    color: var(--text-white);
+}
+.inputPassword {
+    display: flex;
+    gap: 5px;
+}
+.inputPassword input {
+    width: 100%;
+}
+.btnSubmitContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+.btnSubmit {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--light-blue);
+    color: var(--text-white);
+    transition: all ease-in-out 0.2s;
+}
+.btnSubmit:hover {
+    background-color: var(--blue);
+}
+
+

@@ -73,8 +73,8 @@ class ActiveRecord {
         })
 
         try {
-            await connetion.execute(query)
-            return 'Elementos Creados Correctamente'
+            const res = await connetion.execute(query)
+            return {msg: 'Elementos Creados Correctamente', res}
         } catch (err) {
             console.log(err)
             return
