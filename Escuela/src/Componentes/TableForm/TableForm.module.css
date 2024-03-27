@@ -1,5 +1,6 @@
 .tableFormContainer {
     overflow-x: hidden;
+    top: 0;
 }
 
 .scrollTable {
@@ -17,4 +18,7 @@
 }
 .scrollTable table {
     margin-bottom: 5px;
+}
+.direccionTd {
+    width: 50px;
 }

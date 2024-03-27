@@ -89,8 +89,8 @@ class ActiveRecord {
         query += `(${campos.map(clave => " " + clave)}) VALUES (${valores.map(valor => getType(valor))})`;
 
         try {
-            await connetion.execute(query)
-            return 'Elemento Creado Correctamente'
+            const res = await connetion.execute(query)
+            return {msg: 'Elemento Creado Correctamente', res}
         } catch (err) {
             console.log(err)
             return

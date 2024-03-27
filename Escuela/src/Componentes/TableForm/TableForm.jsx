@@ -31,7 +31,7 @@ const TableForm = ({infoExcel, handleSaveUser}) => {
                                     <td>{alumno?.fechaNac}</td>
                                     <td>{alumno?.numero}</td>
                                     <td>{alumno?.correo}</td>
-                                    <td>{alumno?.direccion}</td>
+                                    <td className={`${styles.direccionTd}`}>{alumno?.direccion}</td>
                                 </tr>
                             ))} 
                         </tbody>

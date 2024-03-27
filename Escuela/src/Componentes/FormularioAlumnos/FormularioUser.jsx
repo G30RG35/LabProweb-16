@@ -1,20 +1,32 @@
 import { useState, useEffect } from 'react';
-import styles from './FormularioAlumnos.module.css'
+import styles from './FormularioUser.module.css'
 import generatePSWD from '../../helpers/generarPassword';
 import * as XLSX from 'xlsx/xlsx.mjs';
 import TableForm from '../TableForm/TableForm';
 import useAdmin from '../../hooks/useAdmin';
 
-const FormularioAlumnos = () => {
+const FormularioUser = () => {
+    const [newPassword, setNewPassword] = useState('');
     const [file, setFile] = useState(null)
     const [infoExel, setInfoExcel] = useState([])
-    const [password, setPassword] = useState(generatePSWD());
 
-    const { handleSaveUser } = useAdmin();
+    const { 
+        handleSaveUser, 
+        alerta, 
+        ID, 
+        nombre, setNombre, 
+        apellidos, setApellidos, 
+        fechaNac, setFechaNac, 
+        numero, setNumero, 
+        correo, setCorreo, 
+        password, setPassword, 
+        direccion, setDireccion
+    } = useAdmin();
 
     const handleSetPassword = () => {
         const newPassword = generatePSWD()
         setPassword(newPassword)
+        setNewPassword(newPassword)
     }
 
     const excelToJson = async() => {
@@ -65,35 +77,45 @@ const FormularioAlumnos = () => {
             )}
 
             <h4 className='mt-3'>Ingresa la informacion para guardar la informacion del alumno</h4>
-            <form className={`${styles.FormAlumno}`}>
+            {alerta && (
+                <div className={`alert alert-${alerta.error ? 'danger' : 'primary'}`} role="alert">
+                    {alerta.msg}
+                </div>
+            )}
+            <form 
+                className={`${styles.FormAlumno}`}
+                onSubmit={e => {
+                    handleSaveUser(1, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}]);
+                }}    
+            >
                 <div className="row gy-2">
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="nombre">Nombre</label>
-                        <input type="text" id="nombre" placeholder='Nombre del alumno' />
+                        <input type="text" id="nombre" placeholder='Nombre del alumno' value={nombre} onChange={e => setNombre(e.target.value)} />
                     </div>
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="apellido">Apellido(s)</label>
-                        <input type="text" id="apellido" placeholder='Apellido(s) del alumno' />
+                        <input type="text" id="apellido" placeholder='Apellido(s) del alumno' value={apellidos} onChange={e => setApellidos(e.target.value)} />
                     </div>
                     <div className={`${styles.inputAlumno} col-12`}>
                         <label htmlFor="fechaNac">Fecha de nacimiento</label>
-                        <input type="date" id="fechaNac" />
+                        <input type="date" id="fechaNac" value={fechaNac} onChange={e => setFechaNac(e.target.value)} />
                     </div>
 
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="numero">Numero</label>
-                        <input type="number" id="numero" placeholder='Numero' />
+                        <input type="number" id="numero" placeholder='Numero' value={numero} onChange={e => setNumero(e.target.value)} />
                     </div>
 
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="correo">Correo</label>
-                        <input type="text" id="correo" placeholder='Correo del alumno' />
+                        <input type="text" id="correo" placeholder='Correo del alumno' value={correo} onChange={e => setCorreo(e.target.value)} />
                     </div>
 
                     <div className={`${styles.inputAlumno} col-12`}>
-                        <label htmlFor="password">Contraseña<span>Contraseña generada de forma aleatoria</span></label>
+                        <label htmlFor="password">Contraseña<span className='text-info'>{ID ? 'Para crear nueva contraseña, presione el boton' : 'Contraseña generada de forma aleatoria'}</span></label>
                         <div className={`${styles.inputPassword}`}>
-                            <input type="text" id="password" placeholder='Contraseña' value={password} onChange={e => setPassword(e.target.value)} />
+                            <input type="text" id="password" className='text-light' placeholder='Contraseña' value={ID ? newPassword : password} onChange={e => ID ? setNewPassword(e.target.value) : setPassword(e.target.value)} disabled />
                             <button
                                 onClick={() => handleSetPassword()}
                                 type='button'
@@ -104,20 +126,24 @@ const FormularioAlumnos = () => {
                                 </svg>
                             </button>
                         </div>
+
+                        
                     </div>
 
                     <div className={`${styles.inputAlumno} col-12`}>
                         <label htmlFor="direccion">Direccion</label>
-                        <input type="text" id="direccion" placeholder='Ej. Aragon 118, Privadas Villa Sol, Escobedo, Nuevo Léon' />
+                        <input type="text" id="direccion" placeholder='Ej. Aragon 118, Privadas Villa Sol, Escobedo, Nuevo Léon' 
+                            value={direccion} onChange={e => setDireccion(e.target.value)}
+                        />
                     </div>
                 </div>
 
                 <div className={`${styles.btnSubmitContainer}`}>
-                    <button type="submit" className={`${styles.btnSubmit}`}>Guardar</button>
+                    <button type="submit" className={`${styles.btnSubmit}`}>{ID ? 'Guardar Cambios' : 'Crear Usuario'}</button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default FormularioAlumnos
+export default FormularioUser

@@ -28,7 +28,16 @@ const addNewUser = async(req, res) => {
         const response = await userOj.saveItem(User, userOj)
 
         if(response) {
-            return res.status(200).json({msg: response})
+            const userRol = {
+                usuarioID : response.res[0].insertId, 
+                rolID : tipo
+            }
+
+            const detUserRol = new DetUsuarioRol(userRol)
+
+            await detUserRol.saveItem(DetUsuarioRol, detUserRol)
+
+            return res.status(200).json({msg: response.msg})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
@@ -73,14 +82,44 @@ const addNewUser = async(req, res) => {
 
 const updateUser = async(req, res) => {
     const { id } = req.params;
-    let user = req.body;
+    let { user } = req.body;
     user.ID = +id;
-    user = new User(user)
+    const userObj = new User(user)
 
-    const response = await user.saveItem(User, user)
+    const oldUser = await userObj.getById(User, user.ID)
+
+    if(oldUser.password !== user.password) {
+        console.log('SON DIFERENTES')
+        userObj.password = await hashearPassword(userObj.password)
+    }
+
+    const response = await userObj.saveItem(User, userObj)
+
+    console.log(response)
 
     if(response) {
         return res.status(200).json({msg: response})
+    } else {
+        const error = new Error('Hubo un error')
+        return res.status(500).json({msg: error.message})
+    }
+}
+
+const deleteUser = async(req, res) => {
+    const { id } = req.params;
+    const oldUser = await userObj.getById(User, +id)
+
+    oldUser.activo = false 
+
+    const userObj = new User(oldUser);
+
+    console.log(userObj)
+    return
+
+    const response = await userObj.saveItem(User, userObj)
+
+    if(response) {
+        return res.status(200).json({msg: 'Usuario deshabilitado correctamente'})
     } else {
         const error = new Error('Hubo un error')
         return res.status(500).json({msg: error.message})

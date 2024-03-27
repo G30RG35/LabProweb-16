@@ -46,7 +46,7 @@ button {
 .tablaForm tbody td {
   -webkit-line-clamp: 1;
   overflow: hidden;    
-  text-overflow: ellipsis;
+  text-overflow:clip;
 }
 
 .button {
@@ -62,3 +62,66 @@ button {
   background-color: var(--blue);
 }
 
+.userContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: var(--text-white);
+}
+.userContainer h2 {
+  font-size: 20px;
+  margin: 0;
+}
+.userContainer p {
+  font-size: 18px;
+  margin: 0;
+}
+.listadoUsers {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 10px;
+}
+.btnFormContainer {
+  display: flex;
+  gap: 5px;
+}
+.deteleBtn {
+  padding: 2px;
+  background-color: red;
+  color: var(--text-white);
+  border-radius: 5px;
+}
+.editBtn {
+  padding: 2px;
+  background-color: var(--light-blue);
+  color: var(--text-white);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deteleBtn svg, .editBtn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.scrollContainer {
+  overflow-x: scroll;
+  padding-right: 5px;
+  max-height: 75vh;
+}
+.scrollContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollContainer::-webkit-scrollbar {
+  background-color: transparent;
+}
+.scrollContainer::-webkit-scrollbar-thumb {
+  background-color: var(--gray);
+  border-radius: 20px;
+}
+.scrollContainer table {
+  margin-bottom: 5px;
+}
