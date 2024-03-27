@@ -1,50 +1,61 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import { Link } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth';
 
 export const Header = () => {
+  const { auth, logOut } = useAuth();
+
   return (
     <>
-      <div className="d-flex align-items-center py-4 bg-body-tertiary">
-        <div className="container">
-          <header className="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a
-              href="/"
-              className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
+      <div className='headerNav shadow'>
+        <div className="navbar navbar-expand-lg navbar-light bg-light">
+          <header className="d-flex flex-wrap justify-content-between container">
+            <Link
+              to="/"
+              className="navbar-brand"
             >
-              <svg className="bi me-2" width="40" height="32">
-                <use href="#bootstrap"></use>
-              </svg>
-              <span className="fs-4">Simple header</span>
-            </a>
-
-            <ul className="nav nav-pills">
-              <li className="nav-item">
-                <a href="#" className="nav-link active" aria-current="page">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  Features
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  Pricing
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  FAQs
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  About
-                </a>
-              </li>
-            </ul>
+              <span className="fs-4">LOGO</span>
+            </Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className='collapse navbar-collapse' id='navbarNav'>
+              <ul className="navbar-nav column-gap-2">
+                <li className="nav-item">
+                  <Link to="/" className="nav-link active">
+                    Inicio
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/eventos" className="nav-link">
+                    Eventos
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/nosotros" className="nav-link">
+                    Nosotros
+                  </Link>
+                </li>
+                {!auth.ID ? (
+                  <li className="nav-item">
+                    <Link to="/login" className="btn btn-primary">
+                      Iniciar Sesión
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <button 
+                      onClick={() => {
+                        logOut()
+                      }}
+                      className="btn btn-danger"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </li>
+                )}
+                
+              </ul>
+            </div>
           </header>
         </div>
       </div>

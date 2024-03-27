@@ -1,11 +1,11 @@
-import ActiveRecord from "./ActiveRecord";
+import ActiveRecord from "./ActiveRecord.js";
 
 class DetUsuarioRol extends ActiveRecord {
     static tableName = 'detUsuarioRol';
 
     constructor(detUsuarioRol) {
         super();
-        this.usuarioID = detUsuarioRol?.usuarioID;
+        this.userID = detUsuarioRol?.usuarioID;
         this.rolID = detUsuarioRol?.rolID;
     }
 }

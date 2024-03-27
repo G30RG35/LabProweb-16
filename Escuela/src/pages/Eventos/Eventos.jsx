@@ -4,9 +4,6 @@ import { Row, Col } from "react-bootstrap";
 import { VistaEvento } from "../../Componentes/Eventos/VistaEvento";
 
 export const Eventos = () => {
-  
-
-  
     return (
     <>
       <div className={`${style.divConteiner} container`}>
