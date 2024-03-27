@@ -1,17 +1,25 @@
-import Footer from "./Componentes/Footer/Footer";
-import { Header } from "./Componentes/Header/Header";
-import { Login } from "./Paginas/Login/Login";
-import { SelectDe } from "./Componentes/Selector de/SelectDeMaterias";
-import { Eventos } from "./Paginas/Eventos/Eventos";
+import React, { Suspense, useEffect, useState } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { PrivateRoutes } from "./router/PrivateRoutes";
+import { PublicRoutes } from "./router/PublicRoutes";
 
 function App() {
+
+  const [router, setRouter] = useState(null);
+
+  useEffect(() => {
+    setRouter(createBrowserRouter([
+      ...(true ? PrivateRoutes() : PublicRoutes()),
+   ]));
+  }, [])
+
   return (
     <>
-    <Header />
-      {/* <Login /> */}
-      {/* <SelectDe /> */}
-      <Eventos />
-      <Footer />
+    {
+        router === null
+        ? <Suspense>Cargando...</Suspense>
+        : <RouterProvider router={router}  />
+      }
     </>
   );
 }
