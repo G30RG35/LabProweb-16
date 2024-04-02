@@ -12,15 +12,6 @@ import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import { AdminProvider } from './context/AdminProvider';
 
 function App() {
-
-  const [router, setRouter] = useState(null);
-
-  useEffect(() => {
-    setRouter(createBrowserRouter([
-      ...(true ? PrivateRoutes() : PublicRoutes()),
-   ]));
-  }, [])
-
   return (
     <BrowserRouter>
       <AuthProvider>
