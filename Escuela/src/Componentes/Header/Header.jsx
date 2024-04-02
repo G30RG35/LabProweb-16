@@ -1,67 +1,64 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-import React, { useEffect, useState } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
-import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth';
 
 export const Header = () => {
-  const [rol, setRol] = useState("")
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setRol(window.localStorage.getItem("rol"))
-  }, [])
-  
-  const handleToggle = () => setIsOpen(!isOpen);
+  const { auth, logOut } = useAuth();
 
   return (
     <>
-      <Navbar bg="light" expand="lg" mb={2}>
-      <Container>
-        <Navbar.Brand href="/">Nombre de Escuela</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={handleToggle} />
-        <Navbar.Collapse in={isOpen} id="basic-navbar-nav">
-          <Nav className="me-auto">
-
-            {rol==1?<>
-              <Nav.Link href="/clases">clases</Nav.Link>
-              <Nav.Link href="/periodos">Periodos</Nav.Link>
-            </>:null}
-
-            {rol==2?<>
-              <Nav.Link href="/grupos">Grupos</Nav.Link>
-              <Nav.Link href="/listas">Listas</Nav.Link>
-              <Nav.Link href="/crudCalificaciones">Calificaciones</Nav.Link>
-            </>:null}
-            <Nav.Link href="/">Mestros</Nav.Link>
-            <Nav.Link href="/">ALmunos</Nav.Link>
-            <Nav.Link href="/">Grupos</Nav.Link>
-            <Nav.Link href="/">Plan de estudios</Nav.Link>
-            <Nav.Link href="/">Clases</Nav.Link>
-            <Nav.Link href="/">Asignacion de alumnos</Nav.Link>
-            <Nav.Link href="/">Periodos</Nav.Link>
-            <Nav.Link href="/">Eventos</Nav.Link>
-            {rol==3?
-            <>
-            
-            </>:null}
-          </Nav>
-          <Nav>
-            <Dropdown>
-              <Dropdown.Toggle variant="light" id="dropdown-basic">
-                Cuenta
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/perfil">Perfil</Dropdown.Item>
-                <Dropdown.Item href="#/logout">Salir</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      <div className='headerNav shadow'>
+        <div className="navbar navbar-expand-lg navbar-light bg-light">
+          <header className="d-flex flex-wrap justify-content-between container">
+            <Link
+              to="/"
+              className="navbar-brand"
+            >
+              <span className="fs-4">LOGO</span>
+            </Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className='collapse navbar-collapse' id='navbarNav'>
+              <ul className="navbar-nav column-gap-2">
+                <li className="nav-item">
+                  <Link to="/" className="nav-link active">
+                    Inicio
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/eventos" className="nav-link">
+                    Eventos
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/nosotros" className="nav-link">
+                    Nosotros
+                  </Link>
+                </li>
+                {!auth.ID ? (
+                  <li className="nav-item">
+                    <Link to="/login" className="btn btn-primary">
+                      Iniciar Sesión
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <button 
+                      onClick={() => {
+                        logOut()
+                      }}
+                      className="btn btn-danger"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </li>
+                )}
+                
+              </ul>
+            </div>
+          </header>
+        </div>
+      </div>
     </>
   );
 };
