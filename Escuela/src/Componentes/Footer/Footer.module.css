@@ -1,0 +1,7 @@
+.footerBg {
+    background-color: var(--gray);
+    color: var(--text-white);
+}
+.liNav {
+    color: var(--text-white);
+}

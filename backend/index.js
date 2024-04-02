@@ -6,6 +6,8 @@ import UserRoutes from "./routes/UserRoutes.js";
 import MateriaRoutes from "./routes/MateriaRoutes.js";
 import PeriodoRoutes from "./routes/PeriodoRoutes.js";
 import SalonRoutes from "./routes/SalonRoutes.js";
+import RolRoutes from "./routes/RolRoutes.js";
+import AuthRoutes from "./routes/AuthRoutes.js";
 
 const app = express();
 app.use(express.json());
@@ -29,22 +31,21 @@ const corsOptions = {
     }
 }
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 /** --- ROUTING --- */
 app.use('/api/users', UserRoutes);
-
 app.use('/api/materias', MateriaRoutes);
 app.use('/api/periodos', PeriodoRoutes);
 app.use('/api/salones', SalonRoutes);
+app.use('/api/rol', RolRoutes);
+app.use('/api/auth', AuthRoutes);
 
 /** 
 app.use('/api/grupos');
 app.use('/api/clases');
 app.use('/api/escolaridad');
 app.use('/api/escolaridad');
-app.use('/api/rol');
-
 */
 
 const PORT = process.env.PORT || 4000

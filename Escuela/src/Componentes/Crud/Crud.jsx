@@ -16,8 +16,10 @@ export const Crud = () => {
     "Calificaciones" ]
     
   return (
-    <>
-    Crud
-    </>
+    <div>
+      {Object.keys(Objeto).map(key => (
+        <p key={key}>{key}</p>
+      ))}
+    </div>
   )
 }

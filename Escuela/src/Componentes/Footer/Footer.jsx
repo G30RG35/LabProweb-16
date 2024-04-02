@@ -1,10 +1,10 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import { Link } from 'react-router-dom';
+import styles from './Footer.module.css'
 
-export const Footer = () => {
+function Footer() {
   return (
     <>
+     <div className={`${styles.footerBg}`}>
       <div className="container">
         <footer className="py-5">
           <div className="row">
@@ -43,6 +43,8 @@ export const Footer = () => {
           </div>
         </footer>
       </div>
+      </div>
     </>
-  );
-};
+  )
+}
+

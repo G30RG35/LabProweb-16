@@ -1,0 +1,24 @@
+.tableFormContainer {
+    overflow-x: hidden;
+    top: 0;
+}
+
+.scrollTable {
+    overflow-x: scroll;
+}
+.scrollTable::-webkit-scrollbar {
+    height: 5px;
+}
+.scrollTable::-webkit-scrollbar {
+    background-color: transparent;
+}
+.scrollTable::-webkit-scrollbar-thumb {
+    background-color: var(--text-white);
+    border-radius: 20px;
+}
+.scrollTable table {
+    margin-bottom: 5px;
+}
+.direccionTd {
+    width: 50px;
+}

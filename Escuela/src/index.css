@@ -4,7 +4,124 @@
   box-sizing: border-box;
   /* border: 1px solid red; */
 }
+:root {
+  --gray: #404040;
+  --light-gray: #636363;
+  --blue: #0369a1;
+  --light-blue: #0284c7;
+  --dark-blue: #1d4ed8;
+  --text-white: #f5f5f4;
+}
 .root {
   width: 100vw;
   height: 100vh;
+}
+button {
+  border: none;
+  background-color: transparent;
+}
+.headerNav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: white;
+}
+
+#drop-area {
+  width: 100%;
+  height: 150px;
+  border: 2px dashed #ccc;
+  text-align: center;
+  line-height: 150px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: all ease-in-out 0.2s;
+}
+#drop-area:hover {
+  background-color: var(--text-white);
+  border: none;
+  color: black;
+}
+
+.tablaForm tbody td {
+  -webkit-line-clamp: 1;
+  overflow: hidden;    
+  text-overflow:clip;
+}
+
+.button {
+  text-decoration: none;
+  color: var(--text-white);
+  font-weight: 600;
+  background-color: var(--light-blue);
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all linear 0.2s;
+}
+.button:hover {
+  background-color: var(--blue);
+}
+
+.userContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: var(--text-white);
+}
+.userContainer h2 {
+  font-size: 20px;
+  margin: 0;
+}
+.userContainer p {
+  font-size: 18px;
+  margin: 0;
+}
+.listadoUsers {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 10px;
+}
+.btnFormContainer {
+  display: flex;
+  gap: 5px;
+}
+.deteleBtn {
+  padding: 2px;
+  background-color: red;
+  color: var(--text-white);
+  border-radius: 5px;
+}
+.editBtn {
+  padding: 2px;
+  background-color: var(--light-blue);
+  color: var(--text-white);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deteleBtn svg, .editBtn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.scrollContainer {
+  overflow-x: scroll;
+  padding-right: 5px;
+  max-height: 75vh;
+}
+.scrollContainer::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollContainer::-webkit-scrollbar {
+  background-color: transparent;
+}
+.scrollContainer::-webkit-scrollbar-thumb {
+  background-color: var(--gray);
+  border-radius: 20px;
+}
+.scrollContainer table {
+  margin-bottom: 5px;
 }

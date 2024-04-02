@@ -1,5 +1,5 @@
 import React from "react";
-import style from "../../Paginas/Eventos/Eventos.module.css";
+import style from "../../pages/Eventos/Eventos.module.css";
 import Fime from "./Fime.jpg";
 
 export const VistaEvento = () => {
