@@ -7,9 +7,9 @@ import { AuthProvider } from './context/AuthProvider';
 import AdminLayout from './layout/AdminLayout';
 import Admin from './pages/Admin/Admin';
 import { Eventos } from './pages/Eventos/Eventos';
-import Nosotros from './pages/Nosotros/Nosotros';
 import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import { AdminProvider } from './context/AdminProvider';
+import { Nosotros } from './pages/Nosotros/Nosotros';
 
 function App() {
   return (

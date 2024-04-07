@@ -1,0 +1,12 @@
+.conteiner{
+    margin-top: 1em;
+}
+
+.spaceRow{
+    min-height:200px;
+    margin:20px 0;
+}
+
+.colorRow{
+    background-color: rgb(174, 174, 174);
+}

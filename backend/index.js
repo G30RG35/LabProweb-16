@@ -31,7 +31,7 @@ const corsOptions = {
     }
 }
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 /** --- ROUTING --- */
 app.use('/api/users', UserRoutes);
