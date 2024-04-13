@@ -125,3 +125,26 @@ button {
 .scrollContainer table {
   margin-bottom: 5px;
 }
+
+/*Estilos para crud*/
+.divConteiner {
+  width: 80%;
+  height: auto;
+  margin: 1em auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4em;
+}
+
+.divAsignacion{
+  background-color: gray;
+  border-radius: 1em;
+  width: 100%;
+  padding: 10px;
+  margin: 1em 0;
+}
+
+.divBtnGuardar{
+  display: flex;
+    flex-direction: row-reverse;
+}

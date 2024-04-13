@@ -1,5 +1,4 @@
 import React from "react";
-import style from "./Crud.module.css";
 import { Accordion } from "react-bootstrap";
 
 export const Crud_Clases = () => {
@@ -42,39 +41,39 @@ export const Crud_Clases = () => {
   ];
 
   return (
-    <div className={`${style.divConteiner}`}>
-      <h1>Asignacion de clases</h1>
-      <div className={`${style.divAsignacion}`}>
+    <div className="divConteiner">
+      <h1>Crud de clases</h1>
+      <div className="divAsignacion">
         <div className="container">
+          {/* <div className="row">
+            <div className="col-sm-5 m-1">
+              <select defaultValue={0} className="form-select" aria-label="Default select example">
+                <option value={0}>Maestros</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col-sm-5 m-1">
+              <select defaultValue={0} className="form-select" aria-label="Default select example">
+                <option value={0}>Materia</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div> */}
           <div className="row">
-            <div className="col-sm-5 m-1">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Maestros</option>
+            {/* <div className="col-sm-5 m-1">
+              <select defaultValue={0} className="form-select" aria-label="Default select example">
+                <option value={0}>Grupo</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
-            </div>
-            <div className="col-sm-5 m-1">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Materia</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-5 m-1">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Grupo</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
+            </div> */}
             <div className="col-sm-5 m-1 d-grid">
-              <button type="button" class="btn btn-primary">
+              <button type="button" className="btn btn-primary">
                 Crear Clase
               </button>
             </div>
@@ -84,17 +83,17 @@ export const Crud_Clases = () => {
       <div>
         <div className="container">
           <div className="row">
-            <div class="input-group mb-3">
+            <div className="input-group mb-3">
               <h3>Filtro</h3>
               <input
                 type="text"
-                class="form-control mx-2"
+                className="form-control mx-2"
                 placeholder="Recipient's username"
                 aria-label="Recipient's username"
                 aria-describedby="button-addon2"
               />
               <button
-                class="btn btn-outline-secondary"
+                className="btn btn-outline-secondary"
                 type="button"
                 id="button-addon2"
               >
@@ -104,7 +103,7 @@ export const Crud_Clases = () => {
           </div>
         </div>
 
-        <Accordion /*defaultActiveKey="0"*/>
+        <Accordion defaultActiveKey="0">
           {arrayDeObjetos.map((clase) => (
             <Accordion.Item key={clase.id} eventKey={clase.id}>
               <Accordion.Header>
@@ -116,12 +115,13 @@ export const Crud_Clases = () => {
                   <div className="row">
                     <div className="col-sm-8">
                       <div className="col-sm-12 m-1">
-                        Maestros
+                      Maestro
                         <select
-                          class="form-select"
+                        defaultValue={0}
+                          className="form-select"
                           aria-label="Default select example"
                         >
-                          <option selected>Maestros</option>
+                          <option value={0}>Maestro</option>
                           <option value="1">One</option>
                           <option value="2">Two</option>
                           <option value="3">Three</option>
@@ -129,11 +129,11 @@ export const Crud_Clases = () => {
                         <div className="row my-2">
                           <div className="col-sm-6">
                             Grupo
-                            <select
-                              class="form-select"
+                            <select defaultValue={0}
+                              className="form-select"
                               aria-label="Default select example"
                             >
-                              <option selected>Grupo</option>
+                              <option value={0}>Grupo</option>
                               <option value="1">One</option>
                               <option value="2">Two</option>
                               <option value="3">Three</option>
@@ -142,10 +142,11 @@ export const Crud_Clases = () => {
                           <div className="col-sm-6 ">
                             Materia
                           <select
-                              class="form-select"
+                              className="form-select"
                               aria-label="Default select example"
+                              defaultValue={0}
                             >
-                              <option selected>Materia</option>
+                              <option value={0}>Materia</option>
                               <option value="1">One</option>
                               <option value="2">Two</option>
                               <option value="3">Three</option>
@@ -156,10 +157,10 @@ export const Crud_Clases = () => {
                       </div>
                     </div>
                     <div className="col-sm-4">
-                      <button type="button" class="btn btn-primary m-2">
+                      <button type="button" className="btn btn-primary m-2">
                         Guardar Cambios
                       </button>
-                      <button type="button" class="btn btn-secondary m-2">
+                      <button type="button" className="btn btn-secondary m-2">
                         Administrar Grupo
                       </button>
                     </div>
