@@ -12,6 +12,7 @@ import { AdminProvider } from './context/AdminProvider';
 import { Nosotros } from './pages/Nosotros/Nosotros';
 import { Crud_Clases } from './pages/CrudDeClases/Crud_Clases';
 import { Calificaciones } from './pages/Calificaciones/Calificaciones';
+import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path='nosotros' element={<Nosotros />} />
                 <Route path='clases' element={<Crud_Clases />} />
                 <Route path='calificaciones' element={<Calificaciones />} />
+                <Route path='periodos' element={<PerdiodosVistaAlumno />} />
 
               </Route>
               <Route path='/admin' element={<AdminLayout />}>
