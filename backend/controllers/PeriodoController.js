@@ -1,3 +1,4 @@
+import formatearFecha from "../helpers/formatearFecha.js";
 import Periodo from "../models/Periodo.js";
 
 const getAllPeriodos = async(req, res) => {
@@ -16,15 +17,13 @@ const getOnePeriodo = async(req, res) => {
 
 const addNewPeriodo = async(req, res) => {
     const { periodo } = req.body;
-    console.log(periodo)
 
     const periodoObj = new Periodo(periodo);
 
-    console.log(periodo)
-    const response = await periodoObj.saveItem(Periodo, periodo)
+    const response = await periodoObj.createItem(Periodo, periodo)
 
     if(response) {
-        return res.status(200).json({msg: response})
+        return res.status(200).json({msg: response.msg})
     } else {
         const error = new Error('Hubo un error')
         return res.status(500).json({msg: error.message})
@@ -32,7 +31,24 @@ const addNewPeriodo = async(req, res) => {
 }
 
 const updatePeriodo = async(req, res) => {
+    const { id } = req.params;
+    const { periodo } = req.body;
 
+    const periodoObj = new Periodo();
+    const oldPeriodo = await periodoObj.getById(Periodo, +id);
+
+    periodoObj.ID = oldPeriodo.ID;
+    periodoObj.fechaInicio = periodo?.fechaInicio ?? formatearFecha(oldPeriodo.fechaInicio);
+    periodoObj.fechaFin = periodo?.fechaFin ?? formatearFecha(oldPeriodo.fechaFin);
+
+    const response = await periodoObj.saveItem(Periodo, periodoObj);
+
+    if(response) {
+        return res.status(200).json({msg: response.msg})
+    } else {
+        const error = new Error('Hubo un error')
+        return res.status(500).json({msg: error.message})
+    }
 }
 
 const deletePeriodo = async(req, res) => {

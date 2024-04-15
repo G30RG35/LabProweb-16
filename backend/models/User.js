@@ -23,21 +23,26 @@ class User extends ActiveRecord {
 
     async getUserInfo(id) {
         const [results, fields] = await connetion.execute(`
-            select u.*, r.nombre as rol, r.ID as rolID from user as u
+            select u.*, GROUP_CONCAT(r.ID) as roles from user as u
             inner join detUsuarioRol as dur on u.ID = dur.userID
             inner join rol as r on r.ID = dur.rolID
             where u.ID = ${id}
+            GROUP BY u.ID, u.nombre;
         `)
 
+        results?.map(result => result.roles = result.roles.split(","))
         return results[0]
     }
 
     async getUsersInfo() {
         const [results, fields] = await connetion.execute(`
-            select u.*, r.nombre as rol, r.ID as rolID from user as u
+            select u.*, GROUP_CONCAT(r.ID) as roles from user as u
             inner join detUsuarioRol as dur on u.ID = dur.userID
             inner join rol as r on r.ID = dur.rolID
+            GROUP BY u.ID, u.nombre;
         `)
+
+        results?.map(result => result.roles = result.roles.split(","))
 
         return results
     }
