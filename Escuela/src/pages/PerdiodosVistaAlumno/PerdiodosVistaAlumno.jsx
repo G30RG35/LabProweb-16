@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
 
 export const PerdiodosVistaAlumno = () => {
@@ -68,7 +68,7 @@ export const PerdiodosVistaAlumno = () => {
     },
   ];
 
-  const [calificaciones, setCalificaciones] = useState({});
+  const [prom, setProm] = useState(0)
 
   const Meses = (fechaInicio, fechaFin) => {
     const inicio = new Date(fechaInicio);
@@ -119,12 +119,15 @@ export const PerdiodosVistaAlumno = () => {
       suma += clase.calificacion;
     }
 
-    const prom = suma / clases.length;
+    const promaux = suma / clases.length;
 
-    console.log("Promedio de calificaciones:", prom);
+    setProm(promaux);
   };
 
-  mostrarCalificaciones();
+  useEffect(() => {
+    mostrarCalificaciones()
+  }, [])
+  
 
   return (
     <>
@@ -141,13 +144,13 @@ export const PerdiodosVistaAlumno = () => {
                 {Meses(periodo.fechaInicio, periodo.fechaFin)}
               </Accordion.Header>
               <Accordion.Body>
-                {mostrarCalificaciones}
+                <div><p>Promedio: {prom}</p></div>
                 <div className="container">
-                  {/* <CalificacionesPerdiodo 
-                data={clases}
-                /> */}
+                {mostrarCalificaciones}
                   {clases.map((materia) => (
-                    <p>{"id de la materia " +materia.materiaID+": "+materia.calificacion}</p>
+                    <div key={materia.userID}>
+                      <p>{"id de la materia " +materia.materiaID+": "+materia.calificacion}</p>
+                    </div>
                   ))}
 
                   <div className="divBtnGuardar">
