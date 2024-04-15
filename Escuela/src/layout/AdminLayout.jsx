@@ -10,9 +10,11 @@ const AdminLayout = () => {
         <h1>Cargando</h1>
     )
 
+    const res = auth?.roles?.filter(rol => rol === "3");
+
     return (
         <>
-            {auth.ID && auth.rol === "Administrador" ? (
+            {auth.ID && res.length > 0 ? (
                 <>
                     <Header />
                     <main>
@@ -20,7 +22,7 @@ const AdminLayout = () => {
                     </main>
                     <Footer />
                 </>
-            ) : <Navigate to="/login" />}
+            ) : <Navigate to="/" />}
         </>
     )
 }

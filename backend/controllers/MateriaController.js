@@ -32,10 +32,10 @@ const addNewMateria = async(req, res) => {
     if(materia) {
         const materiaObj = new Materia(materia);
 
-        const response = await materiaObj.saveItem(Materia, materiaObj);
+        const response = await materiaObj.createItem(Materia, materiaObj);
 
         if(response) {
-            return res.status(201).json({msg: response})
+            return res.status(201).json({msg: response.msg})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
@@ -46,11 +46,11 @@ const addNewMateria = async(req, res) => {
         const materiaObj = new Materia();
         const materiasObj = materias?.map(materia => new Materia(materia));
 
-        try {
-            const response = await materiaObj.createManyItems(Materia, materiasObj, materiaObj);
+        const response = await materiaObj.createManyItems(Materia, materiasObj, materiaObj);
 
-            return res.status(200).json({msg: response, status: 200})
-        } catch (err) {
+        if(response) {
+            return res.status(201).json({msg: response.msg})
+        } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
         }
@@ -59,17 +59,22 @@ const addNewMateria = async(req, res) => {
 
 const updateMateria = async(req, res) => {
     const { id } = req.params;
-    let materia = req.body;
-    materia.ID = +id;
+    const { materia } = req.body;
 
-    materia = new Materia(materia);
+    const materiaObj = new Materia();
+    const oldMateria = await materiaObj.getById(Materia, +id);
 
-    try {
-        const response = await materia.saveItem(Materia, materia);
+    materiaObj.ID = +id;
+    materiaObj.nombre = materia?.nombre ?? oldMateria.nombre;
+    materiaObj.activo = materia?.activo ?? oldMateria.activo;
 
-        return res.status(200).json({msg: response, status: 200})
-    } catch (error) {
-        console.log(error)
+    const response = await materiaObj.saveItem(Materia, materiaObj);
+
+    if(response) {
+        return res.status(200).json({msg: response.msg})
+    } else {
+        const error = new Error('Hubo un error')
+        return res.status(500).json({msg: error.message})
     }
 }
 

@@ -1,0 +1,21 @@
+.divOpciones{
+    color: aliceblue;
+    font-weight: 500;
+    border: 1em;
+    border-radius: 1em;
+    padding: 2em;
+    background-color: #808080;
+}
+
+.divEditores{
+    color: aliceblue;
+    font-weight: 500;
+    background-color: #494949;
+    border-radius: 1em;
+    padding: 2em;
+    margin: 1em;
+}
+
+.separacion{
+    margin: 2em 0;
+}

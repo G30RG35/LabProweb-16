@@ -50,7 +50,7 @@ class ActiveRecord {
 
         try {
             await connetion.execute(query)
-            return 'Elemento Actualizado Correctamente'
+            return {msg: 'Elementos Actualizado Correctamente'}
         } catch (err) {
             console.log(err)
             return
@@ -60,6 +60,7 @@ class ActiveRecord {
     async createManyItems(modelName, objects, object) {
         let { claves } = await this.getArray(object)
         const campos = claves?.filter(clave => clave !== 'ID');
+        console.log()
 
         let query = `INSERT INTO ${modelName.tableName} `;
         query += `(${campos.map(clave => " " + clave)}) VALUES `;
@@ -71,7 +72,7 @@ class ActiveRecord {
                 return query += `(${campos.map((clave) => getType(object[clave]) + "")}),`
             }
         })
-
+        
         try {
             const res = await connetion.execute(query)
             return {msg: 'Elementos Creados Correctamente', res}
@@ -81,12 +82,13 @@ class ActiveRecord {
         }
     }
 
-    async createItem(modelName, valores, claves) {
-        valores = valores?.filter(valor => valor !== undefined);
-        const campos = claves?.filter(clave => clave !== 'ID');
+    async createItem(modelName, object) {
+        const { ID, ...item } = object
+
+        const claves = Object.keys(item)
 
         let query = `INSERT INTO ${modelName.tableName} `;
-        query += `(${campos.map(clave => " " + clave)}) VALUES (${valores.map(valor => getType(valor))})`;
+        query += `(${claves.map(clave => clave)}) VALUES (${claves.map(clave => getType(object[clave]))})`;
 
         try {
             const res = await connetion.execute(query)
@@ -102,6 +104,21 @@ class ActiveRecord {
         let valores = claves.map((clave) => object[clave]);
 
         return {claves, valores}
+    }
+
+    async deleteManyItems(modelName, attributes, values) {
+        let query = `DELETE FROM ${modelName.tableName} WHERE `
+        for(let i = 0; i < attributes.length; i++) {
+            query += `${i > 0 ? ' AND ' : ''} ${attributes[i]} = ${getType(values[i])}`
+        }
+
+        try {
+            await connetion.execute(query)
+            return true
+        } catch (err) {
+            console.log(err)
+            return false
+        }
     }
 }
 

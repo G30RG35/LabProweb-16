@@ -29,6 +29,7 @@ const Login = () => {
   useEffect(() => {
     comprobarInfo()
   }, [ID, password])
+
   
   return (
     <>
@@ -54,6 +55,7 @@ const Login = () => {
                 id="floatingInput"
                 placeholder="Ej. 12345"
                 onChange={(e) => setID(e.target.value)}
+                min={0}
               />
               <label htmlFor="floatingInput">Numero de Estudiante</label>
             </div>

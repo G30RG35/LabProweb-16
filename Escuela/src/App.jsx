@@ -7,9 +7,13 @@ import { AuthProvider } from './context/AuthProvider';
 import AdminLayout from './layout/AdminLayout';
 import Admin from './pages/Admin/Admin';
 import { Eventos } from './pages/Eventos/Eventos';
-import Nosotros from './pages/Nosotros/Nosotros';
 import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import { AdminProvider } from './context/AdminProvider';
+import { Nosotros } from './pages/Nosotros/Nosotros';
+import { Crud_Clases } from './pages/CrudDeClases/Crud_Clases';
+import { Calificaciones } from './pages/Calificaciones/Calificaciones';
+import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
+import { Administrador } from './pages/Administrador/Administrador';
 
 function App() {
   return (
@@ -18,15 +22,21 @@ function App() {
         <AppProvider>
           <AdminProvider>
             <Routes>
+          
               <Route path='/' element={<MainLayout />}>
                 <Route index element={<Index />} />
                 <Route path='login' element={<Login />} />
                 <Route path='eventos' element={<Eventos />} />
                 <Route path='nosotros' element={<Nosotros />} />
+                <Route path='clases' element={<Crud_Clases />} />
+                <Route path='calificaciones' element={<Calificaciones />} />
+                <Route path='periodos' element={<PerdiodosVistaAlumno />} />
+                <Route path='administrador' element={<Administrador />} />
               </Route>
               <Route path='/admin' element={<AdminLayout />}>
                 <Route index element={<Admin />} />
                 <Route path='alumnos' element={<CrudAlumnos />} />
+               
               </Route>
             </Routes>
           </AdminProvider>
