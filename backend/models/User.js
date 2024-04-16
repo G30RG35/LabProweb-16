@@ -46,6 +46,19 @@ class User extends ActiveRecord {
 
         return results
     }
+    async getUsersInfoByRol(rolID) {
+        const [results, fields] = await connetion.execute(`
+            select u.*, GROUP_CONCAT(r.ID) as roles from user as u
+            inner join detUsuarioRol as dur on u.ID = dur.userID
+            inner join rol as r on r.ID = dur.rolID
+            WHERE rolID = ${rolID}
+            GROUP BY u.ID, u.nombre
+        `)
+
+        results?.map(result => result.roles = result.roles.split(","))
+
+        return results
+    }
 }
 
 

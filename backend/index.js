@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import createConnection from "./config/DB.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import MateriaRoutes from "./routes/MateriaRoutes.js";
 import PeriodoRoutes from "./routes/PeriodoRoutes.js";
@@ -34,7 +33,7 @@ const corsOptions = {
     }
 }
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 /** --- ROUTING --- */
 app.use('/api/users', UserRoutes);

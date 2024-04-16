@@ -1,0 +1,16 @@
+.btnSearch {
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnSearch svg {
+    width: 25px;
+}
+.searchInput {
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+}

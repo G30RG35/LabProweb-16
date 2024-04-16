@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx/xlsx.mjs';
 import TableForm from '../TableForm/TableForm';
 import useAdmin from '../../hooks/useAdmin';
 
-const FormularioUser = () => {
+const FormularioUser = ({tipo}) => {
     const [newPassword, setNewPassword] = useState('');
     const [file, setFile] = useState(null)
     const [infoExel, setInfoExcel] = useState([])
@@ -71,12 +71,13 @@ const FormularioUser = () => {
 
             {infoExel.length > 0 && (
                 <TableForm 
+                    tipo={tipo}
                     infoExcel={infoExel}
                     handleSaveUser={handleSaveUser}
                 />
             )}
 
-            <h4 className='mt-3'>Ingresa la informacion para guardar la informacion del alumno</h4>
+            <h4 className='mt-3'>Ingresa la informacion para guardar la informacion del usuario</h4>
             {alerta && (
                 <div className={`alert alert-${alerta.error ? 'danger' : 'primary'}`} role="alert">
                     {alerta.msg}
@@ -85,17 +86,17 @@ const FormularioUser = () => {
             <form 
                 className={`${styles.FormAlumno}`}
                 onSubmit={e => {
-                    handleSaveUser(1, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}]);
+                    handleSaveUser(tipo, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}]);
                 }}    
             >
                 <div className="row gy-2">
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="nombre">Nombre</label>
-                        <input type="text" id="nombre" placeholder='Nombre del alumno' value={nombre} onChange={e => setNombre(e.target.value)} />
+                        <input type="text" id="nombre" placeholder={`Nombre del usuario`} value={nombre} onChange={e => setNombre(e.target.value)} />
                     </div>
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="apellido">Apellido(s)</label>
-                        <input type="text" id="apellido" placeholder='Apellido(s) del alumno' value={apellidos} onChange={e => setApellidos(e.target.value)} />
+                        <input type="text" id="apellido" placeholder='Apellido(s) del usuario' value={apellidos} onChange={e => setApellidos(e.target.value)} />
                     </div>
                     <div className={`${styles.inputAlumno} col-12`}>
                         <label htmlFor="fechaNac">Fecha de nacimiento</label>
@@ -109,7 +110,7 @@ const FormularioUser = () => {
 
                     <div className={`${styles.inputAlumno} col-md-6`}>
                         <label htmlFor="correo">Correo</label>
-                        <input type="text" id="correo" placeholder='Correo del alumno' value={correo} onChange={e => setCorreo(e.target.value)} />
+                        <input type="text" id="correo" placeholder='Correo del usuario' value={correo} onChange={e => setCorreo(e.target.value)} />
                     </div>
 
                     <div className={`${styles.inputAlumno} col-12`}>
