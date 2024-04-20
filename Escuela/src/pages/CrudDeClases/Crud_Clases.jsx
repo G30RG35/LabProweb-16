@@ -45,33 +45,7 @@ export const Crud_Clases = () => {
       <h1>Crud de clases</h1>
       <div className="divAsignacion">
         <div className="container">
-          {/* <div className="row">
-            <div className="col-sm-5 m-1">
-              <select defaultValue={0} className="form-select" aria-label="Default select example">
-                <option value={0}>Maestros</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-            <div className="col-sm-5 m-1">
-              <select defaultValue={0} className="form-select" aria-label="Default select example">
-                <option value={0}>Materia</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
-          </div> */}
           <div className="row">
-            {/* <div className="col-sm-5 m-1">
-              <select defaultValue={0} className="form-select" aria-label="Default select example">
-                <option value={0}>Grupo</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div> */}
             <div className="col-sm-5 m-1 d-grid">
               <button type="button" className="btn btn-primary">
                 Crear Clase
@@ -115,9 +89,9 @@ export const Crud_Clases = () => {
                   <div className="row">
                     <div className="col-sm-8">
                       <div className="col-sm-12 m-1">
-                      Maestro
+                        Maestro
                         <select
-                        defaultValue={0}
+                          defaultValue={0}
                           className="form-select"
                           aria-label="Default select example"
                         >
@@ -129,7 +103,8 @@ export const Crud_Clases = () => {
                         <div className="row my-2">
                           <div className="col-sm-6">
                             Grupo
-                            <select defaultValue={0}
+                            <select
+                              defaultValue={0}
                               className="form-select"
                               aria-label="Default select example"
                             >
@@ -141,7 +116,7 @@ export const Crud_Clases = () => {
                           </div>
                           <div className="col-sm-6 ">
                             Materia
-                          <select
+                            <select
                               className="form-select"
                               aria-label="Default select example"
                               defaultValue={0}
@@ -151,7 +126,6 @@ export const Crud_Clases = () => {
                               <option value="2">Two</option>
                               <option value="3">Three</option>
                             </select>
-                            
                           </div>
                         </div>
                       </div>

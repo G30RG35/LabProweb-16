@@ -14,6 +14,7 @@ import { Crud_Clases } from './pages/CrudDeClases/Crud_Clases';
 import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
 import { Administrador } from './pages/Administrador/Administrador';
+import { Maestros } from './pages/CrudMaestros/Maestros';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
+                <Route path='maestros' element={<Maestros />} />
               </Route>
               <Route path='/admin' element={<AdminLayout />}>
                 <Route index element={<Admin />} />
