@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Container, Accordion, Button } from "react-bootstrap";
-import style from "./Maestros.module.css";
+import style from "./Alumnos.module.css";
 import Form from "react-bootstrap/Form";
+import Datepicker from "../../Componentes/Datapicker/Datepicker";
 
-export const Maestros = () => {
+export const Alumnos = () => {
   const arrayDeObjetos = [
     {
       id: "01401001",
@@ -138,10 +139,17 @@ export const Maestros = () => {
     );
   });
 
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDateSelection = (date) => {
+    setSelectedDate(date);
+    console.log('Selected Date:', date);
+  };
+
   return (
     <>
       <Container>
-        <h1>Listado de mestros</h1>
+        <h1>Listado de Alumnos</h1>
         <Row>
           <Col xs={12} md={7}>
             <Row>
@@ -163,6 +171,7 @@ export const Maestros = () => {
                 >
                   Button
                 </button>
+                
               </div>
             </Row>
             <Accordion defaultActiveKey="0">
@@ -176,7 +185,7 @@ export const Maestros = () => {
                       <div className="row">
                         <div className={style.divAgregar}>
                           <div className={style.center}>
-                            <h4>Editar Maestro</h4>
+                            <h4>Editar Alumnos</h4>
                           </div>
                           <Form.Control
                             size="sm"
@@ -190,7 +199,7 @@ export const Maestros = () => {
                             placeholder="Apellidos"
                           />
                           <br />
-                          {/* fecha de nacimeinto */}
+                          <Datepicker onDateSelected={handleDateSelection}/>
                           <br />
                           <Form.Control
                             size="sm"
@@ -229,13 +238,13 @@ export const Maestros = () => {
           <Col xs={12} md={5}>
             <div className={style.divAgregar}>
               <div className={style.center}>
-                <h4>Agregar Maestro</h4>
+                <h4>Agregar Alumno</h4>
               </div>
               <Form.Control size="sm" type="text" placeholder="Nombre" />
               <br />
               <Form.Control size="sm" type="text" placeholder="Apellidos" />
               <br />
-              {/* fecha de nacimeinto */}
+              <Datepicker onDateSelected={handleDateSelection}/>
               <br />
               <Form.Control size="sm" type="text" placeholder="Correo" />
               <br />
