@@ -16,6 +16,8 @@ import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
 import { Administrador } from './pages/Administrador/Administrador';
 import CrudAdmin from './pages/Admin/CrudAdmin/CrudAdmin';
+import { Maestros } from './pages/CrudMaestros/Maestros';
+import { Alumnos } from './pages/CrudAlumnos/Alumnos';
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
+                <Route path='maestros' element={<Maestros />} />
+                <Route path='alumnos' element={<Alumnos />} />
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>
