@@ -1,10 +1,10 @@
 import styles from './TableForm.module.css'
 
-const TableForm = ({infoExcel, handleSaveUser}) => {
+const TableForm = ({infoExcel, handleSaveUser, tipo}) => {
     return (
         <>
             <button
-                onClick={() => handleSaveUser(1, infoExcel)}
+                onClick={() => handleSaveUser(tipo, infoExcel)}
                 className='button'
             >
                 Guardar Lista

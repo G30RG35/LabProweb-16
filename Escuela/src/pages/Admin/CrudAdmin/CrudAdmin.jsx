@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import styles from './CrudAlumnos.module.css';
+import styles from './CrudAdmin.module.css';
 import useAdmin from '../../../hooks/useAdmin';
 import FormularioUser from '../../../Componentes/FormularioAlumnos/FormularioUser';
 import axios from 'axios';
 
-const CrudAlumnos = () => {
-    const [alumnos, setAlumnos] = useState([])
+const CrudAdmin = () => {
     const [usersFiltered, setUsersFiltered] = useState([])
+    const [admin, setAdmin] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    const { users, setUsers, handleFillForm } = useAdmin();
+    const { handleFillForm } = useAdmin();
 
-    const handleAlumnos = async() => {
+    const handleAdmin = async() => {
         const token = localStorage.getItem('token');
 
         const config = {
@@ -21,23 +21,24 @@ const CrudAlumnos = () => {
         }
 
         try {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/1`, config);
-            setAlumnos(data.users);
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/3`, config);
+
+            setAdmin(data.users);
         } catch (error) {
             console.log(error)
         }
     }
 
     useEffect(() => {
-        handleAlumnos();
+        handleAdmin();
     }, [])
 
     useEffect(() => {
-        setUsersFiltered(alumnos)
-    }, [alumnos])
+        setUsersFiltered(admin)
+    }, [admin])
 
     useEffect(() => {
-        const filtered = alumnos?.filter(user => {
+        const filtered = admin?.filter(user => {
             const idMatch = user.ID.toString().includes(searchTerm);
             const nameMatch = user.nombre.toLowerCase().includes(searchTerm.toLowerCase());
             const lastNameMatch = user.apellidos.toLowerCase().includes(searchTerm.toLowerCase());
@@ -47,17 +48,19 @@ const CrudAlumnos = () => {
         setUsersFiltered(filtered)
     }, [searchTerm])
 
+    
+
     return (
         <div className='container my-5'>
             <div className='row gy-2'>
                 <div className='col-lg-6 overflow-hidden'>
-                    <h1>Listado de Alumnos</h1>
+                    <h1>Listado de Administradores</h1>
                     <div className="row">
                         <div className="col-11">
                             <input 
                                 type="search" 
                                 id="search" 
-                                placeholder='Buscar Alumno' 
+                                placeholder='Buscar Administrador' 
                                 className={`w-100 ${styles.searchInput}`} 
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 value={searchTerm}
@@ -101,7 +104,7 @@ const CrudAlumnos = () => {
 
                 <div className="col-lg-6 order-first order-lg-last">
                     <FormularioUser 
-                        tipo={1}
+                        tipo={3}
                     />
                 </div>
             </div>
@@ -109,4 +112,4 @@ const CrudAlumnos = () => {
     )
 }
 
-export default CrudAlumnos
+export default CrudAdmin
