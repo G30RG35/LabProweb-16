@@ -44,6 +44,8 @@ function App() {
                 <Route index element={<Admin />} />
                 <Route path='alumnos' element={<CrudAlumnos />} />
                 <Route path='maestros' element={<CrudMestros />} />
+                <Route path='admin' element={<CrudAdmin />} />
+                <Route path='grupos' element={<Crud_Clases />} />
                 <Route path='claseMaestro' element={<CrudClases />} />
                 <Route path='periodos' element={<CrudPeriodo />} />
               </Route>
