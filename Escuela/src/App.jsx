@@ -31,7 +31,7 @@ function App() {
                 <Route path='login' element={<Login />} />
                 <Route path='eventos' element={<Eventos />} />
                 <Route path='nosotros' element={<Nosotros />} />
-                <Route path='clases' element={<Crud_Clases />} />
+
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
@@ -44,6 +44,7 @@ function App() {
                 <Route path='alumnos' element={<CrudAlumnos />} />
                 <Route path='maestros' element={<CrudMestros />} />
                 <Route path='admin' element={<CrudAdmin />} />
+                <Route path='grupos' element={<Crud_Clases />} />
               </Route>
             </Routes>
           </AdminProvider>
