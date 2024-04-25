@@ -1,7 +1,10 @@
 import React from "react";
 import { Accordion } from "react-bootstrap";
+import useAdmin from "../../../hooks/useAdmin";
 
-export const Crud_Clases = () => {
+export const CrudClases = () => {
+  const { maestros } = useAdmin();
+
   const arrayDeObjetos = [
     {
       id: "01401002",
@@ -90,15 +93,15 @@ export const Crud_Clases = () => {
                     <div className="col-sm-8">
                       <div className="col-sm-12 m-1">
                         Maestro
+                        
                         <select
                           defaultValue={0}
                           className="form-select"
                           aria-label="Default select example"
                         >
-                          <option value={0}>Maestro</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          {maestros?.map(maestro => (
+                            <option value={maestro.ID}>{maestro.apellidos + ' ' + maestro.nombre}</option>
+                          ))}
                         </select>
                         <div className="row my-2">
                           <div className="col-sm-6">

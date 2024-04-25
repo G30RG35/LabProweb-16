@@ -17,10 +17,13 @@ const AdminProvider = ({children}) => {
     const [password, setPassword] = useState(generatePSWD());
     const [direccion, setDireccion] = useState('');
 
+    const [maestros, setMaestros] = useState([]);
+
     const navigate = useNavigate()
 
     useEffect(() => {
         handleGetUsers()
+        handleGetMaestros()
     }, [])
 
     const handleGetUsers = async() => {
@@ -37,6 +40,24 @@ const AdminProvider = ({children}) => {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/users`, config );
             setUsers(data.users)
             
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetMaestros = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/2`, config);
+            setMaestros(data.users);
         } catch (error) {
             console.log(error)
         }
@@ -157,6 +178,7 @@ const AdminProvider = ({children}) => {
                 handleSaveUser, 
                 handleFillForm,
                 alerta, setAlerta, 
+                maestros,
 
                 // Formulario
                 ID, setID, 
