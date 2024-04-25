@@ -19,7 +19,7 @@ const lstOpciones = [
   },
   {
     id: 4,
-    nombre: "Asignacion Maestro - Clase", 
+    nombre: "claseMaestro", 
     info: "Ver, editar o eliminar grupos y asignar a los maestros a un grupo"
   },
   {

@@ -6,31 +6,11 @@ import axios from 'axios';
 
 const CrudMaestros = () => {
     const [usersFiltered, setUsersFiltered] = useState([])
-    const [maestros, setMaestros] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    const { handleFillForm } = useAdmin();
-
-    const handleMestros = async() => {
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
-        try {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/2`, config);
-            console.log(data)
-            setMaestros(data.users);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const { handleFillForm, maestros } = useAdmin();
 
     useEffect(() => {
-        handleMestros();
+        
     }, [])
 
     useEffect(() => {
