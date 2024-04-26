@@ -16,6 +16,10 @@ import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
 import { Administrador } from './pages/Administrador/Administrador';
 import CrudAdmin from './pages/Admin/CrudAdmin/CrudAdmin';
+import CrudPeriodos from './pages/Admin/CrudPeriodos/CrudPeriodos';
+import CrudGrupos from './pages/Admin/CrudGrupos/CrudGrupos';
+import CrudMaterias from './pages/Admin/CrudMaterias/CrudMaterias';
+import CrudMatMaestros from './pages/Admin/CrudMatMaestros/CrudMatMaestros';
 
 function App() {
   return (
@@ -40,6 +44,10 @@ function App() {
                 <Route path='alumnos' element={<CrudAlumnos />} />
                 <Route path='maestros' element={<CrudMestros />} />
                 <Route path='admin' element={<CrudAdmin />} />
+                <Route path='periodos' element={<CrudPeriodos />} />
+                <Route path='grupos' element={<CrudGrupos />} />
+                <Route path='materias' element={<CrudMaterias />} />
+                <Route path='clase-maestro' element={<CrudMatMaestros />} />
               </Route>
             </Routes>
           </AdminProvider>

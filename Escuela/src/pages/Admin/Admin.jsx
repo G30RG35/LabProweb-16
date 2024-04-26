@@ -5,26 +5,31 @@ const lstOpciones = [
   {
     id: 1,
     nombre: "Periodos", 
+    url: "periodos",
     info: "Ver, editar o eliminar los periodos de la instutucion"
   },
   {
     id: 2,
     nombre: "Grupos", 
+    url: "grupos",
     info: "Ver, editar o eliminar los grupos de la instutucion"
   },
   {
     id: 3,
     nombre: "Materias", 
+    url: "materias",
     info: "Ver, editar o eliminar los materias de la instutucion", 
   },
   {
     id: 4,
     nombre: "Asignacion Maestro - Clase", 
+    url: "clase-maestro",
     info: "Ver, editar o eliminar grupos y asignar a los maestros a un grupo"
   },
   {
     id: 5,
     nombre: "Asignacion Alumno - Clase",
+    url: "clase-alumno",
     info: "Ver, editar o eliminar grupos y asignar a los alumno a un grupo"
   },
 ]
@@ -41,7 +46,7 @@ const Admin = () => {
               <div key={opcion.id} className={`text-light border-top pt-3 ${styles.opcionTarjeta}`}>
                 <h3 className='fw-regular fs-4'>{opcion.nombre}</h3>
                 <p className='m-0'>{opcion.info}</p>
-                <a href={`/admin/${opcion.nombre.toLowerCase()}`} className='btn btn-primary mt-1'>Comenzar</a>
+                <a href={`/admin/${opcion.url}`} className='btn btn-primary mt-1'>Comenzar</a>
               </div>
             ))}
           </div>
