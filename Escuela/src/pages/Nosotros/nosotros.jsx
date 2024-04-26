@@ -97,7 +97,7 @@ export const Nosotros = () => {
             en los estudiantes, brindándoles oportunidades para explorar sus
             talentos y desarrollar sus habilidades.
           </p>
-        </Row>
+        </Row> 
       </Container>
     </>
   );

@@ -18,7 +18,7 @@
 }
 
 main{
-margin: 20px;
+  margin: 20px;
 }
 
 button {
@@ -92,6 +92,15 @@ button {
   display: flex;
   gap: 5px;
 }
+.btn.bgPrimary {
+  background-color: var(--light-blue);
+  color: var(--text-white);
+  transition: background 0.2s ease-in-out;
+}
+.btn.bgPrimary:hover {
+  background-color: var(--dark-blue);
+  color: var(--text-white);
+}
 .deteleBtn {
   padding: 2px;
   background-color: red;
@@ -152,4 +161,11 @@ button {
 .divBtnGuardar{
   display: flex;
     flex-direction: row-reverse;
+}
+
+.formContainer {
+  padding: 20px;
+  background-color: var(--light-gray);
+  color: var(--text-white);
+  border-radius: 10px;
 }
