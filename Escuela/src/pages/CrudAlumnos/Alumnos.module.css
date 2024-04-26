@@ -1,0 +1,24 @@
+.divAgregar{
+    color: aliceblue;
+    background-color: #808080;
+    width: 100%;
+    height: auto;
+    border-radius: .5em;
+    padding: .5em;
+}
+.center{
+    display: flex;
+    justify-content: center;
+}
+.divEditores{
+    color: aliceblue;
+    font-weight: 500;
+    background-color: #494949;
+    border-radius: 1em;
+    padding: 2em;
+    margin: 1em;
+}
+
+.separacion{
+    margin: 2em 0;
+}

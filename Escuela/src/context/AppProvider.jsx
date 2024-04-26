@@ -21,8 +21,9 @@ const AppProvider = ({children}) => {
             setAlerta(null)
             return data;
         } catch (error) {
+            console.error(error)
             setAlerta({
-                msg: error.response.data.msg, 
+                msg: error?.response?.data?.msg, 
                 error: true
             })
         }

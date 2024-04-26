@@ -11,7 +11,7 @@ import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import CrudMestros from './pages/Admin/CrudMaestros/CrudMaestros';
 import { AdminProvider } from './context/AdminProvider';
 import { Nosotros } from './pages/Nosotros/Nosotros';
-import { Crud_Clases } from './pages/CrudDeClases/Crud_Clases';
+import { CrudClases } from './pages/Admin/CrudClases/CrudClases';
 import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
 import { Administrador } from './pages/Administrador/Administrador';
@@ -33,10 +33,12 @@ function App() {
                 <Route path='login' element={<Login />} />
                 <Route path='eventos' element={<Eventos />} />
                 <Route path='nosotros' element={<Nosotros />} />
-                <Route path='clases' element={<Crud_Clases />} />
+                <Route path='clases' element={<CrudClases />} />
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
+                <Route path='maestros' element={<Maestros />} />
+                <Route path='alumnos' element={<Alumnos />} />
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>

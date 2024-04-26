@@ -24,6 +24,8 @@ const AdminProvider = ({children}) => {
     const [password, setPassword] = useState(generatePSWD());
     const [direccion, setDireccion] = useState('');
 
+    const [maestros, setMaestros] = useState([]);
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -185,6 +187,7 @@ const AdminProvider = ({children}) => {
                 handleSaveUser, 
                 handleFillForm,
                 alerta, setAlerta, 
+                maestros,
 
                 // Formulario
                 ID, setID, 

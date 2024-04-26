@@ -65,7 +65,7 @@ const Login = () => {
                 className="form-control"
                 id="floatingPassword"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value) }
               />
               <label htmlFor="floatingPassword">Password</label>
             </div>
