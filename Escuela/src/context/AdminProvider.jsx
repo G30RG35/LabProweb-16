@@ -6,8 +6,15 @@ import generatePSWD from "../helpers/generarPassword";
 const AdminContext = createContext();
 
 const AdminProvider = ({children}) => {
+    // Inicializar alerta
     const [alerta, setAlerta] = useState(null)
+
+    // Informacion de la pagina
     const [users, setUsers] = useState([]);
+    const [periodos, setPeriodos] = useState([]);
+    const [clases, setClases] = useState([]);
+
+    // Inputs
     const [ID, setID] = useState(null);
     const [nombre, setNombre] = useState('');
     const [apellidos, setApellidos] = useState('');
@@ -22,8 +29,8 @@ const AdminProvider = ({children}) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        handleGetUsers()
-        handleGetMaestros()
+        handleGetUsers();
+        handleGetPeriodos();
     }, [])
 
     const handleGetUsers = async() => {
@@ -45,7 +52,7 @@ const AdminProvider = ({children}) => {
         }
     }
 
-    const handleGetMaestros = async() => {
+    const handleGetPeriodos = async() => {
         const token = localStorage.getItem('token');
 
         const config = {
@@ -56,8 +63,9 @@ const AdminProvider = ({children}) => {
         }
 
         try {
-            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/2`, config);
-            setMaestros(data.users);
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
+            setPeriodos(data.periodos)
+            
         } catch (error) {
             console.log(error)
         }
@@ -174,6 +182,7 @@ const AdminProvider = ({children}) => {
         <AdminContext.Provider
             value={{
                 users, 
+                periodos,
                 setUsers, 
                 handleSaveUser, 
                 handleFillForm,
