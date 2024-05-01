@@ -20,6 +20,8 @@ import CrudPeriodos from './pages/Admin/CrudPeriodos/CrudPeriodos';
 import CrudGrupos from './pages/Admin/CrudGrupos/CrudGrupos';
 import CrudMaterias from './pages/Admin/CrudMaterias/CrudMaterias';
 import CrudMatMaestros from './pages/Admin/CrudMatMaestros/CrudMatMaestros';
+import { CrudSalones } from './pages/Admin/CrudSalones/CrudSalones';
+import { CrudEscolaridad } from './pages/Admin/CrudEscolaridad/CrudEscolaridad';
 
 function App() {
   return (
@@ -37,8 +39,10 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
-                <Route path='maestros' element={<Maestros />} />
-                <Route path='alumnos' element={<Alumnos />} />
+                {/* <Route path='maestros' element={<Maestros />} /> */}
+                {/* <Route path='alumnos' element={<Alumnos />} /> */}
+
+                
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>
@@ -46,8 +50,12 @@ function App() {
                 <Route path='alumnos' element={<CrudAlumnos />} />
                 <Route path='maestros' element={<CrudMestros />} />
                 <Route path='admin' element={<CrudAdmin />} />
-                <Route path='periodos' element={<CrudPeriodos />} />
+                
                 <Route path='grupos' element={<CrudGrupos />} />
+                <Route path='periodos' element={<CrudPeriodos />} />
+                <Route path='salones' element={<CrudSalones />} />
+                <Route path='escolaridad' element={<CrudEscolaridad />} />
+
                 <Route path='materias' element={<CrudMaterias />} />
                 <Route path='clase-maestro' element={<CrudMatMaestros />} />
               </Route>
