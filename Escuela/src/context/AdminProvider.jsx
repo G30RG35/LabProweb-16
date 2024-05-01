@@ -13,6 +13,9 @@ const AdminProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [periodos, setPeriodos] = useState([]);
     const [clases, setClases] = useState([]);
+    const [grupos, setGrupos] = useState([]);
+    const [salones, setSalones] = useState([]);
+    const [escolaridades, setEscolaridades] = useState([])
 
     // Inputs
     const [ID, setID] = useState(null);
@@ -31,18 +34,20 @@ const AdminProvider = ({children}) => {
     useEffect(() => {
         handleGetUsers();
         handleGetPeriodos();
+        handleGetGrupos();
+        handleGetSalones();
+        handleGetEscolaridades();
     }, [])
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
 
     const handleGetUsers = async() => {
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/users`, config );
             setUsers(data.users)
@@ -53,18 +58,39 @@ const AdminProvider = ({children}) => {
     }
 
     const handleGetPeriodos = async() => {
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
             setPeriodos(data.periodos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetGrupos = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/grupos`, config );            
+            setGrupos(data.grupos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetSalones = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/salones`, config );            
+            setSalones(data.salones)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetEscolaridades = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/escolaridad`, config );            
+            setEscolaridades(data.escolaridades)
             
         } catch (error) {
             console.log(error)
@@ -188,6 +214,9 @@ const AdminProvider = ({children}) => {
                 handleFillForm,
                 alerta, setAlerta, 
                 maestros,
+                grupos,
+                salones,
+                escolaridades,
 
                 // Formulario
                 ID, setID, 
@@ -197,7 +226,11 @@ const AdminProvider = ({children}) => {
                 numero, setNumero, 
                 correo, setCorreo, 
                 password, setPassword,
-                direccion, setDireccion
+                direccion, setDireccion,
+
+
+                //Funciones 
+                handleGetSalones,
             }}
         >
             {children}
