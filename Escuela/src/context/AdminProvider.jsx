@@ -26,7 +26,7 @@ const AdminProvider = ({children}) => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState(generatePSWD());
     const [direccion, setDireccion] = useState('');
-
+    const [eventos, setEventos] = useState([])
     const [maestros, setMaestros] = useState([]);
 
     const navigate = useNavigate()
@@ -37,6 +37,7 @@ const AdminProvider = ({children}) => {
         handleGetGrupos();
         handleGetSalones();
         handleGetEscolaridades();
+        handleGetEventos();
     }, [])
     const token = localStorage.getItem('token');
 
@@ -91,6 +92,16 @@ const AdminProvider = ({children}) => {
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/escolaridad`, config );            
             setEscolaridades(data.escolaridades)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetEventos = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/eventos`, config );            
+            setEventos(data.eventos)
             
         } catch (error) {
             console.log(error)
@@ -217,6 +228,7 @@ const AdminProvider = ({children}) => {
                 grupos,
                 salones,
                 escolaridades,
+                eventos,
 
                 // Formulario
                 ID, setID, 
