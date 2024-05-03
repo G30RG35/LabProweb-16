@@ -37,8 +37,6 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
-                <Route path='maestros' element={<Maestros />} />
-                <Route path='alumnos' element={<Alumnos />} />
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>
@@ -50,6 +48,10 @@ function App() {
                 <Route path='grupos' element={<CrudGrupos />} />
                 <Route path='materias' element={<CrudMaterias />} />
                 <Route path='clase-maestro' element={<CrudMatMaestros />} />
+              </Route>
+
+              <Route path='/alumno'>
+
               </Route>
             </Routes>
           </AdminProvider>
