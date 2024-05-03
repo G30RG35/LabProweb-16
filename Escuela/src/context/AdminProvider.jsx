@@ -38,17 +38,16 @@ const AdminProvider = ({children}) => {
         handleGetEscolaridades();
         handleGetSalones()
     }, [])
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
 
     const handleGetUsers = async() => {
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/users`, config );
             setUsers(data.users)
@@ -59,15 +58,6 @@ const AdminProvider = ({children}) => {
     }
 
     const handleGetPeriodos = async() => {
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
             setPeriodos(data.periodos)
@@ -263,7 +253,11 @@ const AdminProvider = ({children}) => {
                 numero, setNumero, 
                 correo, setCorreo, 
                 password, setPassword,
-                direccion, setDireccion
+                direccion, setDireccion,
+
+
+                //Funciones 
+                handleGetSalones,
             }}
         >
             {children}
