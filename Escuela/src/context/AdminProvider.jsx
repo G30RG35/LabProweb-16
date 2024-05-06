@@ -13,6 +13,9 @@ const AdminProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [periodos, setPeriodos] = useState([]);
     const [clases, setClases] = useState([]);
+    const [grupos, setGrupos] = useState([]);
+    const [salones, setSalones] = useState([]);
+    const [escolaridades, setEscolaridades] = useState([]);
 
     // Inputs
     const [ID, setID] = useState(null);
@@ -25,24 +28,26 @@ const AdminProvider = ({children}) => {
     const [direccion, setDireccion] = useState('');
 
     const [maestros, setMaestros] = useState([]);
-
+    
     const navigate = useNavigate()
 
     useEffect(() => {
         handleGetUsers();
         handleGetPeriodos();
+        handleGetGroups();
+        handleGetEscolaridades();
+        handleGetSalones()
     }, [])
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
 
     const handleGetUsers = async() => {
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/users`, config );
             setUsers(data.users)
@@ -53,6 +58,16 @@ const AdminProvider = ({children}) => {
     }
 
     const handleGetPeriodos = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
+            setPeriodos(data.periodos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    const handleGetGroups = async() => {
         const token = localStorage.getItem('token');
 
         const config = {
@@ -63,8 +78,46 @@ const AdminProvider = ({children}) => {
         }
 
         try {
-            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
-            setPeriodos(data.periodos)
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/grupos`, config );            
+            setGrupos(data.grupos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    const handleGetEscolaridades = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/escolaridades`, config );            
+            setEscolaridades(data.escolaridades)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    const handleGetSalones = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/salones`, config );            
+            setSalones(data.salones)
             
         } catch (error) {
             console.log(error)
@@ -188,6 +241,9 @@ const AdminProvider = ({children}) => {
                 handleFillForm,
                 alerta, setAlerta, 
                 maestros,
+                grupos,
+                salones, 
+                escolaridades,
 
                 // Formulario
                 ID, setID, 
@@ -197,7 +253,11 @@ const AdminProvider = ({children}) => {
                 numero, setNumero, 
                 correo, setCorreo, 
                 password, setPassword,
-                direccion, setDireccion
+                direccion, setDireccion,
+
+
+                //Funciones 
+                handleGetSalones,
             }}
         >
             {children}
