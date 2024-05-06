@@ -37,8 +37,6 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
-                <Route path='maestros' element={<Maestros />} />
-                <Route path='alumnos' element={<Alumnos />} />
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>

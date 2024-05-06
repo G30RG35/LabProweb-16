@@ -65,7 +65,7 @@ const FormularioUser = ({tipo}) => {
         <div className={`${styles.formContainer}`}>
             <h5>Subir Excel</h5>
             <div id='drop-area'>
-                <label className="form-label" htmlFor="customFile">{file ? file.name : 'Selecciona un archivo excel'}</label>
+                <label className="form-label" htmlFor="customFile" style={{width: "100%"}}>{file ? file.name : 'Selecciona un archivo excel'}</label>
                 <input type="file" onChange={e => setFile(e.target.files[0])} className="form-control w-100 h-100" id="customFile" accept='.xlsx, .xls' hidden />
             </div>
 
