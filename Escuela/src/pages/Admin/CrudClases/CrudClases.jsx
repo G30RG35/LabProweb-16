@@ -1,58 +1,102 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Accordion } from "react-bootstrap";
 import useAdmin from "../../../hooks/useAdmin";
+import formatearFechaPeriodo from "../../../helpers/formatearFechaPeriodo";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export const CrudClases = () => {
-  const { maestros } = useAdmin();
+  const [usuarioID, setUsuarioID] = useState(0)
+  const [materiaID, setMateriaID] = useState(0)
+  const [grupoID, setGrupoID] = useState(0)
 
-  const arrayDeObjetos = [
-    {
-      id: "01401002",
-      Nombre: "Ingles",
-      Grupo: "401",
-      Salon: "002",
-      Maestro: "Marco Antonio",
-    },
-    {
-      id: "01401003",
-      Nombre: "Ingles",
-      Grupo: "401",
-      Salon: "002",
-      Maestro: "Marco Antonio",
-    },
-    {
-      id: "01401004",
-      Nombre: "Ingles",
-      Grupo: "401",
-      Salon: "002",
-      Maestro: "Marco Antonio",
-    },
-    {
-      id: "01401005",
-      Nombre: "Ingles",
-      Grupo: "401",
-      Salon: "002",
-      Maestro: "Marco Antonio",
-    },
-    {
-      id: "01401006",
-      Nombre: "Ingles",
-      Grupo: "401",
-      Salon: "002",
-      Maestro: "Marco Antonio",
-    },
-  ];
+  const { maestros, materias, grupos, clases, setAlerta, alerta } = useAdmin();
+
+  const handleAddNewClase = async(e) => {
+    e.preventDefault()
+    const clase = {
+      grupoID, 
+      materiaID, 
+      usuarioID
+    }
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/clases`, {
+        clase : clase
+      }, config)
+
+      setAlerta({
+          error: false, 
+          msg: data.msg
+      })
+    } catch (error) {
+      setAlerta({
+        error: true, 
+        msg: error.response.data.msg
+      })
+    }
+  }
 
   return (
-    <div className="divConteiner">
-      <h1>Crud de clases</h1>
+    <div className="container my-5">
+      <h1 className="fw-bold">Asignación de clases</h1>
       <div className="divAsignacion">
         <div className="container">
-          <div className="row">
-            <div className="col-sm-5 m-1 d-grid">
-              <button type="button" className="btn btn-primary">
-                Crear Clase
-              </button>
+          <div className="">
+            <div className="p-4 text-light">
+              <h1>Crear clase</h1>
+              <p>Ingrese la información que se solicita para crear una clase</p>
+
+              {alerta && (
+                <p className={`alert ${alerta.error ? 'alert-danger' : 'alert-success'} text-uppercase fw-medium`}>{alerta.msg}</p>
+              )}
+
+              <form className="row g-3" onSubmit={e => handleAddNewClase(e)}>
+                <div className="col-md-6">
+                  <label htmlFor="maestro">Maestro</label>
+                  <select id="maestro" value={usuarioID} onChange={e => setUsuarioID(e.target.value)} className="form-select">
+                    <option value="0">Seleccione Maestro</option>
+                    {maestros?.map(maestro => (
+                      <option key={maestro.ID} value={maestro.ID}>{maestro.apellidos + ' ' + maestro.nombre}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-6">
+                  <label htmlFor="materia">Materia</label>
+                  <select value={materiaID} onChange={e => setMateriaID(e.target.value)} id="materia" className="form-select">
+                    <option value="0">Seleccione Materia</option>
+                    {materias?.map(materia => (
+                      <option value={materia.ID} key={materia.ID}>{materia.nombre}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-6">
+                  <label htmlFor="grupo">Grupo</label>
+                  <select value={grupoID} onChange={e => setGrupoID(e.target.value)} id="grupo" className="form-select">
+                    <option value="0">Seleccione Grupo</option>
+                    {grupos?.map(grupo => (
+                      <option key={grupo.ID} value={grupo.ID}>{'Grupo: ' + grupo.ID + ' / ' + grupo.escolaridad + ' / ' + formatearFechaPeriodo(grupo.fechaInicio) + '-' + formatearFechaPeriodo(grupo.fechaFin)}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-md-6 d-flex align-items-end">
+                  <button className="btn btn-primary w-100">
+                    Crear Clase
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -60,7 +104,7 @@ export const CrudClases = () => {
       <div>
         <div className="container">
           <div className="row">
-            <div className="input-group mb-3">
+            <div className="input-group mb-3 px-0">
               <h3>Filtro</h3>
               <input
                 type="text"
@@ -81,11 +125,10 @@ export const CrudClases = () => {
         </div>
 
         <Accordion defaultActiveKey="0">
-          {arrayDeObjetos.map((clase) => (
-            <Accordion.Item key={clase.id} eventKey={clase.id}>
+          {clases?.map(clase => (
+            <Accordion.Item key={clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID} eventKey={clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID}>
               <Accordion.Header>
-                {clase.Nombre + "/" + clase.Grupo + "/" + clase.Salon}
-                {clase.id}
+                {"Grupo: " + clase.grupoID + " / " + clase.materia + " / " + clase.maestro}
               </Accordion.Header>
               <Accordion.Body>
                 <div className="container">
@@ -95,26 +138,26 @@ export const CrudClases = () => {
                         Maestro
                         
                         <select
-                          defaultValue={0}
+                          value={clase.usuarioID}  
                           className="form-select"
                           aria-label="Default select example"
                         >
                           {maestros?.map(maestro => (
-                            <option value={maestro.ID}>{maestro.apellidos + ' ' + maestro.nombre}</option>
+                            <option key={maestro.ID} value={maestro.ID}>{maestro.apellidos + ' ' + maestro.nombre}</option>
                           ))}
                         </select>
                         <div className="row my-2">
                           <div className="col-sm-6">
                             Grupo
                             <select
-                              defaultValue={0}
+                              value={clase.grupoID}
                               className="form-select"
                               aria-label="Default select example"
                             >
                               <option value={0}>Grupo</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              {grupos?.map(grupo => (
+                                <option value={grupo.ID} key={grupo.ID}>{grupo.escolaridad + ' ' + formatearFechaPeriodo(grupo.fechaInicio) + '-' + formatearFechaPeriodo(grupo.fechaFin)}</option>
+                              ))}
                             </select>
                           </div>
                           <div className="col-sm-6 ">
@@ -122,12 +165,12 @@ export const CrudClases = () => {
                             <select
                               className="form-select"
                               aria-label="Default select example"
-                              defaultValue={0}
+                              value={clase.materiaID}
                             >
-                              <option value={0}>Materia</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              <option value={0}>Grupo</option>
+                              {materias?.map(materia => (
+                                <option value={materia.ID} key={materia.ID}>{materia.nombre}</option>
+                              ))}
                             </select>
                           </div>
                         </div>
@@ -137,9 +180,9 @@ export const CrudClases = () => {
                       <button type="button" className="btn btn-primary m-2">
                         Guardar Cambios
                       </button>
-                      <button type="button" className="btn btn-secondary m-2">
+                      <Link to={`/admin/clase-alumno/${clase.grupoID}/${clase.materiaID}/${clase.usuarioID}`} className="btn btn-secondary m-2">
                         Administrar Grupo
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

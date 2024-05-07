@@ -10,10 +10,6 @@ const CrudMaestros = () => {
     const { handleFillForm, maestros } = useAdmin();
 
     useEffect(() => {
-        
-    }, [])
-
-    useEffect(() => {
         setUsersFiltered(maestros)
     }, [maestros])
 

@@ -4,6 +4,7 @@ import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import formatearFecha from '../../../helpers/formatearFecha';
 import axios from 'axios';
+import formatearFechaPeriodo from '../../../helpers/formatearFechaPeriodo';
 
 const CrudGrupos = () => {
   const [salonID, setSalonID] = useState(0);
@@ -39,7 +40,7 @@ const CrudGrupos = () => {
     } catch (error) {
         console.log(error)
     }
-}
+  }
 
   return (
     <div className='container my-5'>
@@ -61,14 +62,20 @@ const CrudGrupos = () => {
                       <form>
                         <div>
                           <label htmlFor="salonID">Salon</label>
-                          <select name="" id="salonID" className='form-select'>
+                          <select name="" value={grupo.salonID} id="salonID" className='form-select'>
                             <option value="0">Seleccionar un Salon</option>
+                            {salones?.map(salon => (
+                              <option key={salon.ID} value={salon.ID}>Capacidad: {salon.capacidad}</option>
+                            ))}
                           </select>
                         </div>
                         <div className='mt-2'>
                           <label htmlFor="periodoID">Periodo</label>
-                          <select name="" id="periodoID" className='form-select'>
+                          <select value={grupo.periodoID} id="periodoID" className='form-select'>
                             <option value="0">Seleccionar un Periodo</option>
+                            {periodos?.map(periodo => (
+                              <option key={periodo.ID} value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio)} - {formatearFechaPeriodo(periodo.fechaFin)}</option>
+                            ))}
                           </select>
                         </div>
 
@@ -106,7 +113,7 @@ const CrudGrupos = () => {
                 <select id="periodo" value={periodoID} onChange={e => setPeriodoID(e.target.value)} className='form-select'>
                   <option value="0">Seleccione un periodo</option>
                   {periodos?.map(periodos => (
-                    <option key={periodos.ID} value={periodos.ID}>{formatearFecha(periodos.fechaInicio)} - {formatearFecha(periodos.fechaFin)}</option>
+                    <option key={periodos.ID} value={periodos.ID}>{formatearFechaPeriodo(periodos.fechaInicio)} - {formatearFechaPeriodo(periodos.fechaFin)}</option>
                   ))}
                 </select>
               </div>

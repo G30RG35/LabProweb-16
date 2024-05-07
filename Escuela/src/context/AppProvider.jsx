@@ -29,12 +29,36 @@ const AppProvider = ({children}) => {
         }
     }
 
+    const handleGetClass = async(grupoID, materiaID, usuarioID) => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        } 
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/clases/${grupoID}/${materiaID}/${usuarioID}`, config)
+
+            return data.clase[0]
+        } catch (error) {
+            console.error(error)
+            setAlerta({
+                msg: error?.response?.data?.msg, 
+                error: true
+            })
+        }
+    }
+
     return (
         <AppContext.Provider
             value={{
                 handleLogin, 
                 alerta, 
-                setAlerta
+                setAlerta, 
+                handleGetClass
             }}
         >
             {children}

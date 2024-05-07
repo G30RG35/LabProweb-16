@@ -46,10 +46,6 @@ app.use('/api/grupos', GrupoRoutes);
 app.use('/api/escolaridades', EscolaridadRoutes);
 app.use('/api/clases', ClaseRoutes);
 
-/** 
-app.use('/api/escolaridad');
-*/
-
 const PORT = process.env.PORT || 4000
 
 app.listen(PORT, () => {

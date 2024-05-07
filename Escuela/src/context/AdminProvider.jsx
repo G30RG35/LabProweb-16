@@ -16,6 +16,7 @@ const AdminProvider = ({children}) => {
     const [grupos, setGrupos] = useState([]);
     const [salones, setSalones] = useState([]);
     const [escolaridades, setEscolaridades] = useState([]);
+    const [materias, setMaterias] = useState([]);
 
     // Inputs
     const [ID, setID] = useState(null);
@@ -37,6 +38,9 @@ const AdminProvider = ({children}) => {
         handleGetGroups();
         handleGetEscolaridades();
         handleGetSalones()
+        handleGetMaterias()
+        handleMaestros()
+        handleGetClases()
     }, [])
     const token = localStorage.getItem('token');
 
@@ -57,10 +61,56 @@ const AdminProvider = ({children}) => {
         }
     }
 
+    const handleMaestros = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/2`, config);
+            setMaestros(data.users);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetClases = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/clases`, config);
+            setClases(data.clases);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleGetPeriodos = async() => {
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
             setPeriodos(data.periodos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetMaterias = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/materias`, config );   
+            setMaterias(data.materias)
             
         } catch (error) {
             console.log(error)
@@ -244,7 +294,8 @@ const AdminProvider = ({children}) => {
                 grupos,
                 salones, 
                 escolaridades,
-
+                materias,
+                clases,
                 // Formulario
                 ID, setID, 
                 nombre, setNombre, 

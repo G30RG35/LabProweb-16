@@ -22,6 +22,7 @@ import CrudMaterias from './pages/Admin/CrudMaterias/CrudMaterias';
 import CrudMatMaestros from './pages/Admin/CrudMatMaestros/CrudMatMaestros';
 import { CrudSalones } from './pages/Admin/CrudSalones/CrudSalones';
 import { CrudEscolaridad } from './pages/Admin/CrudEscolaridad/CrudEscolaridad';
+import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
 
 function App() {
   return (
@@ -53,7 +54,8 @@ function App() {
                 <Route path='escolaridad' element={<CrudEscolaridad />} />
 
                 <Route path='materias' element={<CrudMaterias />} />
-                <Route path='clase-maestro' element={<CrudMatMaestros />} />
+                <Route path='clase-maestro' element={<CrudClases />} />
+                <Route path='clase-alumno/:grupoID/:materiaID/:userID' element={<CrudClaseAlumno />} />
               </Route>
 
               <Route path='/alumno'>
