@@ -27,7 +27,7 @@ const AdminProvider = ({children}) => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState(generatePSWD());
     const [direccion, setDireccion] = useState('');
-
+    const [eventos, setEventos] = useState([])
     const [maestros, setMaestros] = useState([]);
     
     const navigate = useNavigate()
@@ -37,6 +37,7 @@ const AdminProvider = ({children}) => {
         handleGetPeriodos();
         handleGetGroups();
         handleGetEscolaridades();
+        handleGetEventos();
         handleGetSalones()
         handleGetMaterias()
         handleMaestros()
@@ -174,6 +175,16 @@ const AdminProvider = ({children}) => {
         }
     }
 
+    const handleGetEventos = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/eventos`, config );            
+            setEventos(data.eventos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleSaveUser = async(tipo, items) => {
         if(ID) {
             handleUpdateUser(tipo, items[0])
@@ -294,8 +305,10 @@ const AdminProvider = ({children}) => {
                 grupos,
                 salones, 
                 escolaridades,
+                eventos,
                 materias,
                 clases,
+                
                 // Formulario
                 ID, setID, 
                 nombre, setNombre, 
