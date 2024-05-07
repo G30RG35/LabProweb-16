@@ -61,12 +61,7 @@ const updateMateria = async(req, res) => {
     const { id } = req.params;
     const { materia } = req.body;
 
-    const materiaObj = new Materia();
-    const oldMateria = await materiaObj.getById(Materia, +id);
-
-    materiaObj.ID = +id;
-    materiaObj.nombre = materia?.nombre ?? oldMateria.nombre;
-    materiaObj.activo = materia?.activo ?? oldMateria.activo;
+    const materiaObj = new Materia(materia);
 
     const response = await materiaObj.saveItem(Materia, materiaObj);
 

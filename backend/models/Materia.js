@@ -3,8 +3,6 @@ import ActiveRecord from "./ActiveRecord.js";
 class Materia extends ActiveRecord {
     static tableName = 'materia';
 
-    static alertaExito = [];
-
     constructor(materia) {
         super();
         this.ID = materia?.ID;

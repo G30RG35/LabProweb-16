@@ -43,12 +43,8 @@ app.use('/api/salones', SalonRoutes);
 app.use('/api/rol', RolRoutes);
 app.use('/api/auth', AuthRoutes);
 app.use('/api/grupos', GrupoRoutes);
-app.use('/api/escolaridad', EscolaridadRoutes);
+app.use('/api/escolaridades', EscolaridadRoutes);
 app.use('/api/clases', ClaseRoutes);
-
-/** 
-app.use('/api/escolaridad');
-*/
 
 const PORT = process.env.PORT || 4000
 

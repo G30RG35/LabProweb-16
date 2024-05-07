@@ -1,119 +1,91 @@
-import { useState, useEffect } from "react";
-import { Accordion } from "react-bootstrap";
-import useAdmin from "../../../hooks/useAdmin";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import useAdmin from '../../../hooks/useAdmin'
+import { Accordion } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import formatearFecha from '../../../helpers/formatearFecha';
+import axios from 'axios';
+import formatearFechaPeriodo from '../../../helpers/formatearFechaPeriodo';
 
 const CrudGrupos = () => {
-    const [idSalon, setIdSalon] = useState(0)
-    const [periodoId, setPeriodoId] = useState(0)
-    const [escolaridadId, setEscolaridadId] = useState(0)
+  const [salonID, setSalonID] = useState(0);
+  const [periodoID, setPeriodoID] = useState(0);
+  const [escolaridadID, setEscolaridadID] = useState(0);
+  const { grupos, salones, escolaridades, periodos } = useAdmin();
 
-    const { grupos, periodos,alerta, setAlerta } = useAdmin();
+  const handleAddNewGroup = async() => {
+    const grupo = {
+      salonID, 
+      periodoID, 
+      escolaridadID
+    }
 
-    const handleAddNewGrupo = async() => {
-        const grupo = {
-        }
+    const token = localStorage.getItem('token');
 
-        const token = localStorage.getItem('token');
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }
-
-        try {
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/grupos`, {
-                grupo
-            }, config);
-
-            setAlerta({
-                error: false, 
-                msg: data.msg
-            });
-        } catch (error) {
-            console.log(error)
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
         }
     }
-    
-    useEffect(() => {
-console.log(periodos)
-    }, [])
-    
+
+    try {
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/grupos`, {
+          grupo : grupo
+        }, config);
+
+        setAlerta({
+            error: false, 
+            msg: data.msg
+        });
+    } catch (error) {
+        console.log(error)
+    }
+  }
 
   return (
-    <>
-      <div className="container my-5">
-        <div className="row">
-          <div className="col-lg 6">
-            <div>
-              <h1>Grupo</h1>
-              <p>Ver las calificaciones de los periodos pasados</p>
+    <div className='container my-5'>
+      <div className="row g-4">
+        <div className="col-lg-6">
+          <div>
+            <h1>Grupos</h1>
+            <p>Ver los grupos actuales y de periodos anteriores</p>
 
-              {alerta && (
-                <p
-                  className={`alert ${
-                    alerta.error ? "alert-danger" : "alert-success"
-                  }`}
-                >
-                  {alerta.msg}
-                </p>
-              )}
-            </div>
-            {grupos.length === 0 ? (
-              <p className="alert alert-danger">
-                Aun no hay periodos dados de alta
-              </p>
-            ) : (
+            {grupos?.length > 0 && (
               <Accordion>
-                {grupos?.map((grupo) => (
+                {grupos?.map(grupo => (
                   <Accordion.Item key={grupo.ID} eventKey={grupo.ID}>
                     <Accordion.Header>
-                      {/* {"ID " +
-                        grupo.ID +
-                        ": " +
-                        formatearFechaPeriodo(grupo.fechaInicio) +
-                        " - " +
-                        formatearFechaPeriodo(grupo.fechaFin)} */}
+                      {"ID: " + grupo.ID + ' Salon: ' + grupo.salonID}
                     </Accordion.Header>
 
                     <Accordion.Body>
-                      <form
-                        className=""
-                        onSubmit={(e) => handleAddNewGrupo()}
-                      >
-                        <div className="d-flex flex-column">
-                          <label htmlFor="fechaInicio">Fecha de inicio</label>
-                          <input
-                            type="date"
-                            id="fechaInicio"
-                            // value={formatearFecha(grupo.fechaInicio)}
-                            // onChange={(e) => setFechaInicio(e.target.value)}
-                            className="form-control"
-                          />
+                      <form>
+                        <div>
+                          <label htmlFor="salonID">Salon</label>
+                          <select name="" value={grupo.salonID} id="salonID" className='form-select'>
+                            <option value="0">Seleccionar un Salon</option>
+                            {salones?.map(salon => (
+                              <option key={salon.ID} value={salon.ID}>Capacidad: {salon.capacidad}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className='mt-2'>
+                          <label htmlFor="periodoID">Periodo</label>
+                          <select value={grupo.periodoID} id="periodoID" className='form-select'>
+                            <option value="0">Seleccionar un Periodo</option>
+                            {periodos?.map(periodo => (
+                              <option key={periodo.ID} value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio)} - {formatearFechaPeriodo(periodo.fechaFin)}</option>
+                            ))}
+                          </select>
                         </div>
 
-                        <div className="d-flex flex-column mt-2">
-                          <label htmlFor="fechaFin">Fecha de fin</label>
-                          <input
-                            type="date"
-                            id="fechaFin"
-                            // value={formatearFecha(grupo.fechaFin)}
-                            // onChange={(e) => setFechaFin(e.target.value)}
-                            className="form-control"
-                          />
+                        <div className='mt-2 d-flex gap-2'>
+                          <Link to={`/admin/grupos/${grupo.ID}`} className='btn btn-primary'>Ver Grupo</Link>
+
+                          <button className='btn btn-success'>Actualizar información</button>
                         </div>
 
-                        <div className="d-flex gap-1 mt-2">
-                          <button type="submit" className="btn bgPrimary">
-                            Editar Grupo
-                          </button>
-                          <Link to={"/"} className="btn btn-success">
-                            Ver Grupo
-                          </Link>
-                        </div>
+                        
                       </form>
                     </Accordion.Body>
                   </Accordion.Item>
@@ -121,58 +93,47 @@ console.log(periodos)
               </Accordion>
             )}
           </div>
+        </div>
 
-          <div className="col-lg-6">
-            <form
-              className="formContainer"
-              onSubmit={(e) => handleAddNewPeriodo()}
-            >
-              <h2>
-                Ingresa la informacion que se solicita para dar de alta un
-                grupo
-              </h2>
+        <div className="col-lg-6">
+          <form className="formContainer" onSubmit={e => handleAddNewGroup(e)}>
+            <h3>Ingresa la informacion que se solicita para dar de alta un grupo</h3>
               <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Salon</label>
-                <input
-                  type="number"
-                  id="salonId"
-                  // value={fechaInicio}
-                  // onChange={(e) => setFechaInicio(e.target.value)}
-                  className="form-control"
-                />
+                <label htmlFor="salon">Salon</label>
+                <select id="salon" value={salonID} onChange={e => setSalonID(e.target.value)} className='form-select'>
+                  <option value="0">Seleccione un salon</option>
+                  {salones?.map(salon => (
+                    <option key={salon.ID} value={salon.ID}>Capacidad: {salon.capacidad}</option>
+                  ))}
+                </select>
               </div>
 
-              <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Periodo</label>
-                <input
-                  type="number"
-                  id="periodoId"
-                  // value={fechaInicio}
-                  // onChange={(e) => setFechaInicio(e.target.value)}
-                  className="form-control"
-                />
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="periodo">Periodo</label>
+                <select id="periodo" value={periodoID} onChange={e => setPeriodoID(e.target.value)} className='form-select'>
+                  <option value="0">Seleccione un periodo</option>
+                  {periodos?.map(periodos => (
+                    <option key={periodos.ID} value={periodos.ID}>{formatearFechaPeriodo(periodos.fechaInicio)} - {formatearFechaPeriodo(periodos.fechaFin)}</option>
+                  ))}
+                </select>
               </div>
 
-              <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Escolaridad</label>
-                <input
-                  type="number"
-                  id="escolaridadId"
-                  // value={fechaInicio}
-                  // onChange={(e) => setFechaInicio(e.target.value)}
-                  className="form-control"
-                />
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="escolaridad">Escolaridad</label>
+                <select id="escolaridad" value={escolaridadID} onChange={e => setEscolaridadID(e.target.value)} className='form-select'>
+                  <option value="0">Seleccione una escolaridad</option>
+                  {escolaridades?.map(escolaridad => (
+                    <option key={escolaridad.ID} value={escolaridad.ID}>{escolaridad.nombre}</option>
+                  ))}
+                </select>
               </div>
 
-              <button type="submit" className="button mt-2">
-                Guardar Grupo
-              </button>
-            </form>
-          </div>
+              <button type="submit" className="button mt-2">Guardar Periodo</button>
+          </form>
         </div>
       </div>
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default CrudGrupos;
+export default CrudGrupos

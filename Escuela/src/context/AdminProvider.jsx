@@ -15,7 +15,8 @@ const AdminProvider = ({children}) => {
     const [clases, setClases] = useState([]);
     const [grupos, setGrupos] = useState([]);
     const [salones, setSalones] = useState([]);
-    const [escolaridades, setEscolaridades] = useState([])
+    const [escolaridades, setEscolaridades] = useState([]);
+    const [materias, setMaterias] = useState([]);
 
     // Inputs
     const [ID, setID] = useState(null);
@@ -28,16 +29,19 @@ const AdminProvider = ({children}) => {
     const [direccion, setDireccion] = useState('');
     const [eventos, setEventos] = useState([])
     const [maestros, setMaestros] = useState([]);
-
+    
     const navigate = useNavigate()
 
     useEffect(() => {
         handleGetUsers();
         handleGetPeriodos();
-        handleGetGrupos();
-        handleGetSalones();
+        handleGetGroups();
         handleGetEscolaridades();
         handleGetEventos();
+        handleGetSalones()
+        handleGetMaterias()
+        handleMaestros()
+        handleGetClases()
     }, [])
     const token = localStorage.getItem('token');
 
@@ -58,6 +62,42 @@ const AdminProvider = ({children}) => {
         }
     }
 
+    const handleMaestros = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/2`, config);
+            setMaestros(data.users);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetClases = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/clases`, config);
+            setClases(data.clases);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleGetPeriodos = async() => {
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/periodos`, config );            
@@ -68,7 +108,26 @@ const AdminProvider = ({children}) => {
         }
     }
 
-    const handleGetGrupos = async() => {
+    const handleGetMaterias = async() => {
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/materias`, config );   
+            setMaterias(data.materias)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    const handleGetGroups = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
         try {
             const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/grupos`, config );            
             setGrupos(data.grupos)
@@ -77,21 +136,39 @@ const AdminProvider = ({children}) => {
             console.log(error)
         }
     }
+    
+    const handleGetEscolaridades = async() => {
+        const token = localStorage.getItem('token');
 
-    const handleGetSalones = async() => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
         try {
-            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/salones`, config );            
-            setSalones(data.salones)
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/escolaridades`, config );            
+            setEscolaridades(data.escolaridades)
             
         } catch (error) {
             console.log(error)
         }
     }
+    
+    const handleGetSalones = async() => {
+        const token = localStorage.getItem('token');
 
-    const handleGetEscolaridades = async() => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
         try {
-            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/escolaridad`, config );            
-            setEscolaridades(data.escolaridades)
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/salones`, config );            
+            setSalones(data.salones)
             
         } catch (error) {
             console.log(error)
@@ -226,10 +303,12 @@ const AdminProvider = ({children}) => {
                 alerta, setAlerta, 
                 maestros,
                 grupos,
-                salones,
+                salones, 
                 escolaridades,
                 eventos,
-
+                materias,
+                clases,
+                
                 // Formulario
                 ID, setID, 
                 nombre, setNombre, 
