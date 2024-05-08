@@ -5,9 +5,11 @@ const AppContext = createContext();
 
 const AppProvider = ({children}) => {
     const [alerta, setAlerta] = useState(null)
+    const [eventos, setEventos] = useState([])
 
     useEffect(() => {
         setAlerta(null)
+        handleGetEventos()
     }, [])
 
     const handleLogin = async(ID, password, remember) => {
@@ -52,13 +54,27 @@ const AppProvider = ({children}) => {
         }
     }
 
+    const handleGetEventos = async() => {
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/eventos`)
+
+            setEventos(data.eventos.reverse())
+        } catch (error) {
+            setAlerta({
+                msg: error?.response?.data?.msg, 
+                error: true
+            })
+        }
+    }
+
     return (
         <AppContext.Provider
             value={{
                 handleLogin, 
                 alerta, 
                 setAlerta, 
-                handleGetClass
+                handleGetClass, 
+                eventos
             }}
         >
             {children}

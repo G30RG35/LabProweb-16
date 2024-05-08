@@ -10,3 +10,8 @@
 .colorRow{
     background-color: rgb(174, 174, 174);
 }
+
+img.imgContainer {
+    max-width: 500px;
+    width: 100%;
+}

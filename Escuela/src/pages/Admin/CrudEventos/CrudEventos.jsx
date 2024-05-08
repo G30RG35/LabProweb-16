@@ -3,13 +3,23 @@ import { Accordion } from "react-bootstrap";
 import useAdmin from "../../../hooks/useAdmin";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import useApp from "../../../hooks/useApp";
+import CloudinaryWidget from "../../../Componentes/CloudinaryWidget/CloudinaryWidget";
 
 export const CrudEventos = () => {
-  const { eventos, escolaridades, alerta, setAlerta } = useAdmin();
+  const [titulo, setTitulo] = useState('')
+  const [descripcion, setDescripcion] = useState('')
+  const [fecha, setFecha] = useState('')
+  const [hora, setHora] = useState('')
+  const [escolaridadID, setEscolaridadID] = useState(0)
+  const [imageUrl, setImageUrl] = useState('')
+  const { escolaridades, alerta, setAlerta } = useAdmin();
+  const { eventos } = useApp()
 
-  const handleAddNewEvento = async () => {
-    const evento = {};
+  console.log(eventos)
 
+  const handleAddNewEvento = async(e) => {
+    e.preventDefault()
     const token = localStorage.getItem("token");
 
     const config = {
@@ -19,11 +29,21 @@ export const CrudEventos = () => {
       },
     };
 
+    const evento = {
+      titulo, 
+      descripcion, 
+      fecha, 
+      hora, 
+      escolaridadID, 
+      imageUrl
+    }
+
+    console.log(evento)
+
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/eventos`,
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/eventos`,
         {
-          evento,
+          evento
         },
         config
       );
@@ -37,9 +57,6 @@ export const CrudEventos = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(eventos);
-  }, []);
   return (
     <>
       <div className="container my-5">
@@ -72,7 +89,7 @@ export const CrudEventos = () => {
                     </Accordion.Header>
 
                     <Accordion.Body>
-                      <form className="" onSubmit={(e) => handleAddNewGrupo()}>
+                      <form className="" onSubmit={(e) => handleAddNewEvento()}>
                         <div className="d-flex gap-1 mt-2">
                           <button type="submit" className="btn bgPrimary">
                             Editar evento
@@ -89,31 +106,72 @@ export const CrudEventos = () => {
           <div className="col-lg-6">
             <form
               className="formContainer"
-              onSubmit={(e) => handleAddNewPeriodo()}
+              onSubmit={(e) => handleAddNewEvento(e)}
             >
               <h2>
                 Ingresa la informacion que se solicita para dar de alta un
                 evento
               </h2>
-              <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Titulo</label>
-                <input type="text" id="titulo" className="form-control" />
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="titulo">Titulo</label>
+                <input 
+                  type="text" 
+                  id="titulo" 
+                  className="form-control" 
+                  placeholder="Titulo del evento"
+                  value={titulo}
+                  onChange={e => setTitulo(e.target.value)}
+                />
               </div>
 
-              <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Descripcion</label>
-                <input type="text" id="descripcion" className="form-control" />
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="descripcion">Descripcion</label>
+                <textarea 
+                  className="form-control"
+                  id="descripcion"
+                  onChange={e => setDescripcion(e.target.value)}
+                  rows={4}
+                >{descripcion}</textarea>
               </div>
 
-              <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Fecha</label>
-                <input type="date" id="Fecha" className="form-control" />
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="fecha">Fecha</label>
+                <input type="date" id="fecha" className="form-control" value={fecha} onChange={e => setFecha(e.target.value)} />
               </div>
 
-              <div className="d-flex flex-column">
-                <label htmlFor="fechaInicio">Hora</label>
-                <input type="time" id="Hora" className="form-control" />
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="hora">Hora</label>
+                <input 
+                  type="time" 
+                  id="Hora" 
+                  className="form-control" 
+                  value={hora}
+                  onChange={e => setHora(e.target.value)}
+                />
               </div>
+              
+              <div className="d-flex flex-column mt-2">
+                <label htmlFor="esc">Escolaridad</label>
+                <select value={escolaridadID} onChange={e => setEscolaridadID(e.target.value)} id="esc" className="form-select">
+                  <option value={0}>Seleccione un plan de estudios</option>
+                  {escolaridades?.map(esc => (
+                    <option value={esc.ID} key={esc.ID}>{esc.nombre}</option>
+                  ))}
+                </select>
+              </div>
+
+              {imageUrl === '' ? (
+                <div className="d-flex flex-column mt-2">
+                  <label htmlFor="">Seleccione una imagen</label>
+                  <CloudinaryWidget 
+                    setImagenUrl={setImageUrl}
+                    completeBtn={true}
+                  />
+                </div>
+              ) : (
+                <img src={imageUrl} className="w-100  p-3" />
+              )}
+              
 
               <button type="submit" className="button mt-2">
                 Guardar Evento
