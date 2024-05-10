@@ -3,6 +3,8 @@ import { Accordion } from "react-bootstrap";
 import useAdmin from "../../../hooks/useAdmin";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import useApp from "../../../hooks/useApp";
+import CloudinaryWidget from "../../../Componentes/CloudinaryWidget/CloudinaryWidget";
 
 export const CrudEventos = () => {
   const { eventos, escolaridades, alerta, setAlerta, handleGetEventos } = useAdmin();
@@ -306,6 +308,7 @@ export const CrudEventos = () => {
             <form
               className="formContainer"
               onSubmit={(e) => handleAddNewEvento(e)}
+
             >
               <h2>
                 Ingresa la informacion que se solicita para dar de alta un
@@ -369,6 +372,19 @@ export const CrudEventos = () => {
                   ))}
                 </select>
               </div>
+
+              {imageUrl === '' ? (
+                <div className="d-flex flex-column mt-2">
+                  <label htmlFor="">Seleccione una imagen</label>
+                  <CloudinaryWidget 
+                    setImagenUrl={setImageUrl}
+                    completeBtn={true}
+                  />
+                </div>
+              ) : (
+                <img src={imageUrl} className="w-100  p-3" />
+              )}
+              
 
               <button type="submit" className="button mt-2">
                 Crear Evento

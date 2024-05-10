@@ -10,7 +10,7 @@ import { Eventos } from './pages/Eventos/Eventos';
 import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import CrudMestros from './pages/Admin/CrudMaestros/CrudMaestros';
 import { AdminProvider } from './context/AdminProvider';
-import { Nosotros } from './pages/Nosotros/nosotros';
+import { Nosotros } from './pages/Nosotros/Nosotros';
 import { CrudClases } from './pages/Admin/CrudClases/CrudClases';
 import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
@@ -30,7 +30,6 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppProvider>
-          <AdminProvider>
             <Routes>
               <Route path='/' element={<MainLayout />}>
                 <Route index element={<Index />} />
@@ -68,7 +67,6 @@ function App() {
 
               </Route>
             </Routes>
-          </AdminProvider>
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>

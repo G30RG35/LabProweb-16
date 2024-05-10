@@ -33,13 +33,15 @@ const Login = () => {
   
   return (
     <>
-      <div className="d-flex align-items-center py-4 bg-body-tertiary">
+      <div className="d-flex align-items-center py-5 bg-body-tertiary">
         <main className="form-signin mx-auto my-auto">
           <form onSubmit={(e) => {
             e.preventDefault();
             handleSubmit()
-          }}>
-            <h1 className="h3 mb-3 fw-normal">Iniciar Sesión</h1>
+          }}
+            className="formLogin"
+          >
+            <h1 className="fs-2 fw-bold text-primary mb-2 fw-normal">Iniciar Sesión</h1>
             <p>Ingrese los datos que se piden para iniciar sesión</p>
 
             {alerta && (
@@ -70,25 +72,14 @@ const Login = () => {
               <label htmlFor="floatingPassword">Password</label>
             </div>
 
-            <div className="form-check text-start my-3">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                value="remember-me"
-                id="flexCheckDefault"
-                onChange={e => setRemember(e.target.checked)}
-              />
-              <label className="form-check-label" htmlFor="flexCheckDefault">
-                Recuerdame
-              </label>
-            </div>
             <button 
-              className="btn btn-primary w-100 py-2" 
+              className="btn btn-primary w-100 py-2 mt-4" 
               type="submit"
               disabled={comprobarInfo()}
             >
               Iniciar Sesión
             </button>
+            <p className="mt-2">En caso de haber olvidado su contraseña, favor de avisar al area administrativa de la institucion para solicitar un cambio de contraeña</p>
           </form>
         </main>
       </div>

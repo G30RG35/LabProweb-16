@@ -3,6 +3,7 @@ import useAuth from "../hooks/useAuth";
 import { Header } from "../Componentes/Header/Header";
 import Footer from "../Componentes/Footer/Footer";
 import Loader from "../Componentes/Loader/Loader";
+import { AdminProvider } from "../context/AdminProvider";
 
 const AdminLayout = () => {
     const { auth, loading } = useAuth();
@@ -19,11 +20,13 @@ const AdminLayout = () => {
         <>
             {auth.ID && res.length > 0 ? (
                 <>
-                    <Header />
-                    <main>
-                        <Outlet />
-                    </main>
-                    <Footer />
+                    <AdminProvider>
+                        <Header />
+                        <main>
+                            <Outlet />
+                        </main>
+                        <Footer />
+                    </AdminProvider>
                 </>
             ) : <Navigate to="/" />}
         </>

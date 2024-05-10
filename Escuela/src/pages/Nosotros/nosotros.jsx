@@ -7,8 +7,8 @@ import styles from "./Nosotros.module.css";
 export const Nosotros = () => {
   return (
     <>
-      <Container className={`${styles.conteiner}`}>
-        <Row className={`${styles.spaceRow} ${styles.colorRow}`}>
+      <Container className={`${styles.conteiner} my-4`}>
+        <Row className={`${styles.spaceRow} ${styles.colorRow} p-4 rounded text-light bg-secondary shadow`}>
           <Col>
             <h2>Misión</h2>
             <p>
@@ -45,30 +45,38 @@ export const Nosotros = () => {
             </p>
           </Col>
         </Row>
-        <Row className={`${styles.spaceRow}`}>
-          <h2>Equipo docente:</h2>
-          <p>
-            En nuestra escuela, creemos que el éxito de los estudiantes depende
-            en gran medida de la calidad de sus profesores. Por eso, contamos
-            con un equipo docente altamente calificado y comprometido con la
-            educación.
-          </p>
-          <p>
-            Nuestros profesores son expertos en sus áreas de conocimiento y
-            están constantemente actualizando sus conocimientos y métodos de
-            enseñanza.
-          </p>
-          <p>
-            Además de su experiencia y formación, nuestros profesores son
-            apasionados por la educación y se dedican a ayudar a los estudiantes
-            a alcanzar su máximo potencial.
-          </p>
-          <img
-            src="https://www.smt.edu.ar/wp-content/uploads/2019/02/3409A20076.jpg"
-            alt=""
-          />
+        <Row className={`${styles.spaceRow} p-4 row`}>
+          <div className="col-lg-8">
+            <h2>Equipo docente:</h2>
+            <p>
+              En nuestra escuela, creemos que el éxito de los estudiantes depende
+              en gran medida de la calidad de sus profesores. Por eso, contamos
+              con un equipo docente altamente calificado y comprometido con la
+              educación.
+            </p>
+            <p>
+              Nuestros profesores son expertos en sus áreas de conocimiento y
+              están constantemente actualizando sus conocimientos y métodos de
+              enseñanza.
+            </p>
+            <p>
+              Además de su experiencia y formación, nuestros profesores son
+              apasionados por la educación y se dedican a ayudar a los estudiantes
+              a alcanzar su máximo potencial.
+            </p>
+          </div>
+
+          <div className="col-lg-4 d-flex justify-content-center">
+            <img
+              src="https://www.smt.edu.ar/wp-content/uploads/2019/02/3409A20076.jpg"
+              alt=""
+              className={`img ${styles.imgContainer}`}
+            />
+          </div>
+          
+          
         </Row>
-        <Row className={`${styles.spaceRow} ${styles.colorRow}`}>
+        <Row className={`${styles.spaceRow} ${styles.colorRow} bg-secondary p-4 rounded text-light shadow`}>
           <h2> Modelo educativo</h2>
           <p>
             En nuestra escuela, creemos en un modelo educativo innovador y
