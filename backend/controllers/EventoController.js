@@ -13,6 +13,27 @@ const getAllEventos = async(req, res) => {
     }
 }
 
+const addNewEvento = async (req, res) => {
+    const { evento } = req.body;
+    
+    try {
+      const nuevoEvento = new Evento(evento);
+      const response = await nuevoEvento.createItem(Evento, nuevoEvento);
+      
+      if(response) {
+        return res.status(201).json({ msg: response.msg });
+      } else {
+        throw new Error('Hubo un error al crear el evento');
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ msg: error.message });
+    }
+  };
+  
+  
+
 export {
     getAllEventos,
+    addNewEvento
 }
