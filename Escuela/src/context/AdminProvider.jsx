@@ -17,6 +17,7 @@ const AdminProvider = ({children}) => {
     const [salones, setSalones] = useState([]);
     const [escolaridades, setEscolaridades] = useState([]);
     const [materias, setMaterias] = useState([]);
+    const [eventos, setEventos] = useState([]);
 
     // Inputs
     const [ID, setID] = useState(null);
@@ -27,7 +28,6 @@ const AdminProvider = ({children}) => {
     const [correo, setCorreo] = useState('');
     const [password, setPassword] = useState(generatePSWD());
     const [direccion, setDireccion] = useState('');
-    const [eventos, setEventos] = useState([])
     const [maestros, setMaestros] = useState([]);
     
     const navigate = useNavigate()
@@ -177,7 +177,7 @@ const AdminProvider = ({children}) => {
 
     const handleGetEventos = async() => {
         try {
-            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/eventos`, config );            
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/eventos`, config );          
             setEventos(data.eventos)
             
         } catch (error) {
@@ -322,6 +322,7 @@ const AdminProvider = ({children}) => {
 
                 //Funciones 
                 handleGetSalones,
+                handleGetEventos,
             }}
         >
             {children}

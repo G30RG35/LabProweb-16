@@ -120,6 +120,18 @@ class ActiveRecord {
             return false
         }
     }
+
+    async deleteItem(modelName, id) {
+        const query = `DELETE FROM ${modelName.tableName} WHERE ID = ${id}`;
+
+        try {
+            await connetion.execute(query);
+            return { msg: 'Elemento eliminado correctamente' };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Hubo un error al eliminar el elemento' };
+        }
+    }
 }
 
 export default ActiveRecord
