@@ -7,39 +7,10 @@ import { Link } from "react-router-dom";
 export const CrudEventos = () => {
   const { eventos, escolaridades, alerta, setAlerta } = useAdmin();
 
-  const handleAddNewEvento = async () => {
-    const evento = {};
-
-    const token = localStorage.getItem("token");
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/eventos`,
-        {
-          evento,
-        },
-        config
-      );
-
-      setAlerta({
-        error: false,
-        msg: data.msg,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     console.log(eventos);
   }, []);
+
   return (
     <>
       <div className="container my-5">
