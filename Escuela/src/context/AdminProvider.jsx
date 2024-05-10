@@ -323,6 +323,7 @@ const AdminProvider = ({children}) => {
                 //Funciones 
                 handleGetSalones,
                 handleGetEventos,
+                handleGetPeriodos,
             }}
         >
             {children}
