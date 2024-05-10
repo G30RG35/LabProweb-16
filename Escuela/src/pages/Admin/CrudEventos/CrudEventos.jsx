@@ -15,6 +15,29 @@ export const CrudEventos = () => {
     escolaridadID: ''
   });
 
+  const [editingEventId, setEditingEventId] = useState(null);
+
+  useEffect(() => {
+    if (editingEventId !== null) {
+      const evento = eventos.find(evento => evento.ID === editingEventId);
+      setEventoData({
+        titulo: evento.titulo,
+        descripcion: evento.descripcion,
+        fecha: evento.fecha,
+        hora: evento.hora,
+        escolaridadID: evento.escolaridadID.toString() // Convertir a cadena
+      });
+    } else {
+      setEventoData({
+        titulo: '',
+        descripcion: '',
+        fecha: '',
+        hora: '',
+        escolaridadID: ''
+      });
+    }
+  }, [editingEventId, eventos]);
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setEventoData({
@@ -24,17 +47,11 @@ export const CrudEventos = () => {
   };
 
   function formatearFecha(fechaString) {
-    const meses = [
-      "enero", "febrero", "marzo", "abril", "mayo", "junio",
-      "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
-    ];
-
     const fecha = new Date(fechaString);
-    const dia = fecha.getDate();
-    const mes = meses[fecha.getMonth()];
-    const año = fecha.getFullYear();
-
-    return `${dia} de ${mes} de ${año}`;
+    const year = fecha.getFullYear();
+    const month = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const day = fecha.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
   function formatearHora(horaString) {
@@ -52,21 +69,16 @@ export const CrudEventos = () => {
       horas = 12;
     }
 
-    return `${horas}:${minutos} ${periodo}`;
+    return `${horas.toString().padStart(2, '0')}:${minutos} ${periodo}`;
   }
 
   function DeXEscolaridad(id) {
-    for (let index = 0; index < escolaridades.length; index++) {
-      if (id == escolaridades[index].ID) {
-        return escolaridades[index].nombre;
-      }
-    }
+    const escolaridad = escolaridades.find(item => item.ID === id);
+    return escolaridad ? escolaridad.nombre : "";
   }
 
   const handleAddNewEvento = async (e) => {
     e.preventDefault();
-
-    console.log(eventoData)
 
     try {
       const token = localStorage.getItem("token");
@@ -78,11 +90,10 @@ export const CrudEventos = () => {
         },
       };
 
-
       if (eventoData.titulo && eventoData.descripcion && eventoData.fecha && eventoData.hora && eventoData.escolaridadID) {
         const { data } = await axios.post(
           `${import.meta.env.VITE_API_URL}/api/eventos`,
-          { evento: eventoData }, // Enviar eventoData dentro de un objeto con clave "evento"
+          { evento: eventoData },
           config
         );
 
@@ -90,7 +101,7 @@ export const CrudEventos = () => {
           error: false,
           msg: data.msg,
         });
-        handleGetEventos()
+        handleGetEventos();
       } else {
         throw new Error('Por favor, completa todos los campos del evento');
       }
@@ -99,9 +110,73 @@ export const CrudEventos = () => {
     }
   };
 
+  const handleEditEvento = async (e, eventoId) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
 
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
 
+      if (eventoData.titulo && eventoData.descripcion && eventoData.fecha && eventoData.hora && eventoData.escolaridadID) {
+        const { data } = await axios.put(
+          `${import.meta.env.VITE_API_URL}/api/eventos/${eventoId}`,
+          {
+            evento: {
+              ...eventoData,
+              fecha: formatearFecha(eventoData.fecha)
+            }
+          },
+          config
+        );
 
+        setAlerta({
+          error: false,
+          msg: data.msg,
+        });
+        handleGetEventos();
+        setEditingEventId(null);
+      } else {
+        throw new Error('Por favor, completa todos los campos del evento');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteEvento = async (eventoId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/eventos/${eventoId}`,
+        config
+      );
+
+      setAlerta({
+        error: false,
+        msg: data.msg,
+      });
+      handleGetEventos();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingEventId(null);
+  };
 
   return (
     <>
@@ -134,17 +209,92 @@ export const CrudEventos = () => {
                     </Accordion.Header>
 
                     <Accordion.Body>
-                      <form className="" onSubmit={(e) => handleAddNewEvento()}>
-                        {evento.descripcion}
-                        {formatearFecha(evento.fecha) + " a las " + formatearHora(evento.hora)}
-                        <br />
-                        Este evento pertenece a: {DeXEscolaridad(evento.escolaridadID)}
-                        <div className="d-flex gap-1 mt-2">
-                          <button type="submit" className="btn bgPrimary">
-                            Editar evento
-                          </button>
-                        </div>
-                      </form>
+                      {editingEventId === evento.ID ? (
+                        <form className="" onSubmit={(e) => handleEditEvento(e, evento.ID)}>
+                          <div className="d-flex flex-column">
+                            <label htmlFor="titulo">Titulo</label>
+                            <input
+                              type="text"
+                              id="titulo"
+                              className="form-control"
+                              value={eventoData.titulo}
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="d-flex flex-column">
+                            <label htmlFor="descripcion">Descripcion</label>
+                            <input
+                              type="text"
+                              id="descripcion"
+                              className="form-control"
+                              value={eventoData.descripcion}
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="d-flex flex-column">
+                            <label htmlFor="fecha">Fecha</label>
+                            <input
+                              type="date"
+                              id="fecha"
+                              className="form-control"
+                              value={eventoData.fecha}
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="d-flex flex-column">
+                            <label htmlFor="hora">Hora</label>
+                            <input
+                              type="time"
+                              id="hora"
+                              className="form-control"
+                              value={eventoData.hora}
+                              onChange={handleChange}
+                            />
+                          </div>
+
+                          <div className="d-flex flex-column">
+                            <label htmlFor="escolaridadID">Escolaridad</label>
+                            <select
+                              id="escolaridadID"
+                              className="form-control"
+                              value={eventoData.escolaridadID}
+                              onChange={handleChange}
+                            >
+                              <option value="">Selecciona una escolaridad</option>
+                              {escolaridades.map(escolaridad => (
+                                <option key={escolaridad.ID} value={escolaridad.ID}>{escolaridad.nombre}</option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div className="d-flex gap-1 mt-2">
+                            <button type="submit" className="btn bgPrimary">
+                              Guardar evento
+                            </button>
+                            <button type="button" className="btn btn-danger" onClick={handleCancelEdit}>
+                              Cancelar
+                            </button>
+                          </div>
+                        </form>
+                      ) : (
+                        <>
+                          {evento.descripcion}
+                          {formatearFecha(evento.fecha) + " a las " + formatearHora(evento.hora)}
+                          <br />
+                          Este evento pertenece a: {DeXEscolaridad(evento.escolaridadID)}
+                          <div className="d-flex gap-1 mt-2">
+                            <button type="button" className="btn bgPrimary" onClick={() => setEditingEventId(evento.ID)}>
+                              Editar evento
+                            </button>
+                            <button type="button" className="btn btn-danger" onClick={() => handleDeleteEvento(evento.ID)}>
+                              Eliminar evento
+                            </button>
+                          </div>
+                        </>
+                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}
@@ -206,18 +356,22 @@ export const CrudEventos = () => {
               </div>
 
               <div className="d-flex flex-column">
-                <label htmlFor="hora">Escolaridad</label>
-                <input
-                  type="input"
+                <label htmlFor="escolaridadID">Escolaridad</label>
+                <select
                   id="escolaridadID"
                   className="form-control"
                   value={eventoData.escolaridadID}
                   onChange={handleChange}
-                />
+                >
+                  <option value="">Selecciona una escolaridad</option>
+                  {escolaridades.map(escolaridad => (
+                    <option key={escolaridad.ID} value={escolaridad.ID}>{escolaridad.nombre}</option>
+                  ))}
+                </select>
               </div>
 
               <button type="submit" className="button mt-2">
-                Guardar Evento
+                Crear Evento
               </button>
             </form>
           </div>
