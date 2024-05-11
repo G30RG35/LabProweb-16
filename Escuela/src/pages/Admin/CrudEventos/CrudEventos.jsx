@@ -373,7 +373,7 @@ export const CrudEventos = () => {
                 </select>
               </div>
 
-              {imageUrl === '' ? (
+              {/* {imageUrl === '' ? (
                 <div className="d-flex flex-column mt-2">
                   <label htmlFor="">Seleccione una imagen</label>
                   <CloudinaryWidget 
@@ -383,7 +383,7 @@ export const CrudEventos = () => {
                 </div>
               ) : (
                 <img src={imageUrl} className="w-100  p-3" />
-              )}
+              )} */}
               
 
               <button type="submit" className="button mt-2">

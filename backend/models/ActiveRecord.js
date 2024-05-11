@@ -60,7 +60,6 @@ class ActiveRecord {
     async createManyItems(modelName, objects, object) {
         let { claves } = await this.getArray(object)
         const campos = claves?.filter(clave => clave !== 'ID');
-        console.log()
 
         let query = `INSERT INTO ${modelName.tableName} `;
         query += `(${campos.map(clave => " " + clave)}) VALUES `;

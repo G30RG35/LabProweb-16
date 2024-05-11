@@ -10,13 +10,13 @@ export const Header = () => {
   return (
     <>
       <div className='headerNav shadow'>
-        <div className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="navbar navbar-expand-lg navbar-dark bg-dark">
           <header className="d-flex flex-wrap justify-content-between container">
             <Link
               to="/"
               className="navbar-brand"
             >
-              <span className="fs-4 text-primary fw-bold">IEI School</span>
+              <span className="fs-4 text-light fw-bold">IEI School</span>
             </Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>

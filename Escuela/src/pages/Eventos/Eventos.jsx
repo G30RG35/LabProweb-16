@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 import style from "./Eventos.module.css";
-import { Row, Col } from "react-bootstrap";
-import useAdmin from "../../hooks/useAdmin";
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import useApp from "../../hooks/useApp";
 
 export const Eventos = () => {
-  const { eventos, escolaridades, alerta, setAlerta } = useAdmin();
+  const { eventos, escolaridades } = useApp();
 
   useEffect(() => {
     console.log(escolaridades);
