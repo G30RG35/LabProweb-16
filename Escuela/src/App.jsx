@@ -24,6 +24,7 @@ import { CrudSalones } from './pages/Admin/CrudSalones/CrudSalones';
 import { CrudEscolaridad } from './pages/Admin/CrudEscolaridad/CrudEscolaridad';
 import { CrudEventos } from './pages/Admin/CrudEventos/CrudEventos';
 import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
+import Perfil from './pages/Perfil/Perfil';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
+                <Route path='perfil' element={<Perfil />} />
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>
@@ -63,10 +65,11 @@ function App() {
               </Route>
 
               <Route path='/alumno'>
-
+              
 
               </Route>
             </Routes>
+
         </AppProvider>
       </AuthProvider>
     </BrowserRouter>
