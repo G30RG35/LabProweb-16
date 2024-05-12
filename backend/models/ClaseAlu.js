@@ -1,4 +1,4 @@
-import ActiveRecord from "./ActiveRecord";
+import ActiveRecord from "./ActiveRecord.js";
 
 class ClaseAlu extends ActiveRecord {
     static tableName = 'claseAlu';

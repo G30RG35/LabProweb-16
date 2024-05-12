@@ -4,7 +4,7 @@ import { addNewEvento, deleteEvento, getAllEventos, updateEvento } from "../cont
 
 const router = express.Router();
 
-router.route('/').get(checkAuth, getAllEventos).post(checkAuth, addNewEvento)
+router.route('/').get(getAllEventos).post(checkAuth, addNewEvento)
 router.route('/:id').put(checkAuth, updateEvento).delete(checkAuth, deleteEvento)
 
 export default router;

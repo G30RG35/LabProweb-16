@@ -10,6 +10,7 @@ import AuthRoutes from "./routes/AuthRoutes.js";
 import GrupoRoutes from './routes/GrupoRoutes.js';
 import EscolaridadRoutes from './routes/EscolaridadRoutes.js';
 import ClaseRoutes from './routes/ClaseRoutes.js';
+import ClaseAlumnoRoutes from './routes/ClaseAlumnoRoutes.js';
 import EventoRoutes from './routes/EventoRoutes.js'
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/api/auth', AuthRoutes);
 app.use('/api/grupos', GrupoRoutes);
 app.use('/api/escolaridades', EscolaridadRoutes);
 app.use('/api/clases', ClaseRoutes);
+app.use('/api/clasesAlumnos', ClaseAlumnoRoutes);
 app.use('/api/eventos', EventoRoutes);
 
 const PORT = process.env.PORT || 4000

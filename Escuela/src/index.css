@@ -243,3 +243,6 @@ iframe {
   color: var(--text-white);
   border: var(--gray) solid 1px;
 }
+.svgImage {
+  width: 25px;
+}
