@@ -51,14 +51,23 @@ const updatePeriodo = async(req, res) => {
     }
 }
 
-const deletePeriodo = async(req, res) => {
-    const { id } = req.params;
-    
-    // Busqueda de todo lo relacionado con el periodo
-    /** ALEJANDRO QUE NO SE TE OLVIDE HACER ESTO
-     *  PERO PRIMERO TIENES QUE TERMINAR EL CRUD DE GRUPO Y CLASE
-     */
-}
+const deletePeriodo = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const periodoObj = new Periodo();
+      const response = await periodoObj.deleteItem(Periodo, +id);
+      if (response) {
+        return res.status(200).json({ msg: response.msg });
+      } else {
+        const error = new Error("Hubo un error");
+        return res.status(500).json({ msg: error.message });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ msg: "Hubo un error en el servidor" });
+    }
+  };
+  
 
 export {
     getAllPeriodos, 

@@ -1,48 +1,132 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAdmin from '../../../hooks/useAdmin'
 import { Accordion } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import formatearFecha from '../../../helpers/formatearFecha';
 import axios from 'axios';
-import formatearFechaPeriodo from '../../../helpers/formatearFechaPeriodo';
+import useApp from '../../../hooks/useApp';
 
 const CrudGrupos = () => {
-  const [salonID, setSalonID] = useState(0);
-  const [periodoID, setPeriodoID] = useState(0);
-  const [escolaridadID, setEscolaridadID] = useState(0);
+  const [grupoData, setGrupoData] = useState({
+    salonID: 0,
+    periodoID: 0,
+    escolaridadID: 0,
+    editandoID: null
+  });
+
   const { grupos, salones, escolaridades, periodos } = useAdmin();
 
-  const handleAddNewGroup = async() => {
+  const formatearFechaPeriodo = (fechaInicio, fechaFin) => {
+    const meses = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+
+    const fechaInicioObj = new Date(fechaInicio);
+    const fechaFinObj = new Date(fechaFin);
+
+    const diaInicio = fechaInicioObj.getDate();
+    const mesInicio = meses[fechaInicioObj.getMonth()];
+    const añoInicio = fechaInicioObj.getFullYear();
+
+    const diaFin = fechaFinObj.getDate();
+    const mesFin = meses[fechaFinObj.getMonth()];
+    const añoFin = fechaFinObj.getFullYear();
+
+    return `${diaInicio} ${mesInicio} ${añoInicio} - ${diaFin} ${mesFin} ${añoFin}`;
+  }
+
+  const handleAddNewGroup = async (e) => {
+    e.preventDefault();
+
+    const { salonID, periodoID, escolaridadID } = grupoData;
+  
+    // Verificar si los campos de selección están en la opción 0
+    if (parseInt(salonID) === 0 || parseInt(periodoID) === 0 || parseInt(escolaridadID) === 0) {
+      return;
+    }
+  
     const grupo = {
-      salonID, 
-      periodoID, 
+      salonID,
+      periodoID,
       escolaridadID
     }
-
+  
     const token = localStorage.getItem('token');
-
+  
     const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        }
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
     }
-
+  
     try {
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/grupos`, {
-          grupo : grupo
-        }, config);
-
-        setAlerta({
-            error: false, 
-            msg: data.msg
-        });
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/grupos`, {
+        grupo: grupo
+      }, config);
+  
     } catch (error) {
-        console.log(error)
+      console.log(error)
+    }
+  }
+
+  const handleEditarClick = (grupo) => {
+    setGrupoData({
+      ...grupoData,
+      salonID: grupo.salonID,
+      periodoID: grupo.periodoID,
+      escolaridadID: grupo.escolaridadID,
+      editandoID: grupo.ID
+    });
+  }
+
+  const handleCancelarEdicion = () => {
+    setGrupoData({
+      ...grupoData,
+      salonID: 0,
+      periodoID: 0,
+      escolaridadID: 0,
+      editandoID: null
+    });
+  }
+
+  const handleGuardarGrupoEditado = async (e) => {
+    e.preventDefault();
+
+    const { salonID, periodoID, escolaridadID, editandoID } = grupoData;
+  
+    // Verificar si los campos de selección están en la opción 0
+    if (parseInt(salonID) === 0 || parseInt(periodoID) === 0 || parseInt(escolaridadID) === 0) {
+
+      return;
+    }
+  
+    const grupo = {
+      salonID,
+      periodoID,
+      escolaridadID
+    }
+  
+    const token = localStorage.getItem('token');
+  
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    }
+  
+    try {
+      const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/grupos/${editandoID}`, {
+        grupo: grupo
+      }, config);
+    } catch (error) {
+      console.log(error)
     }
   }
 
   return (
+    
     <div className='container my-5'>
       <div className="row g-4">
         <div className="col-lg-6">
@@ -55,38 +139,53 @@ const CrudGrupos = () => {
                 {grupos?.map(grupo => (
                   <Accordion.Item key={grupo.ID} eventKey={grupo.ID}>
                     <Accordion.Header>
-                      {"ID: " + grupo.ID + ' Salon: ' + grupo.salonID}
+                      {grupo.escolaridad+" Salon "+grupo.salonID}
                     </Accordion.Header>
 
                     <Accordion.Body>
-                      <form>
+                      {grupoData.editandoID === grupo.ID ? (
+                        <form onSubmit={handleGuardarGrupoEditado}>
+                          <div>
+                            <label htmlFor="salonID">Salon</label>
+                            <select name="" value={grupoData.salonID} id="salonID" className='form-select' onChange={e => setGrupoData({ ...grupoData, salonID: e.target.value })}>
+                              <option value="0">Seleccionar un Salon</option>
+                              {salones?.map(salon => (
+                                <option key={salon.ID} value={salon.ID}>{"Id:" + salon.ID + " Capacidad:" + salon.capacidad}</option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className='mt-2'>
+                            <label htmlFor="periodoID">Periodo</label>
+                            <select value={grupoData.periodoID} id="periodoID" className='form-select' onChange={e => setGrupoData({ ...grupoData, periodoID: e.target.value })}>
+                              <option value="0">Seleccionar un Periodo</option>
+                              {periodos?.map(periodo => (
+                                <option key={periodo.ID} value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio, periodo.fechaFin)}</option>
+                              ))}
+                            </select>
+                            <div className='mt-2'>
+                              <label htmlFor="periodoID">Escolaridad</label>
+                              <select id="escolaridad" value={grupoData.escolaridadID} onChange={e => setGrupoData({ ...grupoData, escolaridadID: e.target.value })} className='form-select'>
+                                <option value="0">Seleccione una escolaridad</option>
+                                {escolaridades?.map(escolaridad => (
+                                  <option key={escolaridad.ID} value={escolaridad.ID}>{escolaridad.nombre}</option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className='mt-2 d-flex gap-2'>
+                            <button className='btn btn-primary' type="submit">Guardar</button>
+                            <button className='btn btn-secondary' onClick={handleCancelarEdicion}>Cancelar</button>
+                          </div>
+                        </form>
+                      ) : (
                         <div>
-                          <label htmlFor="salonID">Salon</label>
-                          <select name="" value={grupo.salonID} id="salonID" className='form-select'>
-                            <option value="0">Seleccionar un Salon</option>
-                            {salones?.map(salon => (
-                              <option key={salon.ID} value={salon.ID}>Capacidad: {salon.capacidad}</option>
-                            ))}
-                          </select>
+                          <p>Salon: {`ID: ${salones.find(salon => salon.ID === grupo.salonID)?.ID} Capacidad: ${salones.find(salon => salon.ID === grupo.salonID)?.capacidad}`}</p>
+                          <p>Periodo: {formatearFechaPeriodo(grupo.fechaInicio, grupo.fechaFin)}</p>
+                          <p>Escolaridad: {escolaridades.find(escolaridad => escolaridad.ID === grupo.escolaridadID)?.nombre}</p>
+                          <button className='btn btn-primary' onClick={() => handleEditarClick(grupo)}>Editar</button>
                         </div>
-                        <div className='mt-2'>
-                          <label htmlFor="periodoID">Periodo</label>
-                          <select value={grupo.periodoID} id="periodoID" className='form-select'>
-                            <option value="0">Seleccionar un Periodo</option>
-                            {periodos?.map(periodo => (
-                              <option key={periodo.ID} value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio)} - {formatearFechaPeriodo(periodo.fechaFin)}</option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div className='mt-2 d-flex gap-2'>
-                          <Link to={`/admin/grupos/${grupo.ID}`} className='btn btn-primary'>Ver Grupo</Link>
-
-                          <button className='btn btn-success'>Actualizar información</button>
-                        </div>
-
-                        
-                      </form>
+                      )}
                     </Accordion.Body>
                   </Accordion.Item>
                 ))}
@@ -96,39 +195,39 @@ const CrudGrupos = () => {
         </div>
 
         <div className="col-lg-6">
-          <form className="formContainer" onSubmit={e => handleAddNewGroup(e)}>
+          <form className="formContainer" onSubmit={handleAddNewGroup}>
             <h3>Ingresa la informacion que se solicita para dar de alta un grupo</h3>
-              <div className="d-flex flex-column">
-                <label htmlFor="salon">Salon</label>
-                <select id="salon" value={salonID} onChange={e => setSalonID(e.target.value)} className='form-select'>
-                  <option value="0">Seleccione un salon</option>
-                  {salones?.map(salon => (
-                    <option key={salon.ID} value={salon.ID}>Capacidad: {salon.capacidad}</option>
-                  ))}
-                </select>
-              </div>
+            <div className="d-flex flex-column">
+              <label htmlFor="salon">Salon</label>
+              <select id="salon" value={grupoData.salonID} onChange={e => setGrupoData({ ...grupoData, salonID: e.target.value })} className='form-select'>
+                <option value="0">Seleccionar un Salon</option>
+                {salones?.map(salon => (
+                  <option key={salon.ID} value={salon.ID}>{"Id:" + salon.ID + " Capacidad:" + salon.capacidad}</option>
+                ))}
+              </select>
+            </div>
 
-              <div className="d-flex flex-column mt-2">
-                <label htmlFor="periodo">Periodo</label>
-                <select id="periodo" value={periodoID} onChange={e => setPeriodoID(e.target.value)} className='form-select'>
-                  <option value="0">Seleccione un periodo</option>
-                  {periodos?.map(periodos => (
-                    <option key={periodos.ID} value={periodos.ID}>{formatearFechaPeriodo(periodos.fechaInicio)} - {formatearFechaPeriodo(periodos.fechaFin)}</option>
-                  ))}
-                </select>
-              </div>
+            <div className="d-flex flex-column mt-2">
+              <label htmlFor="periodo">Periodo</label>
+              <select id="periodo" value={grupoData.periodoID} onChange={e => setGrupoData({ ...grupoData, periodoID: e.target.value })} className='form-select'>
+                <option value="0">Seleccione un periodo</option>
+                {periodos?.map(periodo => (
+                  <option key={periodo.ID} value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio, periodo.fechaFin)}</option>
+                ))}
+              </select>
+            </div>
 
-              <div className="d-flex flex-column mt-2">
-                <label htmlFor="escolaridad">Escolaridad</label>
-                <select id="escolaridad" value={escolaridadID} onChange={e => setEscolaridadID(e.target.value)} className='form-select'>
-                  <option value="0">Seleccione una escolaridad</option>
-                  {escolaridades?.map(escolaridad => (
-                    <option key={escolaridad.ID} value={escolaridad.ID}>{escolaridad.nombre}</option>
-                  ))}
-                </select>
-              </div>
+            <div className="d-flex flex-column mt-2">
+              <label htmlFor="escolaridad">Escolaridad</label>
+              <select id="escolaridad" value={grupoData.escolaridadID} onChange={e => setGrupoData({ ...grupoData, escolaridadID: e.target.value })} className='form-select'>
+                <option value="0">Seleccione una escolaridad</option>
+                {escolaridades?.map(escolaridad => (
+                  <option key={escolaridad.ID} value={escolaridad.ID}>{escolaridad.nombre}</option>
+                ))}
+              </select>
+            </div>
 
-              <button type="submit" className="button mt-2">Guardar Periodo</button>
+            <button type="submit" className="button mt-2">Guardar Periodo</button>
           </form>
         </div>
       </div>
@@ -136,4 +235,4 @@ const CrudGrupos = () => {
   )
 }
 
-export default CrudGrupos
+export default CrudGrupos;
