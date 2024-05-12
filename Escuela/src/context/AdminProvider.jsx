@@ -324,6 +324,7 @@ const AdminProvider = ({children}) => {
                 handleGetSalones,
                 handleGetEventos,
                 handleGetPeriodos,
+                handleGetMaterias,
             }}
         >
             {children}
