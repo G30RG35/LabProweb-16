@@ -22,11 +22,18 @@ const getOneClase = async(req, res) => {
     const { grupoID, materiaID, usuarioID } = req.params;
 
     const claseObj = new ClaseInfo({ "grupoID" : grupoID, "materiaID" : materiaID, "usuarioID" : usuarioID })
+    const claseAlu = await claseObj.getClaseAlumnosInfo({ "grupoID" : grupoID, "materiaID" : materiaID, "maestroID" : usuarioID })
 
     const clase = await claseObj.getClaseOneInfo(claseObj)
 
+    for(let i=0; i < claseAlu.length; i++) {
+        claseAlu[i].upload = true
+    }
+
+    clase[0].alumnos = claseAlu;
+
     if(clase) {
-        return res.status(201).json({msg: "Ok", clase})
+        return res.status(201).json({msg: "Ok", clase : clase[0]})
     } else {
         const error = new Error('Hubo un error')
         return res.status(500).json({msg: error.message})

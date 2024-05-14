@@ -57,6 +57,20 @@ class ActiveRecord {
         }
     }
 
+    async updateOneItem(modelName, id, attribute, value) {
+        let query = `UPDATE ${modelName.tableName}\n`;
+        query += `SET ${attribute} = ${value}`;
+        query += `WHERE ID = ${id}`
+
+        try {
+            await connetion.execute(query)
+            return {msg: 'Elemento Actualizado Correctamente'}
+        } catch (err) {
+            console.log(err)
+            return
+        }
+    }
+
     async createManyItems(modelName, objects, object) {
         let { claves } = await this.getArray(object)
         const campos = claves?.filter(clave => clave !== 'ID');

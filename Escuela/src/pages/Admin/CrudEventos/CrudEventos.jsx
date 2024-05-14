@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Accordion } from "react-bootstrap";
 import useAdmin from "../../../hooks/useAdmin";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import useApp from "../../../hooks/useApp";
-import CloudinaryWidget from "../../../Componentes/CloudinaryWidget/CloudinaryWidget";
 
 export const CrudEventos = () => {
   const { eventos, escolaridades, alerta, setAlerta, handleGetEventos } = useAdmin();

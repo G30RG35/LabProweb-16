@@ -29,6 +29,7 @@ const AdminProvider = ({children}) => {
     const [password, setPassword] = useState(generatePSWD());
     const [direccion, setDireccion] = useState('');
     const [maestros, setMaestros] = useState([]);
+    const [alumnosDB, setAlumnosDB] = useState([]);
     
     const navigate = useNavigate()
 
@@ -42,6 +43,7 @@ const AdminProvider = ({children}) => {
         handleGetMaterias()
         handleMaestros()
         handleGetClases()
+        handleAlumnos()
     }, [])
     const token = localStorage.getItem('token');
 
@@ -75,6 +77,24 @@ const AdminProvider = ({children}) => {
         try {
             const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/2`, config);
             setMaestros(data.users);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleAlumnos = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/rol/usuarios/1`, config);
+            setAlumnosDB(data.users);
         } catch (error) {
             console.log(error)
         }
@@ -308,6 +328,7 @@ const AdminProvider = ({children}) => {
                 eventos,
                 materias,
                 clases,
+                alumnosDB, 
                 
                 // Formulario
                 ID, setID, 

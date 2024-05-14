@@ -10,7 +10,7 @@ import { Eventos } from './pages/Eventos/Eventos';
 import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import CrudMestros from './pages/Admin/CrudMaestros/CrudMaestros';
 import { AdminProvider } from './context/AdminProvider';
-import { Nosotros } from './pages/Nosotros/nosotros';
+import { Nosotros } from './pages/Nosotros/Nosotros';
 import { CrudClases } from './pages/Admin/CrudClases/CrudClases';
 import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
@@ -25,6 +25,7 @@ import { CrudEscolaridad } from './pages/Admin/CrudEscolaridad/CrudEscolaridad';
 import { CrudEventos } from './pages/Admin/CrudEventos/CrudEventos';
 import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
 import Perfil from './pages/Perfil/Perfil';
+import AlumnoLayout from './layout/AlumnoLayout';
 
 function App() {
   return (
@@ -41,7 +42,6 @@ function App() {
                 <Route path='calificaciones' element={<Calificaciones />} />
                 <Route path='periodos' element={<PerdiodosVistaAlumno />} />
                 <Route path='administrador' element={<Administrador />} />
-                <Route path='perfil' element={<Perfil />} />
               </Route>
 
               <Route path='/admin' element={<AdminLayout />}>
@@ -64,9 +64,8 @@ function App() {
                 <Route path='clase-alumno/:grupoID/:materiaID/:userID' element={<CrudClaseAlumno />} />
               </Route>
 
-              <Route path='/alumno'>
-              
-
+              <Route path='/alumno' element={<AlumnoLayout />}>
+                <Route index element={<Perfil />} />
               </Route>
             </Routes>
 

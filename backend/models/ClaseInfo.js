@@ -47,6 +47,24 @@ class ClaseInfo extends ActiveRecord {
             return
         }
     }
+
+    async getClaseAlumnosInfo(object) {
+        let claves = Object.keys(object);
+        let query = "SELECT * FROM ClaseAluView AS c\n"
+        query += "WHERE "
+
+        for(let i=0; i<claves.length; i++) {
+            query += `${i === 0 ? '' : ' AND '}${claves[i]} = ${object[claves[i]]}`
+        }
+
+        try {
+            const [results, fields] = await connection.execute(query)
+            return results
+        } catch (error) {
+            console.log(error)
+            return
+        }
+    }
 }
 
 export default ClaseInfo;

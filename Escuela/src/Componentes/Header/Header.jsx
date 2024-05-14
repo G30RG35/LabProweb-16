@@ -6,6 +6,7 @@ export const Header = () => {
   const { auth, logOut } = useAuth();
 
   const isAdmin = auth?.roles?.filter(rol => rol === "3");
+  const isAlumno = auth?.roles?.filter(rol => rol === "1");
 
   return (
     <>
@@ -44,6 +45,13 @@ export const Header = () => {
                     </li>
                   </>
                 )}
+                {isAlumno?.length > 0 && (
+                  <li className="nav-item">
+                    <Link to="/alumno" className="nav-link">
+                      Perfil
+                    </Link>
+                  </li>
+                )}
                 {!auth.ID ? (
                   <li className="nav-item">
                     <Link to="/login" className="btn btn-primary">
@@ -62,7 +70,6 @@ export const Header = () => {
                     </button>
                   </li>
                 )}
-                
               </ul>
             </div>
           </header>

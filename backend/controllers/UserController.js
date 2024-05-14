@@ -4,6 +4,7 @@ import generatePSWD from "../helpers/generarPassword.js";
 import hashearPassword from "../helpers/hashearPassword.js";
 import DetUsuarioRol from "../models/DetUsuarioRol.js";
 import User from "../models/User.js";
+import { emailNewUser } from "../helpers/email.js";
 
 const getAllUsers = async(req, res) => {
     const userOj = new User();
@@ -17,8 +18,6 @@ const getOneUser = async(req, res) => {
     const userOj = new User();
     const user = await userOj.getUserInfo(id);
 
-    console.log(user)
-
     res.status(200).json({msg: 'Ok', user})
 }
 
@@ -27,9 +26,17 @@ const addNewUser = async(req, res) => {
 
     if(user) {
         const userOj = new User(user)
+
         userOj.password = await hashearPassword(userOj.password)
 
         const response = await userOj.createItem(User, userOj)
+
+        await emailNewUser({ 
+            email : user.correo, 
+            ID : response.res[0].insertId, 
+            password : userOj.password, 
+            nombre : userOj.nombre + " " + userOj.apellidos 
+        })
 
         if(response) {
             const userRol = {
@@ -62,6 +69,15 @@ const addNewUser = async(req, res) => {
         const response = await user.createManyItems(User, usersNew, user)
 
         const userRolArray = []
+
+        for(let i=0; i < users.length; i++) {
+            await emailNewUser({ 
+                email : users[i].correo, 
+                ID : response.res[0].insertId + i, 
+                password : users[i].password, 
+                nombre : users[i].nombre + " " + users[i].apellidos 
+            })
+        }
 
         for(let i=response.res[0].insertId;i<(users.length+response.res[0].insertId);i++) {
             const user = {

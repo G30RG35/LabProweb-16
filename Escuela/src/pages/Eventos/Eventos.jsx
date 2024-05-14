@@ -50,11 +50,9 @@ export const Eventos = () => {
     }
   }
 
-
-
   function CardComponent({ data }) {
     return (
-      <Card className={`m-4`} style={{ width: '80%' }}>
+      <Card>
         {/* <Card.Img variant="top" src={data.image} /> */}
         <Card.Body>
           <Card.Title>{data.titulo}</Card.Title>
@@ -73,9 +71,8 @@ export const Eventos = () => {
     <>
       <div className={`${style.divConteiner} container my-5`}>
         <div className={`${style.Rowreverse} row`}>
-          <div className={`${style.separacion} col-12 col-md-8 `}>
-            <div className={`d-flex justify-content-center flex-column`}>
-
+          <div className={`col-md-8 `}>
+            <div className={`d-flex gap-4 justify-content-center flex-column`}>
               {eventos.map((evento, index) => (
                 <CardComponent key={index} data={evento} />
               ))}

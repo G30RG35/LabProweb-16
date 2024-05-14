@@ -31,13 +31,7 @@ const lstOpciones = [
     nombre: "Asignacion Maestro - Clase", 
     url: "clase-maestro",
     info: "Ver, editar o eliminar grupos y asignar a los maestros a un grupo"
-  },
-  {
-    id: 6,
-    nombre: "Asignacion Alumno - Clase",
-    url: "clase-alumno",
-    info: "Ver, editar o eliminar grupos y asignar a los alumno a un grupo"
-  },
+  }
 ]
 
 const Admin = () => {

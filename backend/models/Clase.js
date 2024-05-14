@@ -11,6 +11,7 @@ class Clase extends ActiveRecord {
         this.grupoID = clase?.grupoID;
         this.materiaID = clase?.materiaID;
         this.usuarioID = clase?.usuarioID;
+        this.active = clase?.active ?? true;
     }
 
     async getOnClasss(object) {
