@@ -1,64 +1,66 @@
 import React from "react";
 import { Accordion } from "react-bootstrap";
+import useApp from "../../hooks/useApp";
 
 export const Calificaciones = () => {
-  const arrayDeAlumnos = [
-    {
-      ID: "001",
-      nombre: "Juan Pérez",
-      apellidos: "Martínez",
-      fechaNac: "2000-01-01",
-      correo: "juan.perez@ejemplo.com",
-      numero: "555-123-4567",
-      password: "password123",
-      direccion: "Calle Principal 123",
-      activo: true,
-    },
-    {
-      ID: "002",
-      nombre: "María García",
-      apellidos: "López",
-      fechaNac: "2002-02-02",
-      correo: "maria.garcia@ejemplo.com",
-      numero: "555-765-4321",
-      password: "password456",
-      direccion: "Avenida Juárez 456",
-      activo: true,
-    },
-    {
-      ID: "003",
-      nombre: "Pedro González",
-      apellidos: "Ramírez",
-      fechaNac: "2003-03-03",
-      correo: "pedro.gonzalez@ejemplo.com",
-      numero: "555-321-6543",
-      password: "password789",
-      direccion: "Calle Sol 789",
-      activo: true,
-    },
-    {
-      ID: "004",
-      nombre: "Ana Flores",
-      apellidos: "Hernández",
-      fechaNac: "2001-04-04",
-      correo: "ana.flores@ejemplo.com",
-      numero: "555-987-6543",
-      password: "password012",
-      direccion: "Calle Luna 987",
-      activo: true,
-    },
-    {
-      ID: "005",
-      nombre: "Luis Sánchez",
-      apellidos: "Diaz",
-      fechaNac: "2004-05-05",
-      correo: "luis.sanchez@ejemplo.com",
-      numero: "555-213-4567",
-      password: "password345",
-      direccion: "Calle Sol 213",
-      activo: true,
-    },
-  ];
+  const { clasesView,alerta, setAlerta } = useApp();
+  // const arrayDeAlumnos = [
+  //   {
+  //     ID: "001",
+  //     nombre: "Juan Pérez",
+  //     apellidos: "Martínez",
+  //     fechaNac: "2000-01-01",
+  //     correo: "juan.perez@ejemplo.com",
+  //     numero: "555-123-4567",
+  //     password: "password123",
+  //     direccion: "Calle Principal 123",
+  //     activo: true,
+  //   },
+  //   {
+  //     ID: "002",
+  //     nombre: "María García",
+  //     apellidos: "López",
+  //     fechaNac: "2002-02-02",
+  //     correo: "maria.garcia@ejemplo.com",
+  //     numero: "555-765-4321",
+  //     password: "password456",
+  //     direccion: "Avenida Juárez 456",
+  //     activo: true,
+  //   },
+  //   {
+  //     ID: "003",
+  //     nombre: "Pedro González",
+  //     apellidos: "Ramírez",
+  //     fechaNac: "2003-03-03",
+  //     correo: "pedro.gonzalez@ejemplo.com",
+  //     numero: "555-321-6543",
+  //     password: "password789",
+  //     direccion: "Calle Sol 789",
+  //     activo: true,
+  //   },
+  //   {
+  //     ID: "004",
+  //     nombre: "Ana Flores",
+  //     apellidos: "Hernández",
+  //     fechaNac: "2001-04-04",
+  //     correo: "ana.flores@ejemplo.com",
+  //     numero: "555-987-6543",
+  //     password: "password012",
+  //     direccion: "Calle Luna 987",
+  //     activo: true,
+  //   },
+  //   {
+  //     ID: "005",
+  //     nombre: "Luis Sánchez",
+  //     apellidos: "Diaz",
+  //     fechaNac: "2004-05-05",
+  //     correo: "luis.sanchez@ejemplo.com",
+  //     numero: "555-213-4567",
+  //     password: "password345",
+  //     direccion: "Calle Sol 213",
+  //     activo: true,
+  //   },
+  // ];
 
   return (
     <div className="divConteiner">
@@ -105,26 +107,36 @@ export const Calificaciones = () => {
           </div>
         </div>
 
-        <Accordion defaultActiveKey="0">
-          {arrayDeAlumnos.map((alumno) => (
-            <Accordion.Item key={alumno.ID} eventKey={alumno.ID}>
-              <Accordion.Header>
-                {alumno.ID + "        " + alumno.nombre + alumno.apellidos}
-              </Accordion.Header>
-              <Accordion.Body>
-                <div className="container">
-                  
+        <Accordion>
+  {clasesview?.map((clase) => (
+    <Accordion.Item key={clase.ID} eventKey={clase.ID}>
+      <Accordion.Header>
+        {`${clase.ID} - Materia: ${clase.materiaID}, Grupo: ${clase.grupoID}`}
+      </Accordion.Header>
+      <Accordion.Body>
+        <div className="d-flex flex-column">
+          <label htmlFor="calificacion">Calificación</label>
+          <input
+            type="text"
+            id="calificacion"
+            className="form-control"
+            value={clase.calificacion}
+            readOnly
+          />
+        </div>
 
-                  <div className="divBtnGuardar">
-                  <button type="button" className="btn btn-primary m-2">
-                    Guardar Cambios
-                  </button>
-                  </div>
-                </div>
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
-        </Accordion>
+        <div className="d-flex gap-1 mt-2">
+          <button type="button" className="btn bgPrimary" onClick={() => handleEditClase(clase.ID)}>
+            Editar clase
+          </button>
+          <button type="button" className="btn btn-danger" onClick={() => handleDeleteClase(clase.ID)}>
+            Eliminar clase
+          </button>
+        </div>
+      </Accordion.Body>
+    </Accordion.Item>
+  ))}
+</Accordion>
       </div>
     </div>
   );
