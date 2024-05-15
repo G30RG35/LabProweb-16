@@ -346,6 +346,7 @@ const AdminProvider = ({children}) => {
                 handleGetEventos,
                 handleGetPeriodos,
                 handleGetMaterias,
+                handleGetGroups,
             }}
         >
             {children}

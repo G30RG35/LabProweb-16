@@ -7,11 +7,14 @@ const AppProvider = ({children}) => {
     const [alerta, setAlerta] = useState(null)
     const [eventos, setEventos] = useState([])
     const [escolaridades, setEscolaridades] = useState([]);
+    const [salones, setSalones] = useState([]);
 
     useEffect(() => {
         setAlerta(null)
         handleGetEventos()
         handleGetEscolaridades()
+        handleGetGroups()
+        handleGetSalones()
     }, [])
 
     const handleLogin = async(ID, password, remember) => {
@@ -87,6 +90,45 @@ const AppProvider = ({children}) => {
             console.log(error)
         }
     }
+    const [grupos, setGrupos] = useState([])
+
+    const handleGetGroups = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/claseview`, config );            
+            setGrupos(data.grupos)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
+    const handleGetSalones = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/salones`, config );            
+            setSalones(data.salones)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <AppContext.Provider
@@ -96,7 +138,9 @@ const AppProvider = ({children}) => {
                 setAlerta, 
                 handleGetClass, 
                 eventos, 
-                escolaridades
+                escolaridades,
+                grupos,
+                salones,
             }}
         >
             {children}
