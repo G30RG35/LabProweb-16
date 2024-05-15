@@ -8,13 +8,14 @@ const AppProvider = ({children}) => {
     const [eventos, setEventos] = useState([])
     const [escolaridades, setEscolaridades] = useState([]);
     const [salones, setSalones] = useState([]);
-
+    const [clasesView, setClasesView] = useState([])
     useEffect(() => {
         setAlerta(null)
         handleGetEventos()
         handleGetEscolaridades()
         handleGetGroups()
         handleGetSalones()
+        handleGetClases()
     }, [])
 
     const handleLogin = async(ID, password, remember) => {
@@ -130,6 +131,25 @@ const AppProvider = ({children}) => {
         }
     }
 
+    const handleGetClases = async (maestroID) => {
+        const token = localStorage.getItem('token');
+      
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        }
+      
+        try {
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/ruta/donde/esta/el/endpoint/${maestroID}`, config);
+          setClasesView(data.clases);
+        } catch (error) {
+          console.log(error);
+          return [];
+        }
+      }
+
     return (
         <AppContext.Provider
             value={{
@@ -141,6 +161,7 @@ const AppProvider = ({children}) => {
                 escolaridades,
                 grupos,
                 salones,
+                clasesView,
             }}
         >
             {children}
