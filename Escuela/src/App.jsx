@@ -26,6 +26,7 @@ import { CrudEventos } from './pages/Admin/CrudEventos/CrudEventos';
 import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
 import Perfil from './pages/Perfil/Perfil';
 import AlumnoLayout from './layout/AlumnoLayout';
+import ReporteCalificaciones from './pages/ReporteCalificaciones/ReporteCalificaciones';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
                 <Route path='clase-maestro2' element={<CrudMatMaestros />} />
 
                 <Route path='eventos' element={<CrudEventos />} />
+                <Route path='reportes/calificaciones' element={<ReporteCalificaciones />} />
 
                 <Route path='clase-maestro' element={<CrudClases />} />
                 <Route path='clase-alumno/:grupoID/:materiaID/:userID' element={<CrudClaseAlumno />} />

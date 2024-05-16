@@ -1,8 +1,22 @@
 import ClaseAlu from "../models/ClaseAlu.js";
 import ClaseAluView from "../models/ClaseAluView.js";
 
-const getAllClaseAlumno = async() => {
+const getAllClaseAlumno = async(req, res) => {
+    const clasesAluObj = new ClaseAluView()
+    const clasesAlu = await clasesAluObj.getAllItems(ClaseAluView);
 
+    if(clasesAlu) {
+        return res.status(201).json({
+            status : 201,
+            msg : "Ok", 
+            clasesAlu
+        })
+    } else {
+        return res.status(500).json({
+            status: 500, 
+            msg: "Hubo un error al obtener las clases, intentelo más tarde"
+        })
+    }
 }
 
 const getClaseAlumno = async(req, res) => {

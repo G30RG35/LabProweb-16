@@ -4,8 +4,8 @@
     max-height: 60vh;
     overflow: hidden;
 }
-
 .imageSize {
     width: 100%;
     height: auto;
+    object-fit: cover;
 }

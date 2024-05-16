@@ -13,6 +13,7 @@ const AdminProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [periodos, setPeriodos] = useState([]);
     const [clases, setClases] = useState([]);
+    const [clasesAlu, setClasesAlu] = useState([]);
     const [grupos, setGrupos] = useState([]);
     const [salones, setSalones] = useState([]);
     const [escolaridades, setEscolaridades] = useState([]);
@@ -113,6 +114,24 @@ const AdminProvider = ({children}) => {
         try {
             const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/clases`, config);
             setClases(data.clases);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleGetClasesAlu = async() => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_API_URL}/api/clasesAlumnos`, config);
+            setClasesAlu(data.clasesAlu);
         } catch (error) {
             console.log(error)
         }
@@ -328,6 +347,7 @@ const AdminProvider = ({children}) => {
                 eventos,
                 materias,
                 clases,
+                clasesAlu,
                 alumnosDB, 
                 
                 // Formulario
@@ -346,6 +366,7 @@ const AdminProvider = ({children}) => {
                 handleGetEventos,
                 handleGetPeriodos,
                 handleGetMaterias,
+                handleGetClasesAlu
             }}
         >
             {children}
