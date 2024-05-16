@@ -9,6 +9,8 @@ const AppProvider = ({children}) => {
     const [escolaridades, setEscolaridades] = useState([]);
     const [salones, setSalones] = useState([]);
     const [clasesView, setClasesView] = useState([])
+    const [clases, setClases] = useState([])
+    
     useEffect(() => {
         setAlerta(null)
         handleGetEventos()

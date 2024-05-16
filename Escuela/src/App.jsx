@@ -27,6 +27,7 @@ import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
 import Perfil from './pages/Perfil/Perfil';
 import AlumnoLayout from './layout/AlumnoLayout';
 import { ListadoGrupos } from './pages/ListadoGrupos/ListadoGrupos';
+import { Clases } from './pages/Alumno/Clases/Clases';
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
 
               <Route path='/alumno' element={<AlumnoLayout />}>
                 <Route index element={<Perfil />} />
+                <Route path='clases' element={<Clases />} />
               </Route>
 
 

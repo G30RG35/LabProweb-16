@@ -3,7 +3,7 @@ import { Accordion } from "react-bootstrap";
 import useApp from "../../hooks/useApp";
 
 export const Calificaciones = () => {
-  const { clasesView,alerta, setAlerta } = useApp();
+  const { clasesView, alerta, setAlerta } = useApp();
   // const arrayDeAlumnos = [
   //   {
   //     ID: "001",
@@ -108,35 +108,35 @@ export const Calificaciones = () => {
         </div>
 
         <Accordion>
-  {clasesview?.map((clase) => (
-    <Accordion.Item key={clase.ID} eventKey={clase.ID}>
-      <Accordion.Header>
-        {`${clase.ID} - Materia: ${clase.materiaID}, Grupo: ${clase.grupoID}`}
-      </Accordion.Header>
-      <Accordion.Body>
-        <div className="d-flex flex-column">
-          <label htmlFor="calificacion">Calificación</label>
-          <input
-            type="text"
-            id="calificacion"
-            className="form-control"
-            value={clase.calificacion}
-            readOnly
-          />
-        </div>
+          {clasesview?.map((clase) => (
+            <Accordion.Item key={clase.ID} eventKey={clase.ID}>
+              <Accordion.Header>
+                {`${clase.ID} - Materia: ${clase.materiaID}, Grupo: ${clase.grupoID}`}
+              </Accordion.Header>
+              <Accordion.Body>
+                <div className="d-flex flex-column">
+                  <label htmlFor="calificacion">Calificación</label>
+                  <input
+                    type="text"
+                    id="calificacion"
+                    className="form-control"
+                    value={clase.calificacion}
+                    readOnly
+                  />
+                </div>
 
-        <div className="d-flex gap-1 mt-2">
-          <button type="button" className="btn bgPrimary" onClick={() => handleEditClase(clase.ID)}>
-            Editar clase
-          </button>
-          <button type="button" className="btn btn-danger" onClick={() => handleDeleteClase(clase.ID)}>
-            Eliminar clase
-          </button>
-        </div>
-      </Accordion.Body>
-    </Accordion.Item>
-  ))}
-</Accordion>
+                <div className="d-flex gap-1 mt-2">
+                  <button type="button" className="btn bgPrimary" onClick={() => handleEditClase(clase.ID)}>
+                    Editar clase
+                  </button>
+                  <button type="button" className="btn btn-danger" onClick={() => handleDeleteClase(clase.ID)}>
+                    Eliminar clase
+                  </button>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+          ))}
+        </Accordion>
       </div>
     </div>
   );
