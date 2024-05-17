@@ -171,8 +171,8 @@ button {
   grid-template-columns: repeat(1, 1fr);
 }
 .galeriaItem {
-  background-color: #44444480;
-  backdrop-filter: blur(10px);
+  background-color: #44444469;
+  backdrop-filter: blur(15px);
   height: 100%;
   width: 100%;
   display: flex;
@@ -187,8 +187,8 @@ button {
   transition: font-size linear 0.3s;
 }
 .galeriaItem:hover {
-  background-color: #44444449;
-  backdrop-filter: blur(2px);
+  background-color: #44444444;
+  backdrop-filter: blur(1px);
 }
 .galeriaItem:hover h3 {
   font-size: 45px;

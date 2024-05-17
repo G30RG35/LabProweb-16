@@ -15,9 +15,9 @@ class ClaseInfo extends ActiveRecord {
 
     async getClaseAllInfo(object) {
         let claves = Object.keys(object);
-        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
+        let query = "SELECT c.grupoID, c.materiaID, c.userID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
         query += "INNER JOIN materia AS m ON m.ID = c.materiaID\n"
-        query += "INNER JOIN user AS u ON u.ID = c.usuarioID"
+        query += "INNER JOIN user AS u ON u.ID = c.userID"
 
         try {
             const [results, fields] = await connection.execute(query)
@@ -30,9 +30,9 @@ class ClaseInfo extends ActiveRecord {
 
     async getClaseOneInfo(object) {
         let claves = Object.keys(object);
-        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
+        let query = "SELECT c.grupoID, c.materiaID, c.userID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
         query += "INNER JOIN materia AS m ON m.ID = c.materiaID\n"
-        query += "INNER JOIN user AS u ON u.ID = c.usuarioID\n"
+        query += "INNER JOIN user AS u ON u.ID = c.userID\n"
         query += "WHERE "
 
         for(let i=0; i<claves.length; i++) {

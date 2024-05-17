@@ -31,14 +31,14 @@ const addNewUser = async(req, res) => {
 
         const response = await userOj.createItem(User, userOj)
 
-        await emailNewUser({ 
-            email : user.correo, 
-            ID : response.res[0].insertId, 
-            password : userOj.password, 
-            nombre : userOj.nombre + " " + userOj.apellidos 
-        })
-
         if(response) {
+            await emailNewUser({ 
+                email : user.correo, 
+                ID : response.res[0].insertId, 
+                password : user.password, 
+                nombre : userOj.nombre + " " + userOj.apellidos 
+            })
+
             const userRol = {
                 usuarioID : response.res[0].insertId, 
                 rolID : tipo
@@ -103,62 +103,7 @@ const addNewUser = async(req, res) => {
 const updateUser = async(req, res) => {
     const { id } = req.params;
     let { user } = req.body;
-
-    const rolObj = new DetUsuarioRol();
-
-    let roles = await rolObj.getByElement(DetUsuarioRol, 'userID', id)
-
-    for(let i = 0; i < roles.length; i++) {
-        const existeRol = user.roles.map(rol => {
-            return +rol === roles[i].rolID
-        })
-
-        if(existeRol.filter(rol => rol).length <= 0) {
-            const response = await rolObj.deleteManyItems(DetUsuarioRol, ['userID', 'rolID'], [+id, +roles[i].rolID])
-
-            if(response) {
-                roles = roles.filter(rol => rol.rolID !== roles[i].rolID)
-                i = i - 1
-            } else {
-                const error = new Error('Hubo un error')
-                return res.status(500).json({msg: error.message})
-            }
-        }
-    }
-
-    if(roles.length > 0) {
-        const newRol = roles.map(rol => {
-            const checkRol = user.roles.map(userRol => {
-                const addUser = async(userNewRol, uID) => {
-                    const response = await rolObj.createItem(DetUsuarioRol, { rolID : +userNewRol, userId : +uID })
-
-                    if(!response) {
-                        const error = new Error('Hubo un error')
-                        return res.status(500).json({msg: error.message})
-                    }
-                }
-                if(rol.rolID !== +userRol) {
-                    addUser(userRol, id)
-                    
-                }
-            })
-        })
-    } else {
-        const roles = user.roles.map(rol => {
-            return {
-                rolID: +rol,
-                userID: +id
-            }
-        })
-
-        const response = await rolObj.createManyItems(DetUsuarioRol, roles, rolObj)
-
-        if(!response) {
-            const error = new Error('Hubo un error')
-            return res.status(500).json({msg: error.message})
-        }
-    }
-
+    
     user.ID = +id;
     const userObj = new User(user)
 
@@ -170,10 +115,8 @@ const updateUser = async(req, res) => {
 
     userObj.fechaNac = formatearFecha(userObj.fechaNac)
     const response = await userObj.saveItem(User, userObj)
-
+    
     if(response) {
-
-
         return res.status(200).json({msg: response})
     } else {
         const error = new Error('Hubo un error')

@@ -1,16 +1,15 @@
 import ClaseAlu from "../models/ClaseAlu.js";
 import ClaseAluView from "../models/ClaseAluView.js";
 
-const getAllClaseAlumno = async() => {
-    const { maestroID } = req.params
-    const claseObj = new ClaseAluView();
-    const clases = await claseObj.getByElement(ClaseAluView, 'maestroID', +maestroID)
+const getAllClaseAlumno = async(req, res) => {
+    const clasesAluObj = new ClaseAluView()
+    const clasesAlu = await clasesAluObj.getAllItems(ClaseAluView);
 
-    if(clases) {
+    if(clasesAlu) {
         return res.status(201).json({
             status : 201,
             msg : "Ok", 
-            clases
+            clasesAlu
         })
     } else {
         return res.status(500).json({

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from './Admin.module.css'
 import TarjetaSeccion from "../../Componentes/TarjetaSeccion/TarjetaSeccion"
 
@@ -63,6 +64,12 @@ const Admin = () => {
           <TarjetaSeccion 
             nombre={'eventos'}
           />
+
+          <div className='bg-secondary rounded text-center text-light py-4 px-5'>
+            <h4>Reporte</h4>
+            <p>Ingrese para poder ver un promedio del periodo actual</p>
+            <Link to={`/admin/reportes/calificaciones`} className='btn bgPrimary'>Ver reporte</Link>
+          </div>
         </div>
       </div>
     </div>

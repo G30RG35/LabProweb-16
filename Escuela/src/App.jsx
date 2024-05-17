@@ -27,6 +27,7 @@ import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
 import Perfil from './pages/Perfil/Perfil';
 import AlumnoLayout from './layout/AlumnoLayout';
 import { ListadoGrupos } from './pages/ListadoGrupos/ListadoGrupos';
+import ReporteCalificaciones from './pages/ReporteCalificaciones/ReporteCalificaciones';
 import { Clases } from './pages/Alumno/Clases/Clases';
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
                 <Route path='clase-maestro2' element={<CrudMatMaestros />} />
 
                 <Route path='eventos' element={<CrudEventos />} />
+                <Route path='reportes/calificaciones' element={<ReporteCalificaciones />} />
 
                 <Route path='clase-maestro' element={<CrudClases />} />
                 <Route path='clase-alumno/:grupoID/:materiaID/:userID' element={<CrudClaseAlumno />} />
@@ -72,6 +74,10 @@ function App() {
               <Route path='/alumno' element={<AlumnoLayout />}>
                 <Route index element={<Perfil />} />
                 <Route path='clases' element={<Clases />} />
+              </Route>
+
+              <Route path='/maestro' element={<AlumnoLayout />}>
+                <Route index element={<ListadoGrupos />} />
               </Route>
 
 

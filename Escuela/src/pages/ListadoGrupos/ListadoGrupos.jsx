@@ -31,7 +31,6 @@ export const ListadoGrupos = () => {
 
 
     return (
-
         <div className="container my-5">
             <div className='col-sm-8 m-auto'>
                 <h1>Listado de Grupos</h1>

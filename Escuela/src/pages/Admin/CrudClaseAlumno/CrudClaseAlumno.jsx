@@ -1,9 +1,8 @@
-import { useParams } from "react-router-dom";
-import useApp from "../../../hooks/useApp";
 import { useEffect, useState } from "react";
-import * as XLSX from 'xlsx/xlsx.mjs';
-import axios from "axios";
+import { useParams } from "react-router-dom";
 import useAdmin from "../../../hooks/useAdmin";
+import axios from "axios";
+import * as XLSX from 'xlsx/xlsx.mjs';
 
 const CrudClaseAlumno = () => {
     const [clase, setClase] = useState({})
@@ -201,7 +200,7 @@ const CrudClaseAlumno = () => {
 
                     <div className="col-sm-4">
                         <button 
-                            type="submit"
+                            type="button"
                             onClick={() => handleSaveUserClass()}
                             className="btn btn-primary w-100"
                             disabled={infoExcel.length === 0}
