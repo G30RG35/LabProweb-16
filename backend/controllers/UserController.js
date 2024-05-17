@@ -113,7 +113,7 @@ const updateUser = async(req, res) => {
 
     userObj.fechaNac = formatearFecha(userObj.fechaNac)
     const response = await userObj.saveItem(User, userObj)
-
+    
     if(response) {
         await emailUpdateUser({ 
             email : user.correo, 
