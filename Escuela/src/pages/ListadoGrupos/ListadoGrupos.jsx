@@ -7,6 +7,7 @@ import { Accordion } from 'react-bootstrap';
 import useAdmin from '../../hooks/useAdmin';
 
 export const ListadoGrupos = () => {
+    const [clases, setClases] = useState([])
     const { setAlerta, alerta } = useApp();
 
     const formatearFechaPeriodo = (fechaInicio, fechaFin) => {
@@ -27,8 +28,7 @@ export const ListadoGrupos = () => {
         const añoFin = fechaFinObj.getFullYear();
     
         return `${diaInicio} ${mesInicio} ${añoInicio} - ${diaFin} ${mesFin} ${añoFin}`;
-      }
-
+    }
 
     return (
         <div className="container my-5">
@@ -45,9 +45,9 @@ export const ListadoGrupos = () => {
                     </Button>
                 </InputGroup>
 
-                {grupos?.length > 0 && (
+                {clases?.length > 0 && (
                     <Accordion>
-                        {grupos?.map(grupo => (
+                        {clases?.map(grupo => (
                             <Accordion.Item key={grupo.ID} eventKey={grupo.ID}>
                                 <Accordion.Header>
                                     {grupo.escolaridad + " Salon " + grupo.salonID}
