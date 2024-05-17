@@ -49,7 +49,7 @@ const GrupoLista = ({ grupo, clases }) => {
         <div className='mb-4' key={grupo.ID}>
             <h4 className='fw-medium fs-6'>Grupo: {grupo.ID}</h4>
             <Accordion>
-                {clases?.map(clase => (
+                {clases?.map(clase => clase.grupoID === grupo.ID && (
                     <Accordion.Item eventKey={clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID} key={clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID}>
                         <Accordion.Header>
                             <p className='m-0'>ID: {clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID}</p>

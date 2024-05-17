@@ -12,8 +12,6 @@ const CrudMaterias = () => {
   const { materias, handleGetMaterias } = useAdmin()
 
   const handleAddNewMateria = async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
-
     const materia = {
       nombre: nombre,
       activo: active
@@ -29,7 +27,7 @@ const CrudMaterias = () => {
     }
 
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/materias${ID}`, materia, config);
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/materias`, {materia : materia}, config);
       setNombre("");
       setActive(1);
       handleGetMaterias();

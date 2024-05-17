@@ -36,8 +36,6 @@ const CrudGrupos = () => {
   }
 
   const handleAddNewGroup = async (e) => {
-    e.preventDefault();
-
     const { salonID, periodoID, escolaridadID } = grupoData;
   
     // Verificar si los campos de selección están en la opción 0
@@ -139,7 +137,7 @@ const CrudGrupos = () => {
                 {grupos?.map(grupo => (
                   <Accordion.Item key={grupo.ID} eventKey={grupo.ID}>
                     <Accordion.Header>
-                      {grupo.escolaridad+" Salon "+grupo.salonID}
+                      {grupo.nombew +" Salon "+grupo.salonID}
                     </Accordion.Header>
 
                     <Accordion.Body>

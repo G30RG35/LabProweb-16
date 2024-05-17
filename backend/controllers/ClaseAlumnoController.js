@@ -75,9 +75,29 @@ const updateClaseAlumno = async(req, res) => {
     }
 }
 
+const getClaseAluMaestro = async(req, res) => {
+    const { id } = req.params
+    const claseAluObj = new ClaseAluView()
+    const clases = await claseAluObj.getByElement("ClaseAluView", "maestroID", id)
+
+    if(clases) {
+        return res.status(201).json({
+            status : 201,
+            msg : "Ok", 
+            clases
+        })
+    } else {
+        return res.status(500).json({
+            status: 500, 
+            msg: "Hubo un error al obtener las clases, intentelo más tarde"
+        })
+    }
+}
+
 export {
     getAllClaseAlumno, 
     addNewClaseAlumno, 
     updateClaseAlumno, 
-    getClaseAlumno
+    getClaseAlumno, 
+    getClaseAluMaestro
 }

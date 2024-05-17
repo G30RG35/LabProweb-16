@@ -15,7 +15,6 @@ const AppProvider = ({children}) => {
         handleGetEscolaridades()
         handleGetGroups()
         handleGetSalones()
-        handleGetClases()
     }, [])
 
     const handleLogin = async(ID, password, remember) => {
@@ -104,7 +103,7 @@ const AppProvider = ({children}) => {
         }
 
         try {
-            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/claseview`, config );            
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/grupos`, config );     
             setGrupos(data.grupos)
             
         } catch (error) {
@@ -131,24 +130,23 @@ const AppProvider = ({children}) => {
         }
     }
 
-    const handleGetClases = async (maestroID) => {
-        const token = localStorage.getItem('token');
+    // const handleGetClases = async (maestroID) => {
+    //     const token = localStorage.getItem('token');
       
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        }
+    //     const config = {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${token}`
+    //       }
+    //     }
       
-        try {
-          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/ruta/donde/esta/el/endpoint/${maestroID}`, config);
-          setClasesView(data.clases);
-        } catch (error) {
-          console.log(error);
-          return [];
-        }
-      }
+    //     try {
+    //       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/claseAlu/maestro/${maestroID}`, config);
+    //       setClasesView(data.clases);
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     return (
         <AppContext.Provider
