@@ -74,6 +74,10 @@ function App() {
                 <Route index element={<Perfil />} />
               </Route>
 
+              <Route path='/maestro' element={<AlumnoLayout />}>
+                <Route index element={<ListadoGrupos />} />
+              </Route>
+
 
 
             </Routes>
