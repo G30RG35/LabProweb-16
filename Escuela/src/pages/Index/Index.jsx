@@ -1,8 +1,18 @@
 import { Link } from 'react-router-dom';
 import styles from './Index.module.css';
 import Carousel from '../../Componentes/Carousel/Carousel'
+import useApp from '../../hooks/useApp';
+import { useState } from 'react';
 
 const Index = () => {
+  const [nombre, setNombre] = useState("")
+  const [apellidos, setApellidos] = useState("")
+  const [email, setEmail] = useState("")
+  const [numero, setNumero] = useState("")
+  const [mensaje, setMensaje] = useState("")
+
+  const { alerta, handleSendEmail } = useApp()
+
   return (
     <div>
       <Carousel />
@@ -46,30 +56,47 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="container my-5 bg-light p-5 rounded-3 shadow-lg">
+      <div className="container my-5 bg-light py-5 p-md-5 rounded-3 shadow-lg">
         <h2 className='text-primary fw-bold'>Solicita informacion</h2>
         <p>Conoce más acerca de nuestro modelo educativo para tus hijos</p>
+
+        {alerta && (
+          <p className={`alert ${alerta.error ? 'alert-danger' : 'alert-success'} text-uppercase fw-medium`}>{alerta.msg}</p>
+        )}
+
         <form>
           <div className="row g-2">
             <div className="col-md-6">
               <label className='fw-medium fs-6 mb-1' htmlFor="nombre">Nombre</label>
-              <input type="text" id='nombre' className='form-control' placeholder='Nombre' />
+              <input value={nombre} onChange={e => setNombre(e.target.value)} type="text" id='nombre' className='form-control' placeholder='Nombre' />
             </div>
             <div className="col-md-6">
               <label className='fw-medium fs-6 mb-1' htmlFor="apellidos">Apellido(s)</label>
-              <input type="text" id='apellidos' className='form-control' placeholder='Apellido(s)' />
+              <input value={apellidos} onChange={e => setApellidos(e.target.value)} type="text" id='apellidos' className='form-control' placeholder='Apellido(s)' />
             </div>
+
             <div className="col-md-6">
-              <label className='fw-medium fs-6 mb-1' htmlFor="email">Correo</label>
-              <input type="email" id='email' className='form-control' placeholder='Ej. correo@gmail.com' />
+              <div className="col-12">
+                <label className='fw-medium fs-6 mb-1' htmlFor="email">Correo</label>
+                <input value={email} onChange={e => setEmail(e.target.value)} type="email" id='email' className='form-control' placeholder='Ej. correo@gmail.com' />
+              </div>
+              <div className="col-12">
+                <label className='fw-medium fs-6 mb-1' htmlFor="numero">Numero de celular</label>
+                <input value={numero} onChange={e => setNumero(e.target.value)} type="number" id='numero' className='form-control' placeholder='Ej. 8110290000' />
+              </div>
             </div>
+
             <div className="col-md-6">
-              <label className='fw-medium fs-6 mb-1' htmlFor="numero">Numero de celular</label>
-              <input type="number" id='numero' className='form-control' placeholder='Ej. 8110290000' />
+              <label className='fw-medium fs-6 mb-1' htmlFor="mensaje">Mensaje</label>
+              <textarea id="mensaje" onChange={e => setMensaje(e.target.value)} className='form-control' rows={4}>{mensaje}</textarea>
             </div>
           </div>
 
-          <button className='mt-2 btn btn-md fw-bold btn-primary'>Enviar Solicitud</button>
+          <button 
+            className='mt-2 btn btn-md fw-bold btn-primary'
+            type='button'
+            onClick={() => handleSendEmail(nombre, apellidos, email, numero, mensaje)}
+          >Enviar Solicitud</button>
         </form>
       </div>
     </div>

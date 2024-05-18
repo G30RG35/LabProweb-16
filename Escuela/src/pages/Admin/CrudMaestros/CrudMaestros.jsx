@@ -7,7 +7,7 @@ import axios from 'axios';
 const CrudMaestros = () => {
     const [usersFiltered, setUsersFiltered] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    const { handleFillForm, maestros } = useAdmin();
+    const { handleFillForm, maestros, users, handleMaestros } = useAdmin();
 
     useEffect(() => {
         setUsersFiltered(maestros)
@@ -24,7 +24,9 @@ const CrudMaestros = () => {
         setUsersFiltered(filtered)
     }, [searchTerm])
 
-    
+    useEffect(() => {
+        handleMaestros()
+    }, [users])
 
     return (
         <div className='container my-5'>

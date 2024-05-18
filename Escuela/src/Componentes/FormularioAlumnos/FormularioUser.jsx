@@ -69,7 +69,7 @@ const FormularioUser = ({tipo}) => {
                 <input type="file" onChange={e => setFile(e.target.files[0])} className="form-control w-100 h-100" id="customFile" accept='.xlsx, .xls' hidden />
             </div>
 
-            {infoExel.length > 0 && (
+            {infoExel?.length > 0 && (
                 <TableForm 
                     tipo={tipo}
                     infoExcel={infoExel}
@@ -79,15 +79,12 @@ const FormularioUser = ({tipo}) => {
 
             <h4 className='mt-3'>Ingresa la informacion para guardar la informacion del usuario</h4>
             {alerta && (
-                <div className={`alert alert-${alerta.error ? 'danger' : 'primary'}`} role="alert">
+                <div className={`alert alert-${alerta.error ? 'danger' : 'success'}`} role="alert">
                     {alerta.msg}
                 </div>
             )}
             <form 
                 className={`${styles.FormAlumno}`}
-                onSubmit={e => {
-                    handleSaveUser(tipo, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}]);
-                }}    
             >
                 <div className="row gy-2">
                     <div className={`${styles.inputAlumno} col-md-6`}>
@@ -140,7 +137,7 @@ const FormularioUser = ({tipo}) => {
                 </div>
 
                 <div className={`${styles.btnSubmitContainer}`}>
-                    <button type="submit" className={`${styles.btnSubmit}`}>{ID ? 'Guardar Cambios' : 'Crear Usuario'}</button>
+                    <button type="button" onClick={() => handleSaveUser(tipo, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}])} className={`${styles.btnSubmit}`}>{ID ? 'Guardar Cambios' : 'Crear Usuario'}</button>
                 </div>
             </form>
         </div>

@@ -8,7 +8,7 @@ const CrudAdmin = () => {
     const [usersFiltered, setUsersFiltered] = useState([])
     const [admin, setAdmin] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
-    const { handleFillForm } = useAdmin();
+    const { handleFillForm, users } = useAdmin();
 
     const handleAdmin = async() => {
         const token = localStorage.getItem('token');
@@ -32,6 +32,10 @@ const CrudAdmin = () => {
     useEffect(() => {
         handleAdmin();
     }, [])
+
+    useEffect(() => {
+        handleAdmin();
+    }, [users])
 
     useEffect(() => {
         setUsersFiltered(admin)

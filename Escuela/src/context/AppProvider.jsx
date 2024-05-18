@@ -9,6 +9,7 @@ const AppProvider = ({children}) => {
     const [escolaridades, setEscolaridades] = useState([]);
     const [salones, setSalones] = useState([]);
     const [clasesView, setClasesView] = useState([])
+    
     useEffect(() => {
         setAlerta(null)
         handleGetEventos()
@@ -130,23 +131,22 @@ const AppProvider = ({children}) => {
         }
     }
 
-    // const handleGetClases = async (maestroID) => {
-    //     const token = localStorage.getItem('token');
-      
-    //     const config = {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`
-    //       }
-    //     }
-      
-    //     try {
-    //       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/claseAlu/maestro/${maestroID}`, config);
-    //       setClasesView(data.clases);
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    const handleSendEmail = async(nombre, apellidos, email, numero, mensaje) => {
+        try {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/contacto/info`, {
+                emailInfo : {nombre, apellidos, email, numero, mensaje}
+            } );            
+            setAlerta({
+                error : false, 
+                msg : data.msg
+            })
+        } catch (error) {
+            setAlerta({
+                error : true, 
+                msg : error.response.data.msg
+            })
+        }
+    }
 
     return (
         <AppContext.Provider
@@ -160,6 +160,7 @@ const AppProvider = ({children}) => {
                 grupos,
                 salones,
                 clasesView,
+                handleSendEmail
             }}
         >
             {children}

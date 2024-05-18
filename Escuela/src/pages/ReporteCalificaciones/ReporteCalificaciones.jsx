@@ -10,6 +10,22 @@ const ReporteCalificaciones = () => {
     const [data, setData] = useState(null);
     const [ancho, setAncho] = useState(0)
 
+    let sumaCal = 0
+    let i = 0
+    let j = 0
+    let k = 0
+    let gruposCount = 0
+    let clasesCount = 0
+    let alumnosCount = 0
+    let promPerClase = []
+
+    let apr = 0;
+    let rep = 0
+
+    let maxPerGrupo = []
+    let minPerGrupo = []
+    let gruposEsc
+
     const ref = useRef(null);
 
     const { escolaridades, clases, grupos, clasesAlu, handleGetClasesAlu } = useAdmin();
@@ -19,22 +35,12 @@ const ReporteCalificaciones = () => {
     }
 
     const handleInfoReporte = () => {
-        let sumaCal = 0
-        let i = 0
-        let j = 0
-        let k = 0
-        let gruposCount = 0
-        let clasesCount = 0
-        let alumnosCount = 0
-        let promPerClase = []
-
-        let apr = 0;
-        let rep = 0
-
-        let maxPerGrupo = []
-        let minPerGrupo = []
-
-        const gruposEsc = grupos?.filter(grupo => grupo.escolaridadID === +escolaridadID)
+        if(escolaridadID) {
+            gruposEsc = grupos?.filter(grupo => grupo.escolaridadID === +escolaridadID)
+        } else {
+            gruposEsc = grupos
+        }
+        
         if(gruposEsc.length > 0) {
             for(i=0;i<gruposEsc.length;i++) {
                 const clasesGru = clases?.filter(clase => clase.grupoID === gruposEsc[i].ID)
@@ -50,8 +56,6 @@ const ReporteCalificaciones = () => {
         
                             return grupoMatch && materiaMatch && maestroMatch
                         })
-
-                        
         
                         for(k=0;k<clasesAluGru.length;k++) {
                             sumaCal += clasesAluGru[k].calificacion
@@ -142,7 +146,13 @@ const ReporteCalificaciones = () => {
 
     return (
         <div className='container my-4'>
-            <h1>Reporte de calificaciones</h1>
+            <div className='d-flex justify-content-between mb-3'>
+                <h1>Reporte de calificaciones</h1>
+
+                <div className='d-flex align-items-end'>
+                    <button onClick={() => setEscolaridadID(null)} className='btn btn-primary'>General</button>
+                </div>
+            </div>
 
             <div className="row g-5">
                 <div className="col-md-6">
@@ -159,7 +169,6 @@ const ReporteCalificaciones = () => {
 
                 <div className="col-md-6">
                     <div className='bg-secondary p-4 rounded text-light shadow'>
-                        {escolaridadID ? (
                             <>
                                 <h4 className='fw-bold m-0 fs-2 text-center'>{escolaridad?.nombre}</h4>
                                 <div ref={ref}>
@@ -194,20 +203,12 @@ const ReporteCalificaciones = () => {
                                             <YAxis stroke="#fff"/>
                                             <Tooltip stroke="#000" />
                                             <Legend />
-                                            <Bar dataKey="promedio" fill='#8884d8' />
+                                            <Bar dataKey="promedio" fill='#2AB8FF' />
                                         </BarChart>
                                     </div>
                                 </div>
                                 
                             </>
-                        ) : (
-                            <>
-                                <h4>Información general</h4>
-                                <div>
-                                    
-                                </div>
-                            </>
-                        )}
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import hashearPassword from "../helpers/hashearPassword.js";
 import DetUsuarioRol from "../models/DetUsuarioRol.js";
 import User from "../models/User.js";
 import { emailNewUser, emailUpdateUser } from "../helpers/email.js";
+import checkPassword from "../helpers/checkPassword.js";
 
 const getAllUsers = async(req, res) => {
     const userOj = new User();
@@ -48,7 +49,7 @@ const addNewUser = async(req, res) => {
 
             await detUserRol.createItem(DetUsuarioRol, detUserRol)
 
-            return res.status(200).json({msg: response.msg})
+            return res.status(200).json({msg: "Se creo el usuario correctamente"})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
@@ -92,7 +93,7 @@ const addNewUser = async(req, res) => {
         await userRol.createManyItems(DetUsuarioRol, userRolArray, userRol)
 
         if(response) {
-            return res.status(200).json({msg: response.msg})
+            return res.status(200).json({msg: "Se crearon los usuarios correctamente"})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
@@ -106,8 +107,9 @@ const updateUser = async(req, res) => {
 
     user.ID = +id;
     const userObj = new User(user)
+    const oldUser = await userObj.getByElement(User, "ID", +id);
 
-    if(user.password !== "") {
+    if(!await checkPassword(oldUser[0].password, user.password)) {
         userObj.password = await hashearPassword(userObj.password)
     }
 

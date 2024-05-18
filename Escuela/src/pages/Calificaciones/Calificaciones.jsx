@@ -4,72 +4,10 @@ import useApp from "../../hooks/useApp";
 
 export const Calificaciones = () => {
   const { clasesView,alerta, setAlerta } = useApp();
-  // const arrayDeAlumnos = [
-  //   {
-  //     ID: "001",
-  //     nombre: "Juan Pérez",
-  //     apellidos: "Martínez",
-  //     fechaNac: "2000-01-01",
-  //     correo: "juan.perez@ejemplo.com",
-  //     numero: "555-123-4567",
-  //     password: "password123",
-  //     direccion: "Calle Principal 123",
-  //     activo: true,
-  //   },
-  //   {
-  //     ID: "002",
-  //     nombre: "María García",
-  //     apellidos: "López",
-  //     fechaNac: "2002-02-02",
-  //     correo: "maria.garcia@ejemplo.com",
-  //     numero: "555-765-4321",
-  //     password: "password456",
-  //     direccion: "Avenida Juárez 456",
-  //     activo: true,
-  //   },
-  //   {
-  //     ID: "003",
-  //     nombre: "Pedro González",
-  //     apellidos: "Ramírez",
-  //     fechaNac: "2003-03-03",
-  //     correo: "pedro.gonzalez@ejemplo.com",
-  //     numero: "555-321-6543",
-  //     password: "password789",
-  //     direccion: "Calle Sol 789",
-  //     activo: true,
-  //   },
-  //   {
-  //     ID: "004",
-  //     nombre: "Ana Flores",
-  //     apellidos: "Hernández",
-  //     fechaNac: "2001-04-04",
-  //     correo: "ana.flores@ejemplo.com",
-  //     numero: "555-987-6543",
-  //     password: "password012",
-  //     direccion: "Calle Luna 987",
-  //     activo: true,
-  //   },
-  //   {
-  //     ID: "005",
-  //     nombre: "Luis Sánchez",
-  //     apellidos: "Diaz",
-  //     fechaNac: "2004-05-05",
-  //     correo: "luis.sanchez@ejemplo.com",
-  //     numero: "555-213-4567",
-  //     password: "password345",
-  //     direccion: "Calle Sol 213",
-  //     activo: true,
-  //   },
-  // ];
 
   return (
     <div className="divConteiner">
       <h1>Listado de alumnos</h1>
-      {/* <div className="divAsignacion">
-        <div className="container">
-         
-        </div>
-      </div> */}
       <div>
         <div className="container">
           <div className="row">
