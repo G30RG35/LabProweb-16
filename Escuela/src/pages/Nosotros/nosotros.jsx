@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styles from "./Nosotros.module.css";
 
-export const Nosotros = () => {
+const Nosotros = () => {
   return (
     <>
       <Container className={`${styles.conteiner} my-4`}>
@@ -110,3 +110,5 @@ export const Nosotros = () => {
     </>
   );
 };
+
+export default Nosotros

@@ -26,7 +26,7 @@ const getOneClase = async(req, res) => {
 
     const clase = await claseObj.getClaseOneInfo(claseObj)
 
-    for(let i=0; i < claseAlu.length; i++) {
+    for(let i=0; i < claseAlu?.length; i++) {
         claseAlu[i].upload = true
     }
 
@@ -75,8 +75,29 @@ const addNewClase = async(req, res) => {
     }
 }
 
+const getClaseMaestro = async(req, res) => {
+    const { maestroID } = req.params
+    const claseAluObj = new ClaseInfo()
+    const clases = await claseAluObj.getClaseMaestroAllInfo(maestroID)
+
+    if(clases) {
+        return res.status(201).json({
+            status : 201,
+            msg : "Ok", 
+            clases
+        })
+    } else {
+        return res.status(500).json({
+            status: 500, 
+            msg: "Hubo un error al obtener las clases, intentelo más tarde"
+        })
+    }
+}
+
+
 export {
     getAllClases, 
     getOneClase, 
-    addNewClase
+    addNewClase, 
+    getClaseMaestro
 }

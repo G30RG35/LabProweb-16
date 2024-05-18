@@ -61,7 +61,7 @@ const GrupoLista = ({ grupo, clases }) => {
                                     <p className='m-0 fw-bold'>Materia: <span className='fw-normal'>{clase.materia}</span></p>
                                     <p className='m-0 fw-bold'>Maestro: <span className='fw-normal'>{clase.maestro}</span></p>
                                     <p className='m-0 fw-bold'>Grupo: <span className='fw-normal'>{clase.grupoID}</span></p>
-                                    <Link className='w-100 btn btn-sm btn-primary mt-2'>Ver grupo</Link>
+                                    <Link to={`/admin/clase-alumno/${clase.grupoID}/${clase.materiaID}/${clase.usuarioID}`} className='w-100 btn btn-sm btn-primary mt-2'>Ver grupo</Link>
                                 </div>
 
                                 <div className="col-md-6">

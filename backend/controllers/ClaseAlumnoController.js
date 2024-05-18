@@ -76,9 +76,9 @@ const updateClaseAlumno = async(req, res) => {
 }
 
 const getClaseAluMaestro = async(req, res) => {
-    const { id } = req.params
+    const { maestroID } = req.params
     const claseAluObj = new ClaseAluView()
-    const clases = await claseAluObj.getByElement("ClaseAluView", "maestroID", id)
+    const clases = await claseAluObj.getByElement(ClaseAluView, "maestroID", maestroID)
 
     if(clases) {
         return res.status(201).json({

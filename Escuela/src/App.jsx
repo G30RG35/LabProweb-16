@@ -10,7 +10,7 @@ import { Eventos } from './pages/Eventos/Eventos';
 import CrudAlumnos from './pages/Admin/CrudAlumnos/CrudAlumnos';
 import CrudMestros from './pages/Admin/CrudMaestros/CrudMaestros';
 import { AdminProvider } from './context/AdminProvider';
-import { Nosotros } from './pages/Nosotros/Nosotros';
+import Nosotros from './pages/Nosotros/Nosotros';
 import { CrudClases } from './pages/Admin/CrudClases/CrudClases';
 import { Calificaciones } from './pages/Calificaciones/Calificaciones';
 import { PerdiodosVistaAlumno } from './pages/PerdiodosVistaAlumno/PerdiodosVistaAlumno';
@@ -26,9 +26,10 @@ import { CrudEventos } from './pages/Admin/CrudEventos/CrudEventos';
 import CrudClaseAlumno from './pages/Admin/CrudClaseAlumno/CrudClaseAlumno';
 import Perfil from './pages/Perfil/Perfil';
 import AlumnoLayout from './layout/AlumnoLayout';
-import { ListadoGrupos } from './pages/ListadoGrupos/ListadoGrupos';
+import { ListadoGrupos } from './pages/Maestro/ListadoGrupos';
 import ReporteCalificaciones from './pages/ReporteCalificaciones/ReporteCalificaciones';
 import MaestroLayout from './layout/MaestroLayout';
+import ClaseMaestro from './pages/Maestro/ClaseMaestro/ClaseMaestro';
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
 
               <Route path='/maestro' element={<MaestroLayout />}>
                 <Route index element={<ListadoGrupos />} />
+                <Route path=':grupoID/:materiaID/:usuarioID' element={<ClaseMaestro />} />
               </Route>
 
 
