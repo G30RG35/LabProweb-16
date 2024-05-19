@@ -14,7 +14,7 @@ const CrudGrupos = () => {
   });
 
   const { grupos, salones, escolaridades, periodos } = useAdmin();
-
+  
   const formatearFechaPeriodo = (fechaInicio, fechaFin) => {
     const meses = [
       "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -137,7 +137,7 @@ const CrudGrupos = () => {
                 {grupos?.map(grupo => (
                   <Accordion.Item key={grupo.ID} eventKey={grupo.ID}>
                     <Accordion.Header>
-                      {grupo.nombew +" Salon "+grupo.salonID}
+                      {grupo.escolaridad +" Salon "+grupo.salonID}
                     </Accordion.Header>
 
                     <Accordion.Body>
