@@ -252,6 +252,8 @@ const AdminProvider = ({children}) => {
                     error: false, 
                     msg: data.msg
                 })
+
+                handleGetUsers()
             } else if(items.length >= 2) {
                 const itemsNew = items?.map(user => {
                     user.password = generatePSWD()
@@ -267,13 +269,27 @@ const AdminProvider = ({children}) => {
                     msg: data.msg
                 })
 
-                navigate(0)
+                handleGetUsers()
             } else {
                 setAlerta({
                     error: false, 
                     msg: 'ERROR'
                 }) 
             }
+
+            handleGetUsers()
+
+            setNombre("")
+            setApellidos("")
+            setFechaNac("")
+            setNumero("")
+            setCorreo("")
+            setPassword("")
+            setDireccion("")
+
+            setTimeout(() =>{
+                setAlerta(null)
+            }, 5000)
         } catch (error) {
             console.log(error)
         }
@@ -301,10 +317,20 @@ const AdminProvider = ({children}) => {
             
             setAlerta({
                 error: false, 
-                msg: data.msg
+                msg: "Se actualizo el usuario correctamente"
             })
+
+            handleGetUsers()
+
+            setNombre("")
+            setApellidos("")
+            setFechaNac("")
+            setNumero("")
+            setCorreo("")
+            setPassword("")
+            setDireccion("")
         } catch (error) {
-            
+            console.log(error)
         }
     }
 
@@ -328,7 +354,6 @@ const AdminProvider = ({children}) => {
         setNumero(user.numero)
         setCorreo(user.correo)
         setDireccion(user.direccion)
-        setPassword(user.password)
     }
 
     return (
@@ -366,7 +391,8 @@ const AdminProvider = ({children}) => {
                 handleGetEventos,
                 handleGetPeriodos,
                 handleGetMaterias,
-                handleGetClasesAlu
+                handleGetClasesAlu, 
+                handleMaestros
             }}
         >
             {children}

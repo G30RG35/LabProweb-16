@@ -35,6 +35,10 @@ const CrudAlumnos = () => {
     useEffect(() => {
         setUsersFiltered(alumnos)
     }, [alumnos])
+    
+    useEffect(() => {
+        handleAlumnos()
+    }, [users])
 
     useEffect(() => {
         const filtered = alumnos?.filter(user => {

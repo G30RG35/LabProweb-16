@@ -7,6 +7,7 @@ export const Header = () => {
 
   const isAdmin = auth?.roles?.filter(rol => rol === "3");
   const isAlumno = auth?.roles?.filter(rol => rol === "1");
+  const isMaestro = auth?.roles?.filter(rol => rol === "2");
 
   return (
     <>
@@ -52,6 +53,14 @@ export const Header = () => {
                     </Link>
                   </li>
                 )}
+                {isMaestro?.length > 0 && (
+                  <li className="nav-item">
+                    <Link to="/maestro" className="nav-link">
+                      Clases
+                    </Link>
+                  </li>
+                )}
+                
                 {!auth.ID ? (
                   <li className="nav-item">
                     <Link to="/login" className="btn btn-primary">

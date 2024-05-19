@@ -15,9 +15,27 @@ class ClaseInfo extends ActiveRecord {
 
     async getClaseAllInfo(object) {
         let claves = Object.keys(object);
-        let query = "SELECT c.grupoID, c.materiaID, c.userID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
+        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
         query += "INNER JOIN materia AS m ON m.ID = c.materiaID\n"
-        query += "INNER JOIN user AS u ON u.ID = c.userID"
+        query += "INNER JOIN user AS u ON u.ID = c.usuarioID"
+
+        try {
+            const [results, fields] = await connection.execute(query)
+            return results
+        } catch (error) {
+            console.log(error)
+            return
+        }
+    }
+
+    async getClaseMaestroAllInfo(maestroID) {
+        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro, p.fechaInicio, p.fechaFin, e.nombre AS escolaridad, gr.salonID, c.active FROM clase AS c\n"
+        query += "INNER JOIN materia AS m ON m.ID = c.materiaID\n"
+        query += "INNER JOIN user AS u ON u.ID = c.usuarioID\n"
+        query += "INNER JOIN grupo AS gr ON gr.ID = c.grupoID\n"
+        query += "INNER JOIN periodo AS p ON p.ID = gr.periodoID\n"
+        query += "INNER JOIN escolaridad AS e ON e.ID = gr.escolaridadID\n"
+        query += "WHERE c.usuarioID = " + maestroID
 
         try {
             const [results, fields] = await connection.execute(query)
@@ -30,9 +48,9 @@ class ClaseInfo extends ActiveRecord {
 
     async getClaseOneInfo(object) {
         let claves = Object.keys(object);
-        let query = "SELECT c.grupoID, c.materiaID, c.userID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
+        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
         query += "INNER JOIN materia AS m ON m.ID = c.materiaID\n"
-        query += "INNER JOIN user AS u ON u.ID = c.userID\n"
+        query += "INNER JOIN user AS u ON u.ID = c.usuarioID\n"
         query += "WHERE "
 
         for(let i=0; i<claves.length; i++) {

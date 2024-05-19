@@ -13,7 +13,6 @@ export const CrudClases = () => {
   const { maestros, materias, grupos, clases, setAlerta, alerta } = useAdmin();
 
   const handleAddNewClase = async(e) => {
-    e.preventDefault()
     const clase = {
       grupoID, 
       materiaID, 

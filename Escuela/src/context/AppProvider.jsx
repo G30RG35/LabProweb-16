@@ -9,7 +9,6 @@ const AppProvider = ({children}) => {
     const [escolaridades, setEscolaridades] = useState([]);
     const [salones, setSalones] = useState([]);
     const [clasesView, setClasesView] = useState([])
-    const [clases, setClases] = useState([])
     
     useEffect(() => {
         setAlerta(null)
@@ -17,7 +16,6 @@ const AppProvider = ({children}) => {
         handleGetEscolaridades()
         handleGetGroups()
         handleGetSalones()
-        handleGetClases()
     }, [])
 
     const handleLogin = async(ID, password, remember) => {
@@ -106,7 +104,7 @@ const AppProvider = ({children}) => {
         }
 
         try {
-            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/claseview`, config );            
+            const { data } = await axios( `${import.meta.env.VITE_API_URL}/api/grupos`, config );     
             setGrupos(data.grupos)
             
         } catch (error) {
@@ -133,24 +131,22 @@ const AppProvider = ({children}) => {
         }
     }
 
-    const handleGetClases = async (maestroID) => {
-        const token = localStorage.getItem('token');
-      
-        const config = {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        }
-      
+    const handleSendEmail = async(nombre, apellidos, email, numero, mensaje) => {
         try {
-          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/ruta/donde/esta/el/endpoint/${maestroID}`, config);
-          setClasesView(data.clases);
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/contacto/info`, {
+                emailInfo : {nombre, apellidos, email, numero, mensaje}
+            } );            
+            setAlerta({
+                error : false, 
+                msg : data.msg
+            })
         } catch (error) {
-          console.log(error);
-          return [];
+            setAlerta({
+                error : true, 
+                msg : error.response.data.msg
+            })
         }
-      }
+    }
 
     return (
         <AppContext.Provider
@@ -164,6 +160,7 @@ const AppProvider = ({children}) => {
                 grupos,
                 salones,
                 clasesView,
+                handleSendEmail
             }}
         >
             {children}

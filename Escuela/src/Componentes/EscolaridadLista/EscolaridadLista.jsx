@@ -1,7 +1,6 @@
 import GrupoLista from "../GrupoLista/GrupoLista";
 
 const EscolaridadLista = ({ escolaridad, grupos, clases, setEscolaridadID }) => {
-    
     return (
         <div>
             <div className='d-flex justify-content-between align-items-end mb-2'>

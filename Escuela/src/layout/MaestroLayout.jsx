@@ -1,11 +1,35 @@
 import { Outlet, Navigate } from "react-router-dom";
+import { AdminProvider } from "../context/AdminProvider";
+import useAuth from "../hooks/useAuth";
 import { Header } from "../Componentes/Header/Header";
 import Footer from "../Componentes/Footer/Footer";
-import useAuth from "../hooks/useAuth";
+import Loader from "../Componentes/Loader/Loader";
 
 const MaestroLayout = () => {
+    const { auth, loading } = useAuth();
+
+    if(loading) return (
+        <div className="container-fluid">
+            <Loader />
+        </div>
+    )
+
+    const res = auth?.roles?.filter(rol => rol === "2");
+
     return (
-        <div>MaestroLayout</div>
+        <>
+            {auth.ID && res.length > 0 ? (
+                <>
+                    <AdminProvider>
+                        <Header />
+                        <main>
+                            <Outlet />
+                        </main>
+                        <Footer />
+                    </AdminProvider>
+                </>
+            ) : <Navigate to="/" />}
+        </>
     )
 }
 

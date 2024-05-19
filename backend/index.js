@@ -12,6 +12,7 @@ import EscolaridadRoutes from './routes/EscolaridadRoutes.js';
 import ClaseRoutes from './routes/ClaseRoutes.js';
 import ClaseAlumnoRoutes from './routes/ClaseAlumnoRoutes.js';
 import EventoRoutes from './routes/EventoRoutes.js'
+import ContactoRoutes from './routes/ContactoRoute.js';
 
 const app = express();
 app.use(express.json());
@@ -49,6 +50,7 @@ app.use('/api/escolaridades', EscolaridadRoutes);
 app.use('/api/clases', ClaseRoutes);
 app.use('/api/clasesAlumnos', ClaseAlumnoRoutes);
 app.use('/api/eventos', EventoRoutes);
+app.use('/api/contacto', ContactoRoutes);
 
 const PORT = process.env.PORT || 4000
 

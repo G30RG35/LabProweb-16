@@ -4,7 +4,8 @@ import generatePSWD from "../helpers/generarPassword.js";
 import hashearPassword from "../helpers/hashearPassword.js";
 import DetUsuarioRol from "../models/DetUsuarioRol.js";
 import User from "../models/User.js";
-import { emailNewUser } from "../helpers/email.js";
+import { emailNewUser, emailUpdateUser } from "../helpers/email.js";
+import checkPassword from "../helpers/checkPassword.js";
 
 const getAllUsers = async(req, res) => {
     const userOj = new User();
@@ -36,7 +37,7 @@ const addNewUser = async(req, res) => {
                 email : user.correo, 
                 ID : response.res[0].insertId, 
                 password : user.password, 
-                nombre : userOj.nombre + " " + userOj.apellidos 
+                nombre : user.nombre + " " + user.apellidos 
             })
 
             const userRol = {
@@ -48,7 +49,7 @@ const addNewUser = async(req, res) => {
 
             await detUserRol.createItem(DetUsuarioRol, detUserRol)
 
-            return res.status(200).json({msg: response.msg})
+            return res.status(200).json({msg: "Se creo el usuario correctamente"})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
@@ -92,7 +93,7 @@ const addNewUser = async(req, res) => {
         await userRol.createManyItems(DetUsuarioRol, userRolArray, userRol)
 
         if(response) {
-            return res.status(200).json({msg: response.msg})
+            return res.status(200).json({msg: "Se crearon los usuarios correctamente"})
         } else {
             const error = new Error('Hubo un error')
             return res.status(500).json({msg: error.message})
@@ -103,13 +104,12 @@ const addNewUser = async(req, res) => {
 const updateUser = async(req, res) => {
     const { id } = req.params;
     let { user } = req.body;
-    
+
     user.ID = +id;
     const userObj = new User(user)
+    const oldUser = await userObj.getByElement(User, "ID", +id);
 
-    const oldUser = await userObj.getById(User, user.ID)
-
-    if(oldUser.password !== user.password) {
+    if(!await checkPassword(oldUser[0].password, user.password)) {
         userObj.password = await hashearPassword(userObj.password)
     }
 
@@ -117,6 +117,13 @@ const updateUser = async(req, res) => {
     const response = await userObj.saveItem(User, userObj)
     
     if(response) {
+        await emailUpdateUser({ 
+            email : user.correo, 
+            ID : id, 
+            password : user.password, 
+            nombre : user.nombre + " " + user.apellidos 
+        })
+
         return res.status(200).json({msg: response})
     } else {
         const error = new Error('Hubo un error')
