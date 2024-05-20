@@ -15,9 +15,10 @@ class ClaseInfo extends ActiveRecord {
 
     async getClaseAllInfo(object) {
         let claves = Object.keys(object);
-        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro FROM clase AS c\n"
+        let query = "SELECT c.grupoID, c.materiaID, c.usuarioID, m.nombre as materia, u.nombre as maestro, g.periodoID FROM clase AS c\n"
         query += "INNER JOIN materia AS m ON m.ID = c.materiaID\n"
-        query += "INNER JOIN user AS u ON u.ID = c.usuarioID"
+        query += "INNER JOIN user AS u ON u.ID = c.usuarioID\n"
+        query += "INNER JOIN grupoinfo AS g ON g.ID = c.grupoID"
 
         try {
             const [results, fields] = await connection.execute(query)
