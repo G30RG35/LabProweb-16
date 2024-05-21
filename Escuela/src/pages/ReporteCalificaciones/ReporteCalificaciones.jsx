@@ -3,9 +3,13 @@ import useAdmin from '../../hooks/useAdmin'
 import GrupoLista from '../../Componentes/GrupoLista/GrupoLista';
 import EscolaridadLista from '../../Componentes/EscolaridadLista/EscolaridadLista';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
+import getPeriodoCurrent from '../../helpers/getPeriodoCurrent';
+import formatearFechaPeriodo from '../../helpers/formatearFechaPeriodo';
 
 const ReporteCalificaciones = () => {
     const [escolaridadID, setEscolaridadID] = useState(null);
+    const [periodoID, setPeriodoID] = useState(null);
+    const [periodoIdNew, setPeriodoIdNew] = useState(null);
     const [escolaridad, setEscolaridad] = useState(null);
     const [data, setData] = useState(null);
     const [ancho, setAncho] = useState(0)
@@ -28,18 +32,20 @@ const ReporteCalificaciones = () => {
 
     const ref = useRef(null);
 
-    const { escolaridades, clases, grupos, clasesAlu, handleGetClasesAlu } = useAdmin();
+    const { escolaridades, clases, grupos, clasesAlu, handleGetClasesAlu, periodos } = useAdmin();
 
     const handleGetClases = async() => {
         await handleGetClasesAlu();
     }
 
-    const handleInfoReporte = () => {
+    const handleInfoReporte = async() => {
         if(escolaridadID) {
             gruposEsc = grupos?.filter(grupo => grupo.escolaridadID === +escolaridadID)
         } else {
             gruposEsc = grupos
         }
+
+        gruposEsc = gruposEsc?.filter(grupo => grupo.periodoID === +periodoID);
         
         if(gruposEsc.length > 0) {
             for(i=0;i<gruposEsc.length;i++) {
@@ -80,11 +86,11 @@ const ReporteCalificaciones = () => {
                             }
                         ]
         
-                        maxPerGrupo[j] = clasesAluGru.reduce(function(a, b) {
+                        maxPerGrupo[j] = clasesAluGru?.reduce(function(a, b) {
                             return a.calificacion > b.calificacion ? a: b
                         })
                         
-                        minPerGrupo[j] = clasesAluGru.reduce(function(a, b) {
+                        minPerGrupo[j] = clasesAluGru?.reduce(function(a, b) {
                             return a.calificacion < b.calificacion ? a: b
                         })
         
@@ -126,6 +132,18 @@ const ReporteCalificaciones = () => {
             promPerClase
         })
     }
+    
+    useEffect(() => {
+        const getPeriodo = async() => {
+            if(!periodoID) {
+                const id = await getPeriodoCurrent(periodos)
+                setPeriodoID(id)
+                setPeriodoIdNew(id)
+            }
+        }
+
+        getPeriodo()
+    }, [periodos])
 
     useEffect(() => {
         handleGetClases()
@@ -136,21 +154,35 @@ const ReporteCalificaciones = () => {
 
         const escolaridadNew = escolaridades?.filter(esc => esc.ID === +escolaridadID)
         setEscolaridad(escolaridadNew[0])
-    }, [escolaridadID])
+    }, [escolaridadID, periodoID])
+
 
     useEffect(() => {
         setAncho(ref.current ? ref.current.offsetWidth : 0);
     }, [ref.current]);
-
-    console.log(ref.current)
 
     return (
         <div className='container my-4'>
             <div className='d-flex justify-content-between mb-3'>
                 <h1>Reporte de calificaciones</h1>
 
-                <div className='d-flex align-items-end'>
-                    <button onClick={() => setEscolaridadID(null)} className='btn btn-primary'>General</button>
+                <div className='d-flex gap-3 align-items-end'>
+                    <select onChange={e => setPeriodoIdNew(e.target.value)} value={periodoID} className='form-select'>
+                        {periodos?.map(periodo => (
+                            <option value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio) + "-" + formatearFechaPeriodo(periodo.fechaFin)}</option>
+                        ))}
+                    </select>
+                    <button 
+                        onClick={() => {
+                            if(periodoID !== periodoIdNew) {
+                                setPeriodoID(periodoIdNew)
+                                setEscolaridad(null)
+                            } else {
+                                setEscolaridadID(null)
+                            }
+                        }} 
+                        className='btn btn-primary'
+                    >{periodoID !== periodoIdNew ? 'Elegir' : 'General'}</button>
                 </div>
             </div>
 
@@ -158,6 +190,7 @@ const ReporteCalificaciones = () => {
                 <div className="col-md-6">
                     {escolaridades?.map(escolaridad => (
                         <EscolaridadLista 
+                            periodoID={periodoID}
                             key={escolaridad.ID}
                             escolaridad={escolaridad}
                             grupos={grupos}
