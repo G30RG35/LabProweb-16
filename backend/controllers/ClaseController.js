@@ -94,10 +94,30 @@ const getClaseMaestro = async(req, res) => {
     }
 }
 
+const updateClase = async(req, res) => {
+    const { clase } = req.body
+    
+    const claseObj = new Clase(clase);
+    let { claves, valores } = await claseObj.getArray(claseObj)
+    const response = await claseObj.updateItem(Clase, claseObj, claves);
+
+    if(response) {
+        return res.status(201).json({
+            status : 201,
+            msg : "La clase se actualizo correctamente"
+        })
+    } else {
+        return res.status(500).json({
+            status: 500, 
+            msg: "Hubo un error al actualizar la clases, intentelo más tarde"
+        })
+    }
+}
 
 export {
     getAllClases, 
     getOneClase, 
     addNewClase, 
-    getClaseMaestro
+    getClaseMaestro, 
+    updateClase
 }

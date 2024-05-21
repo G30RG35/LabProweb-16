@@ -5,8 +5,8 @@ import User from "../models/User.js";
 const auth = async(req, res) => {
     const { ID, password } = req.body;
     const userObj = new User(req.body);
-
-    const user = await userObj.getUserInfo(ID);
+    
+    const user = await userObj.getByElement("user", "ID", ID);
 
     if(!user) {
         const error = new Error("El usuario no esta registrado");

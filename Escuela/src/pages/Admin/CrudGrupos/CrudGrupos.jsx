@@ -13,7 +13,7 @@ const CrudGrupos = () => {
     editandoID: null
   });
 
-  const { grupos, salones, escolaridades, periodos } = useAdmin();
+  const { grupos, salones, escolaridades, periodos, alerta, setAlerta } = useAdmin();
   
   const formatearFechaPeriodo = (fechaInicio, fechaFin) => {
     const meses = [
@@ -62,6 +62,11 @@ const CrudGrupos = () => {
       const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/grupos`, {
         grupo: grupo
       }, config);
+
+      setAlerta({
+        error : false, 
+        msg : data.msg
+      })
   
     } catch (error) {
       console.log(error)
@@ -100,7 +105,8 @@ const CrudGrupos = () => {
     }
   
     const grupo = {
-      salonID,
+      ID : editandoID,
+      salonID,  
       periodoID,
       escolaridadID
     }
@@ -115,9 +121,14 @@ const CrudGrupos = () => {
     }
   
     try {
-      const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/grupos/${editandoID}`, {
+      const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/grupos`, {
         grupo: grupo
       }, config);
+
+      setAlerta({
+        error : false, 
+        msg : data.msg
+      })
     } catch (error) {
       console.log(error)
     }
@@ -195,6 +206,14 @@ const CrudGrupos = () => {
         <div className="col-lg-6">
           <form className="formContainer" onSubmit={handleAddNewGroup}>
             <h3>Ingresa la informacion que se solicita para dar de alta un grupo</h3>
+            {alerta && (
+                <p
+                  className={`alert ${alerta.error ? "alert-danger" : "alert-success"
+                    }`}
+                >
+                  {alerta.msg}
+                </p>
+              )}
             <div className="d-flex flex-column">
               <label htmlFor="salon">Salon</label>
               <select id="salon" value={grupoData.salonID} onChange={e => setGrupoData({ ...grupoData, salonID: e.target.value })} className='form-select'>

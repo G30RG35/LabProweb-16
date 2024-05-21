@@ -9,6 +9,7 @@ export const CrudClases = () => {
   const [usuarioID, setUsuarioID] = useState(0)
   const [materiaID, setMateriaID] = useState(0)
   const [grupoID, setGrupoID] = useState(0)
+  const [clase, setClase] = useState({})
 
   const { maestros, materias, grupos, clases, setAlerta, alerta } = useAdmin();
 
@@ -44,6 +45,41 @@ export const CrudClases = () => {
       })
     }
   }
+  
+  const handleUpdateClase = async(grupoIDNew, materiaIDNew, usuarioIDNew) => {
+    const clase = {
+      grupoID : grupoIDNew, 
+      materiaID : materiaIDNew, 
+      usuarioID : usuarioIDNew
+    }
+
+    const token = localStorage.getItem('token');
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    try {
+      const { data } = await axios.put(`${import.meta.env.VITE_API_URL}/api/clases`, {
+        clase : clase
+      }, config)
+
+      setAlerta({
+          error: false, 
+          msg: data.msg
+      })
+    } catch (error) {
+      setAlerta({
+        error: true, 
+        msg: error.response.data.msg
+      })
+    }
+  }
+
+
 
   return (
     <div className="container my-5">
@@ -176,7 +212,7 @@ export const CrudClases = () => {
                       </div>
                     </div>
                     <div className="col-sm-4">
-                      <button type="button" className="btn btn-primary m-2">
+                      <button onClick={() => handleUpdateClase(clase.grupoID, clase.materiaID, clase.usuarioID)} type="button" className="btn btn-primary m-2">
                         Guardar Cambios
                       </button>
                       <Link to={`/admin/clase-alumno/${clase.grupoID}/${clase.materiaID}/${clase.usuarioID}`} className="btn btn-secondary m-2">

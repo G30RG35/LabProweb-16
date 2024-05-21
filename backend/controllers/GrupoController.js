@@ -14,10 +14,6 @@ const getAllGrupos = async(req, res) => {
     }
 }
 
-const getOneGrupo = async(req, res) => {
-
-}
-
 const addNewGrupo = async(req, res) => {
     const { grupo, grupos } = req.body;
 
@@ -34,8 +30,24 @@ const addNewGrupo = async(req, res) => {
     }
 }
 
+const updateGrupo = async(req, res) => {
+    const { grupo } = req.body;
+
+    if(grupo) {
+        const grupoObj = new Grupo(grupo);
+        const response = await grupoObj.saveItem(Grupo, grupoObj);
+
+        if(response) {
+            return res.status(201).json({msg: "El grupo se ha actualizado correctamente"})
+        } else {
+            const error = new Error('Hubo un error')
+            return res.status(500).json({msg: error.message})
+        }
+    }
+}
+
 export {
     getAllGrupos,
-    getOneGrupo,  
-    addNewGrupo
+    addNewGrupo, 
+    updateGrupo
 }
