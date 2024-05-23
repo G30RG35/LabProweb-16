@@ -110,9 +110,14 @@ const updateUser = async(req, res) => {
     let oldUser = await userObj.getByElement(User, "ID", +id);
     oldUser = oldUser[0]
 
-    if(!await checkPassword(oldUser[0].password, user.password)) {
-        userObj.password = await hashearPassword(userObj.password)
+    if(user.password !== "") {
+        if(!await checkPassword(oldUser.password, user.password)) {
+            userObj.password = await hashearPassword(userObj.password)
+        }
+    } else {
+        userObj.password = oldUser.password
     }
+
 
     userObj.fechaNac = formatearFecha(userObj.fechaNac)
     const response = await userObj.saveItem(User, userObj)

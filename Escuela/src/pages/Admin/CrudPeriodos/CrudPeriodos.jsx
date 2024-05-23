@@ -168,7 +168,6 @@ const CrudPeriodos = () => {
                                                 ) : (
                                                     <div className="d-flex gap-1 mt-2">
                                                         <button onClick={(e) => handleEditPeriodo(e, periodo.ID)} className="btn btn-primary">Editar</button>
-                                                        <button onClick={(e) => handleEliminarPeriodo(e, periodo.ID)} className="btn btn-danger">Eliminar</button>
                                                     </div>
                                                 )}
                                             </div>

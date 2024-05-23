@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styles from './FormularioUser.module.css'
 import generatePSWD from '../../helpers/generarPassword';
 import * as XLSX from 'xlsx/xlsx.mjs';
@@ -20,7 +20,8 @@ const FormularioUser = ({tipo}) => {
         numero, setNumero, 
         correo, setCorreo, 
         password, setPassword, 
-        direccion, setDireccion
+        direccion, setDireccion, 
+        cleanUser
     } = useAdmin();
 
     const handleSetPassword = () => {
@@ -60,6 +61,19 @@ const FormularioUser = ({tipo}) => {
             excelToJson()
         }
     }, [file])
+
+    const checkInfo = useCallback(() => {
+        return nombre === "" ||
+            apellidos === "" ||
+            fechaNac === "" ||
+            numero.length < 10 ||
+            correo === "" ||
+            direccion === ""
+    }, [nombre, apellidos, fechaNac, numero, correo, password, direccion])
+
+    useEffect(() => {
+        checkInfo()
+    }, [nombre, apellidos, fechaNac, numero, correo, password, direccion])
 
     return (
         <div className={`${styles.formContainer}`}>
@@ -136,8 +150,11 @@ const FormularioUser = ({tipo}) => {
                     </div>
                 </div>
 
-                <div className={`${styles.btnSubmitContainer}`}>
-                    <button type="button" onClick={() => handleSaveUser(tipo, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}])} className={`${styles.btnSubmit}`}>{ID ? 'Guardar Cambios' : 'Crear Usuario'}</button>
+                <div className={`${styles.btnSubmitContainer} gap-4`}>
+                    {ID && (
+                        <button onClick={() => cleanUser()} className='btn btn-secondary'>Limpiar formulario</button>
+                    )}
+                    <button disabled={checkInfo()} type="button" onClick={() => handleSaveUser(tipo, [{nombre, apellidos, fechaNac, numero, correo, password, direccion}])} className={`btn btn-primary`}>{ID ? 'Guardar Cambios' : 'Crear Usuario'}</button>
                 </div>
             </form>
         </div>

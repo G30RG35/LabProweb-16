@@ -127,15 +127,6 @@ export const Perfil = () => {
                                 /> 
                             }
                         </p>
-
-                        {isEditing ? (
-                            <div className="d-flex gap-2 mt-3">
-                                <button className="btn btn-primary" onClick={handleSave}>Guardar</button>
-                                <button className="btn btn-danger" onClick={handleCancel}>Cancelar</button>
-                            </div>
-                        ) : (
-                            <button className="btn btn-primary" onClick={handleEdit}>Editar</button>
-                        )}
                     </div>
 
                     <div className="col-lg-6">

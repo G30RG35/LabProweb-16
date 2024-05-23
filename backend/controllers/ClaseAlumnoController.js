@@ -1,5 +1,6 @@
 import ClaseAlu from "../models/ClaseAlu.js";
 import ClaseAluView from "../models/ClaseAluView.js";
+import Salon from "../models/Salon.js";
 
 const getAllClaseAlumno = async(req, res) => {
     const clasesAluObj = new ClaseAluView()

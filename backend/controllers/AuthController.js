@@ -6,9 +6,8 @@ const auth = async(req, res) => {
     const { ID, password } = req.body;
     const userObj = new User(req.body);
     
-    let user = await userObj.getByElement(User, "ID", ID);
-    user = user[0]
-
+    let user = await userObj.getUserInfo(ID);
+    
     if(!user) {
         const error = new Error("El usuario no esta registrado");
         return res.status(404).json({msg: error.message});

@@ -1,13 +1,23 @@
 import { Link } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth';
 import NavAdmin from '../NavAdmin/NavAdmin';
+import { useEffect, useState } from 'react';
 
 export const Header = () => {
+  const [isAdmin, setIsAdmin] = useState([])
+  const [isAlumno, setIsAlumno] = useState([])
+  const [isMaestro, setIsMaestro] = useState([])
   const { auth, logOut } = useAuth();
+  
+  console.log(auth)
 
-  const isAdmin = auth?.roles?.filter(rol => rol === "3");
-  const isAlumno = auth?.roles?.filter(rol => rol === "1");
-  const isMaestro = auth?.roles?.filter(rol => rol === "2");
+  useEffect(() => {
+    setIsAdmin(auth?.roles?.filter(rol => rol === "3"))
+    setIsAlumno(auth?.roles?.filter(rol => rol === "1"))
+    setIsMaestro(auth?.roles?.filter(rol => rol === "2"))
+  }, [auth])
+
+  console.log(isAdmin)
 
   return (
     <>

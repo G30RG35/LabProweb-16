@@ -56,10 +56,12 @@ export const Eventos = () => {
         {/* <Card.Img variant="top" src={data.image} /> */}
         <Card.Body>
           <Card.Title>{data.titulo}</Card.Title>
-          <Card.Text>{data.descripcion}
-            {formatearFecha(data.fecha) + " a las " + formatearHora(data.hora)}</Card.Text>
-          <br />
-          Este evento pertenece a: {DeXEscolaridad(data.escolaridadID)}
+            <>
+              <p>{data.descripcion}</p>
+              <p>{formatearFecha(data.fecha) + " a las " + formatearHora(data.hora)}</p>
+            
+              <p>Este evento pertenece a: {DeXEscolaridad(data.escolaridadID)}</p> 
+            </>
         </Card.Body>
       </Card>
     );

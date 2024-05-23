@@ -320,8 +320,13 @@ const AdminProvider = ({children}) => {
                 msg: "Se actualizo el usuario correctamente"
             })
 
+            setTimeout(() => {
+                setAlerta(null)
+            }, 6000)
+
             handleGetUsers()
 
+            setID(null)
             setNombre("")
             setApellidos("")
             setFechaNac("")
@@ -332,6 +337,18 @@ const AdminProvider = ({children}) => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const cleanUser = async() => {
+        setID(null)
+            setNombre("")
+            setApellidos("")
+            setFechaNac("")
+            setNumero("")
+            setCorreo("")
+            setPassword("")
+            setDireccion("")
+            setAlerta(null)
     }
 
     const handleDeleteUser = async(id) => {
@@ -442,7 +459,8 @@ const AdminProvider = ({children}) => {
                 handleGetClasesAlu, 
                 handleMaestros, 
                 handleDeleteUser, 
-                handleRecoverUser
+                handleRecoverUser, 
+                cleanUser
             }}
         >
             {children}
