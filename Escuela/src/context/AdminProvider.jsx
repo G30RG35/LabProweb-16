@@ -334,6 +334,54 @@ const AdminProvider = ({children}) => {
         }
     }
 
+    const handleDeleteUser = async(id) => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+        
+        try {
+            const { data } = await axios.delete( `${import.meta.env.VITE_API_URL}/api/users/${id}`, config);
+            
+            setAlerta({
+                error: false, 
+                msg: "Se desactivo el usuario correctamente"
+            })
+
+            handleGetUsers()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleRecoverUser = async(id) => {
+        const token = localStorage.getItem('token');
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+        
+        try {
+            const { data } = await axios.post( `${import.meta.env.VITE_API_URL}/api/users/${id}`, {}, config);
+            
+            setAlerta({
+                error: false, 
+                msg: "Se activo el usuario correctamente"
+            })
+
+            handleGetUsers()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleFillForm = (user) => {
         setID(user.ID)
         setNombre(user.nombre)
@@ -392,7 +440,9 @@ const AdminProvider = ({children}) => {
                 handleGetPeriodos,
                 handleGetMaterias,
                 handleGetClasesAlu, 
-                handleMaestros
+                handleMaestros, 
+                handleDeleteUser, 
+                handleRecoverUser
             }}
         >
             {children}

@@ -85,10 +85,7 @@ const CrudClaseAlumno = () => {
                 infoExcel[i].upload = true
             }
 
-            setAlumnos([
-                ...alumnos, 
-                ...infoExcel
-            ])
+            handleGetClaseAlumno()
 
             setInfoExcel([])
 

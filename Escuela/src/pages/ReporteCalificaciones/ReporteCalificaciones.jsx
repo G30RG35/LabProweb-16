@@ -88,11 +88,11 @@ const ReporteCalificaciones = () => {
         
                         maxPerGrupo[j] = clasesAluGru?.reduce(function(a, b) {
                             return a.calificacion > b.calificacion ? a: b
-                        })
+                        }, 0)
                         
                         minPerGrupo[j] = clasesAluGru?.reduce(function(a, b) {
                             return a.calificacion < b.calificacion ? a: b
-                        })
+                        }, 0)
         
                         clasesCount++
                     }
@@ -148,6 +148,10 @@ const ReporteCalificaciones = () => {
     useEffect(() => {
         handleGetClases()
     }, [])
+    
+    useEffect(() => {
+        handleInfoReporte()
+    }, [clasesAlu])
 
     useEffect(() => {
         handleInfoReporte()
@@ -155,6 +159,7 @@ const ReporteCalificaciones = () => {
         const escolaridadNew = escolaridades?.filter(esc => esc.ID === +escolaridadID)
         setEscolaridad(escolaridadNew[0])
     }, [escolaridadID, periodoID])
+
 
 
     useEffect(() => {
@@ -169,7 +174,7 @@ const ReporteCalificaciones = () => {
                 <div className='d-flex gap-3 align-items-end'>
                     <select onChange={e => setPeriodoIdNew(e.target.value)} value={periodoID} className='form-select'>
                         {periodos?.map(periodo => (
-                            <option value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio) + "-" + formatearFechaPeriodo(periodo.fechaFin)}</option>
+                            <option key={periodo.ID} value={periodo.ID}>{formatearFechaPeriodo(periodo.fechaInicio) + "-" + formatearFechaPeriodo(periodo.fechaFin)}</option>
                         ))}
                     </select>
                     <button 
@@ -188,7 +193,7 @@ const ReporteCalificaciones = () => {
 
             <div className="row g-5">
                 <div className="col-md-6">
-                    {escolaridades?.map(escolaridad => (
+                    {escolaridades?.map(escolaridad => escolaridad.ID !== 4 && (
                         <EscolaridadLista 
                             periodoID={periodoID}
                             key={escolaridad.ID}

@@ -75,6 +75,21 @@ const updateClaseAlumno = async(req, res) => {
     }
 }
 
+const deleteClaseAlumno = async(req, res) => {
+    const { grupoID, materiaID, maestroID, usuarioID } = req.params;
+    const { claseAlumno } = req.body
+
+    const claseAlumnoObj = new ClaseAlu()
+    const query = `DELETE FROM clasealu WHERE usuarioID = ${usuarioID} AND grupoID = ${grupoID} AND maestroID = ${maestroID} AND materiaID = ${materiaID}`;
+    const response = await claseAlumnoObj.queryExecute(query)
+
+    if(response) {
+        return res.status(201).json({msg: "Se elimino el alumno correctamente"})
+    } else {
+        return res.status(500).json({msg: 'La clase ya existe'})
+    }
+}
+
 const getClaseAluMaestro = async(req, res) => {
     const { maestroID } = req.params
     const claseAluObj = new ClaseAluView()
@@ -99,5 +114,6 @@ export {
     addNewClaseAlumno, 
     updateClaseAlumno, 
     getClaseAlumno, 
-    getClaseAluMaestro
+    getClaseAluMaestro, 
+    deleteClaseAlumno
 }

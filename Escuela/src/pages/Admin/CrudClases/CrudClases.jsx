@@ -134,7 +134,7 @@ export const CrudClases = () => {
                 <div className="col-md-6">
                   <label htmlFor="maestro">Maestro</label>
                   <select id="maestro" value={usuarioID} onChange={e => setUsuarioID(e.target.value)} className="form-select">
-                    <option value={usuarioID}>Seleccione Maestro</option>
+                    <option value={0}>Seleccione Maestro</option>
                     {maestros?.map(maestro => (
                       <option key={maestro.ID} value={maestro.ID}>{maestro.apellidos + ' ' + maestro.nombre}</option>
                     ))}
@@ -265,7 +265,7 @@ export const CrudClases = () => {
 
         <h3 className="mt-3">Todas las clases</h3>
         <Accordion defaultActiveKey="0">
-          {filteredItems?.map(clase =>  (
+          {filteredItems?.map(clase => clase.periodoID !== +periodoID && (
             <Accordion.Item key={clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID} eventKey={clase.grupoID + "" + clase.materiaID + "" + clase.usuarioID}>
               <Accordion.Header>
                 {"Grupo: " + clase.grupoID + " / " + clase.materia + " / " + clase.maestro}

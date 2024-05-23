@@ -145,6 +145,16 @@ class ActiveRecord {
             return { error: 'Hubo un error al eliminar el elemento' };
         }
     }
+
+    async queryExecute(query) {
+        try {
+            await connetion.execute(query);
+            return { msg: 'Elemento eliminado correctamente' };
+        } catch (error) {
+            console.log(error);
+            return { error: 'Hubo un error al eliminar el elemento' };
+        }
+    }
 }
 
 export default ActiveRecord

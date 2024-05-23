@@ -107,7 +107,8 @@ const updateUser = async(req, res) => {
 
     user.ID = +id;
     const userObj = new User(user)
-    const oldUser = await userObj.getByElement(User, "ID", +id);
+    let oldUser = await userObj.getByElement(User, "ID", +id);
+    oldUser = oldUser[0]
 
     if(!await checkPassword(oldUser[0].password, user.password)) {
         userObj.password = await hashearPassword(userObj.password)
@@ -153,10 +154,33 @@ const deleteUser = async(req, res) => {
     }
 }
 
+const recoverUser = async(req, res) => {
+    const { id } = req.params;
+
+    const userObj = new User();
+    const oldUser = await userObj.getById(User, +id)
+
+    oldUser.activo = true 
+
+    oldUser.fechaNac = formatearFecha(oldUser.fechaNac)
+    
+    const userNew = new User(oldUser)
+
+    const response = await userNew.saveItem(User, userNew)
+
+    if(response) {
+        return res.status(200).json({msg: 'Usuario habilitado correctamente'})
+    } else {
+        const error = new Error('Hubo un error')
+        return res.status(500).json({msg: error.message})
+    }
+}
+
 export {
     getAllUsers,
     getOneUser,
     addNewUser,
     updateUser, 
-    deleteUser
+    deleteUser, 
+    recoverUser
 }
